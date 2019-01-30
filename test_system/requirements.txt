@@ -1,3 +1,6 @@
 django
 future
+djangorestframework
+markdown
+django-filter
 
