@@ -9,6 +9,7 @@ from .permissions import IsOwnerOrReadOnly
 class TestQuestionAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     lookup_field = 'pk'
     serializer_class = TestQuestionSerializer
+    permission_classes = [IsOwnerOrReadOnly]
 
     def get_queryset(self):
         qs = TestQuestion.objects.all()
@@ -18,6 +19,7 @@ class TestQuestionAPIView(mixins.CreateModelMixin, generics.ListAPIView):
 class TestQuestionRudView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
     serializer_class = TestQuestionSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     
     def get_queryset(self):
         return TestQuestion.objects.all()
