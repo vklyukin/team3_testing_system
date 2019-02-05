@@ -9,6 +9,9 @@ class Preference(Enum):
     TEACHER = 'Teacher'
     ADMIN = 'Admin'
 
+    def __eq__(self, other):
+        return str(other).lower() == str(self.name).lower()
+
 
 class UserPreferences(models.Model):
     """Represents user's status (e.g. STUDENT, TEACHER, ADMIN)"""

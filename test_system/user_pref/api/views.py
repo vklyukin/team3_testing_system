@@ -10,6 +10,8 @@ class UserPreferenceAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     permission_classes = [IsOwnerPrefReadOnly]
 
     def get_queryset(self):
-        qs = UserPreferences.objects.all()
-        qs = qs.filter(Q(user=self.request.user))
-        return qs
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            return qs
+        return []

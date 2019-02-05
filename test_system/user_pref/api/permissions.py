@@ -7,7 +7,7 @@ class IsOwnerPrefReadOnly(permissions.BasePermission):
     They are not able to change it.
     """
 
-    def has_pref_permission(self, request, view, obj):
+    def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.user.is_authenticated:
