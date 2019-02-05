@@ -6,6 +6,6 @@ class UserPreferenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPreferences
         fields = [
-            'user_preference'
+            'user_preference',
         ]
-        read_only_fields = ['userID']
+        read_only_fields = ['user',]
