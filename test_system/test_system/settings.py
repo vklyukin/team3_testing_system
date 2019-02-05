@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'test_question',
     'test_editor',
+    'user_pref',
 ]
 
 MIDDLEWARE = [
