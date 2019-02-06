@@ -39,7 +39,7 @@ class IsAdmin(permissions.BasePermission):
 
 class EmptyPermission(permissions.BasePermission):
     """
-    Teacher's actions permission
+    Anonymous user actions permission
     """
 
     def has_object_permission(self, request, view, obj):
