@@ -1,0 +1,21 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#first{
+	text-align: center;
+}
+
+#sub_but{
+	float: left;
+	margin-left: 20px;
+}
+
+#cans_but{
+	float: right;
+	margin-right: 20px;
+}
+
+#header{
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
