@@ -1,25 +1,27 @@
-const SendGet = () => {
-  return fetch('http://localhost:5000/api/question/', {
+const SendGet = () => { //function that get all questions from the server side
+  return fetch('http://localhost:5000/api/question/', { //fetch get request to get array of questions
     method: 'get'
   })
       .then(function (response) {
-        return response.json();
+        return response.json(); //reading request like a json object
       })
       .then(function (json) {
-        const q_table_body = document.getElementById("q_table_body");
+        const q_table_body = document.getElementById("q_table_body"); //get table object from HTML code by its id
 
-        for (let i = 0; i < json.length; ++i) {
-          const q_tr = document.createElement("tr");
-          q_table_body.appendChild(q_tr);
+        for (let i = 0; i < json.length; ++i) { //loop that fill that table with content gathered from server side
+          const q_tr = document.createElement("tr"); //creating <tr> element in HTML
+          q_table_body.appendChild(q_tr); //append table object with this tr object created on the line above
 
-          const q_id = document.createElement("th");
-          let q_pk = "q_id_";
+          const q_id = document.createElement("th"); //creating <th> element
+          let q_pk = "q_id_"; //unique id for this element, will be used to call it by id later
           q_pk = q_pk.concat(json[i].pk);
-          q_id.setAttribute("id", q_pk);
-          q_id.setAttribute("scope", "row");
-          q_id.setAttribute("hidden", "hidden");
-          q_tr.appendChild(q_id);
-          q_id.innerHTML = json[i].pk;
+          q_id.setAttribute("id", q_pk); //setting id
+          q_id.setAttribute("scope", "row"); //setting attributes
+          q_id.setAttribute("hidden", "hidden"); //make it hidden
+          q_tr.appendChild(q_id); //append it to the table
+          q_id.innerHTML = json[i].pk; //append content to created object
+
+          //All futher actions were done similary, parsing json that we got from server side by get fetch request
 
           const q_number = document.createElement("th");
           let q_num = "q_";
@@ -105,7 +107,7 @@ const SendGet = () => {
           q_corr3.innerHTML = "3";
           const q_corr4 = document.createElement("option");
           q_corr4.innerHTML = "4";
-          if (json[i].answ_correct === 0) {
+          if (json[i].answ_correct === 0) { //choose which option will be choosen by default based on the json
             q_corr1.setAttribute("selected", "selected");
           } else if (json[i].answ_correct === 1) {
             q_corr2.setAttribute("selected", "selected");
@@ -125,31 +127,33 @@ const SendGet = () => {
       });
 };
 
-const SendChanges = () => {
-  let elem_count = document.getElementById("q_table").rows.length;
-  for (let i = 1; i < elem_count; ++i) {
-    let q_number = document.getElementById('q_' + i);
-    let q_pk = document.getElementById('q_id_' + i);
-    let q_text = document.getElementById('q_text_' + i);
-    let q_ans_1 = document.getElementById('q_ans_' + i + '_1');
-    let q_ans_2 = document.getElementById('q_ans_' + i + '_2');
-    let q_ans_3 = document.getElementById('q_ans_' + i + '_3');
-    let q_ans_4 = document.getElementById('q_ans_' + i + '_4');
-    let q_corr = document.getElementById('q_corr_' + i);
-    let selected = q_corr.options[q_corr.selectedIndex].value - 1;
-    fetch('http://localhost:5000/api/question/' + i + '/', {
+const SendChanges = () => { //function that checks for the changes in the questions and send them to the server side
+  let elem_count = document.getElementById("q_table").rows.length; //number of questions
+  for (let i = 1; i < elem_count; ++i) { //loop that check all questions
+    let q_number = document.getElementById('q_' + i); //getting question's number
+    let q_pk = document.getElementById('q_id_' + i); //getting question's pk
+    let q_text = document.getElementById('q_text_' + i); //getting question's text
+    let q_ans_1 = document.getElementById('q_ans_' + i + '_1'); //getting question's answer option 1
+    let q_ans_2 = document.getElementById('q_ans_' + i + '_2'); //getting question's answer option 2
+    let q_ans_3 = document.getElementById('q_ans_' + i + '_3'); //getting question's answer option 3
+    let q_ans_4 = document.getElementById('q_ans_' + i + '_4'); //getting question's answer option 4
+    let q_corr = document.getElementById('q_corr_' + i); //getting question's correct answer wrapper
+    let selected = q_corr.options[q_corr.selectedIndex].value - 1; //getting question's correct answer
+    fetch('http://localhost:5000/api/question/' + i + '/', { //sending fetch put request to add changed question to the Data Base
         method: "PUT",
-        credentials: "same-origin",
+        credentials: "same-origin", //including cookie information
         headers: {
-          "X-CSRFToken": getCookie("csrftoken"),
+          "X-CSRFToken": getCookie("csrftoken"), //token to check user validation
           "Accept": "application/json",
           'Content-Type': 'application/json'
         },
+        //making json from data that was piked on the lines above
         body:JSON.stringify({ pk: q_pk.innerHTML, number: q_number.innerHTML, text: q_text.value, answ_correct: selected, answ_option1: q_ans_1.value, answ_option2: q_ans_2.value, answ_option3: q_ans_3.value, answ_option4: q_ans_4.value,})
       })
   }
 };
 
+//function that retutn cookie by its name, taken from django documentation
 const getCookie = name => {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
