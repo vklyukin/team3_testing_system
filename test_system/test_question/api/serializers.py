@@ -63,11 +63,16 @@ class EmptyQuestionSerializer(serializers.ModelSerializer):
         return True
 
 
+class CorrectAnswerValidator(object):
+    def __call__(self, answ_correct):
+        if not 0 <= answ_correct <= 3:
+            raise serializers.ValidationError("Correct answer field is out of possible range")
+
+
 class TestQuestionCreateSerializer(serializers.ModelSerializer):
-    # Add validators in the future
     number = serializers.IntegerField()
     text = serializers.CharField()
-    answ_correct = serializers.IntegerField()
+    answ_correct = serializers.IntegerField(validators=[CorrectAnswerValidator()])
     answ_option1 = serializers.CharField()
     answ_option2 = serializers.CharField()
     answ_option3 = serializers.CharField()
