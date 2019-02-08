@@ -8,9 +8,8 @@ class IsTeacher(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS:
+            if request.method in permissions.SAFE_METHODS or request.method == 'POST':
                 return True
-            return obj.owner == request.user
         return False
 
 
@@ -33,7 +32,7 @@ class IsAdmin(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
-            return obj.owner == request.user
+            return True
         return False
 
 
