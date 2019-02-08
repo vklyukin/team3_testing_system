@@ -1,6 +1,8 @@
 from rest_framework import generics, mixins
 from test_question.models import TestQuestion
-from .serializers import TeacherQuestionSerializer, StudentQuestionSerializer, EmptyQuestionSerializer
+from .serializers import TeacherQuestionSerializer, StudentQuestionSerializer, EmptyQuestionSerializer, TestQuestionCreateSerializer
+from rest_framework.response import Response
+from rest_framework import status
 from django.db.models import Q
 from .permissions import IsStudent, IsAdmin, IsTeacher, EmptyPermission
 from user_pref.models import UserPreferences, Preference
@@ -9,7 +11,7 @@ from user_pref.models import UserPreferences, Preference
 # from rest_framework_simplejwt import authentication
 
 
-class TestQuestionAPIView(mixins.CreateModelMixin, generics.ListAPIView):
+class TestQuestionAPIView(generics.ListAPIView, generics.CreateAPIView):
     lookup_field = 'pk'
 
     def get_serializer_class(self):
@@ -37,6 +39,15 @@ class TestQuestionAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     def get_queryset(self):
         qs = TestQuestion.objects.all()
         return qs
+
+    def create(self, request, *args, **kwargs):
+        serialized = TestQuestionCreateSerializer(data=request.data)
+        if serialized.is_valid():
+            serialized.save()
+            response = serialized.data
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TestQuestionRudView(generics.RetrieveUpdateDestroyAPIView):

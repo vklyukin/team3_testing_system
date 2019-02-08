@@ -15,7 +15,6 @@ class TeacherQuestionSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
         ]
-        read_only_fields = ['user']
 
     def validate_title(self, value):
         # qs = TestQuestion.objects.filter(title__exact=value)
@@ -39,7 +38,7 @@ class StudentQuestionSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
         ]
-        read_only_fields = ['user', 'answ_correct']
+        read_only_fields = ['answ_correct']
 
     def validate_title(self, value):
         return True
@@ -50,7 +49,6 @@ class EmptyQuestionSerializer(serializers.ModelSerializer):
         model = TestQuestion
         fields = []
         read_only_fields = [
-            'user',
             'pk',
             'number',
             'text',
@@ -63,3 +61,35 @@ class EmptyQuestionSerializer(serializers.ModelSerializer):
 
     def validate_title(self, value):
         return True
+
+
+class TestQuestionCreateSerializer(serializers.ModelSerializer):
+    # Add validators in the future
+    number = serializers.IntegerField()
+    text = serializers.CharField()
+    answ_correct = serializers.IntegerField()
+    answ_option1 = serializers.CharField()
+    answ_option2 = serializers.CharField()
+    answ_option3 = serializers.CharField()
+    answ_option4 = serializers.CharField()
+
+    def create(self, validated_data):
+        question = TestQuestion.objects.create(number=validated_data['number'], text=validated_data['text'],
+                                               answ_correct=validated_data['answ_correct'],
+                                               answ_option1=validated_data['answ_option1'],
+                                               answ_option2=validated_data['answ_option2'],
+                                               answ_option3=validated_data['answ_option3'],
+                                               answ_option4=validated_data['answ_option4'])
+        return question
+
+    class Meta:
+        model = TestQuestion
+        fields = [
+            'number',
+            'text',
+            'answ_correct',
+            'answ_option1',
+            'answ_option2',
+            'answ_option3',
+            'answ_option4',
+        ]

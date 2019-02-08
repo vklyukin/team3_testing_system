@@ -5,9 +5,6 @@ from django.db import models
 class TestQuestion(models.Model):
     """Default class for test questions with multichoice"""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             on_delete=models.PROTECT)
-
     number = models.IntegerField()
     text = models.TextField()
     answ_correct = models.IntegerField()
@@ -36,7 +33,3 @@ class TestQuestion(models.Model):
 
     def __repr__(self):
         return self.__str__()
-
-    @property
-    def owner(self):
-        return self.user
