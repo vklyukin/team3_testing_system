@@ -7,20 +7,20 @@ class StudentAnswerSerializer(serializers.ModelSerializer):
         model = StudentAnswer
         fields = [
             'answer',
-        ]
-        read_only_fields = [
             'user',
             'question',
         ]
+        # read_only_fields = [
+        #     'user',
+        #     'question',
+        # ]
 
 
 class StudentAnswerSerializerEmpty(serializers.ModelSerializer):
     class Meta:
         model = StudentAnswer
-        fields = [
+        exclude = [
             'answer',
-        ]
-        read_only_fields = [
             'user',
             'question',
         ]

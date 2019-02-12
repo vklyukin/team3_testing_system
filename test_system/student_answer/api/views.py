@@ -4,9 +4,11 @@ from .serializers import StudentAnswerSerializer, StudentAnswerSerializerEmpty
 from django.db.models import Q
 from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission
 from user_pref.models import UserPreferences, Preference
+from rest_framework import permissions
 
 
 class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
+    lookup_field = 'pk'
 
     def get_serializer_class(self):
         if self.request.user.is_authenticated:
