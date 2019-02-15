@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'test_question',
     'test_editor',
     'user_pref',
+    'file_uploader',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
