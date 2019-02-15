@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/question/', include('test_question.api.urls', namespace='api-test-question')),
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
     path('api/preferences', include('user_pref.api.urls', namespace='api-user-preferences')),
+    path('api/file_uploader', include('file_uploader.api.urls', namespace='api-file-uploader')),
 ]
