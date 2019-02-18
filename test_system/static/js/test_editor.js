@@ -30,12 +30,12 @@ const SendGet = () => { //function that get all questions from the server side
           q_tr.appendChild(q_number);
           q_number.innerHTML = json[i].number;
 
-          const q_text = document.createElement("input");
+          const q_text = document.createElement("textarea");
           let q_str1 = "q_text_";
           const q_text_wrapper = document.createElement("th");
-          q_text.setAttribute("type", "text");
           q_text.setAttribute("id", q_str1.concat(json[i].pk));
-          q_text.setAttribute("value", json[i].text);
+          q_text.setAttribute("class", "form-control");
+          q_text.innerHTML = json[i].text;
           q_text_wrapper.appendChild(q_text);
           q_tr.appendChild(q_text_wrapper);
 
@@ -46,9 +46,10 @@ const SendGet = () => { //function that get all questions from the server side
           q_ans_1 = q_ans_1.concat(json[i].pk);
           q_ans_1 = q_ans_1.concat("_1");
           q_answ1.setAttribute("type", "text");
+          q_answ1.setAttribute("class", "form-control");
           q_answ1.setAttribute("value", json[i].answ_option1);
           q_answ1.setAttribute("id", q_ans_1);
-          q_answ1_div.innerHTML = "1) ";
+          q_answ1_div.innerHTML = "1";
           q_answ1_div.appendChild(q_answ1);
           q_answ1_wrapper.appendChild(q_answ1_div);
           q_tr.appendChild(q_answ1_wrapper);
@@ -60,9 +61,10 @@ const SendGet = () => { //function that get all questions from the server side
           q_ans_2 = q_ans_2.concat(json[i].pk);
           q_ans_2 = q_ans_2.concat("_2");
           q_answ2.setAttribute("type", "text");
+          q_answ2.setAttribute("class", "form-control");
           q_answ2.setAttribute("value", json[i].answ_option2);
           q_answ2.setAttribute("id", q_ans_2);
-          q_answ2_div.innerHTML = "2) ";
+          q_answ2_div.innerHTML = "2";
           q_answ2_div.appendChild(q_answ2);
           q_answ1_wrapper.appendChild(p1);
           q_answ1_wrapper.appendChild(q_answ2_div);
@@ -74,9 +76,10 @@ const SendGet = () => { //function that get all questions from the server side
           q_ans_3 = q_ans_3.concat(json[i].pk);
           q_ans_3 = q_ans_3.concat("_3");
           q_answ3.setAttribute("type", "text");
+          q_answ3.setAttribute("class", "form-control");
           q_answ3.setAttribute("value", json[i].answ_option3);
           q_answ3.setAttribute("id", q_ans_3);
-          q_answ3_div.innerHTML = "3) ";
+          q_answ3_div.innerHTML = "3";
           q_answ3_div.appendChild(q_answ3);
           q_answ1_wrapper.appendChild(p2);
           q_answ1_wrapper.appendChild(q_answ3_div);
@@ -88,16 +91,17 @@ const SendGet = () => { //function that get all questions from the server side
           q_ans_4 = q_ans_4.concat(json[i].pk);
           q_ans_4 = q_ans_4.concat("_4");
           q_answ4.setAttribute("type", "text");
+          q_answ4.setAttribute("class", "form-control");
           q_answ4.setAttribute("value", json[i].answ_option4);
           q_answ4.setAttribute("id", q_ans_4);
-          q_answ4_div.innerHTML = "4) ";
+          q_answ4_div.innerHTML = "4";
           q_answ4_div.appendChild(q_answ4);
           q_answ1_wrapper.appendChild(p3);
           q_answ1_wrapper.appendChild(q_answ4_div);
 
           const q_corr_wrapper = document.createElement("select");
           let q_corr = "q_corr_";
-          q_corr_wrapper.setAttribute("class", "form-control");
+          q_corr_wrapper.setAttribute("class", "custom-select form-control");
           q_corr_wrapper.setAttribute("id", q_corr.concat(json[i].pk));
           const q_corr1 = document.createElement("option");
           q_corr1.innerHTML = "1";
