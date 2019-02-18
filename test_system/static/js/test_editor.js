@@ -124,14 +124,26 @@ const SendGet = () => { //function that get all questions from the server side
           q_corr_wrapper_th.appendChild(q_corr_wrapper);
           q_tr.appendChild(q_corr_wrapper_th);
 
-          const q_duration = document.createElement("input");
-          let q_durr = "q_dur_";
-          const q_dur_wrapper = document.createElement("th");
-          q_duration.setAttribute("type", "text");
-          q_duration.setAttribute("id", q_durr.concat(json[i].pk));
-          q_duration.setAttribute("value", json[i].duration);
-          q_dur_wrapper.appendChild(q_duration);
-          q_tr.appendChild(q_dur_wrapper);
+          const q_duration_div = document.createElement("div");
+          const q_duration_container = document.createElement("div");
+          q_duration_container.setAttribute("class", "picker-container");
+          const q_duration_th = document.createElement("th");
+          q_duration_div.innerHTML = json[i].duration;
+          let q_duration_ID = "q_dur_";
+          q_duration_ID = q_duration_ID.concat(json[i].pk);
+          q_duration_div.setAttribute("class", "js-inline-picker");
+          q_duration_div.setAttribute("id", q_duration_ID);
+          const picker = new Picker(q_duration_div, {
+            format: 'HH:mm:ss',
+            container: q_duration_container,
+            controls: true,
+            inline: true,
+            headers: true,
+            rows: 3
+          });
+          q_duration_th.appendChild(q_duration_div);
+          q_duration_th.appendChild(q_duration_container);
+          q_tr.appendChild(q_duration_th);
         }
       });
 };
@@ -148,7 +160,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
     let q_ans_4 = document.getElementById('q_ans_' + i + '_4'); //getting question's answer option 4
     let q_corr = document.getElementById('q_corr_' + i); //getting question's correct answer wrapper
     let selected = q_corr.options[q_corr.selectedIndex].value - 1; //getting question's correct answer
-    let q_duration = document.getElementById('q_dur_' + i);
+    let q_dur = document.getElementById('q_dur_' + i);
     fetch('http://localhost:5000/api/question/' + i + '/', { //sending fetch put request to add changed question to the Data Base
         method: "PUT",
         credentials: "same-origin", //including cookie information
@@ -158,7 +170,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
           'Content-Type': 'application/json'
         },
         //making json from data that was piked on the lines above
-        body:JSON.stringify({ pk: q_pk.innerHTML, number: q_number.innerHTML, text: q_text.value, answ_correct: selected, answ_option1: q_ans_1.value, answ_option2: q_ans_2.value, answ_option3: q_ans_3.value, answ_option4: q_ans_4.value, duration: q_duration.value,})
+        body:JSON.stringify({ pk: q_pk.innerHTML, number: q_number.innerHTML, text: q_text.value, answ_correct: selected, answ_option1: q_ans_1.value, answ_option2: q_ans_2.value, answ_option3: q_ans_3.value, answ_option4: q_ans_4.value, duration: q_dur.innerHTML,})
       })
   }
 };
