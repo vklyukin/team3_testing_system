@@ -15,6 +15,7 @@ class TeacherQuestionSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
             'duration',
+            'is_reading'
         ]
 
     def validate_title(self, value):
@@ -39,11 +40,33 @@ class StudentQuestionSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
             'duration',
+            'is_reading',
         ]
-        read_only_fields = ['answ_correct']
+        read_only_fields = ['answ_correct', 'is_reading']
 
     def validate_title(self, value):
         return True
+
+
+class StudentQuestionAPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TestQuestion
+        fields = [
+            'pk',
+            'number',
+            'duration',
+            'is_reading',
+        ]
+        read_only_fields = [
+            'answ_correct',
+            'text',
+            'answ_option1',
+            'answ_option2',
+            'answ_option3',
+            'answ_option4',
+            'is_reading',
+            'duration',
+        ]
 
 
 class EmptyQuestionSerializer(serializers.ModelSerializer):
@@ -60,6 +83,7 @@ class EmptyQuestionSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
             'duration',
+            'is_reading',
         ]
 
     def validate_title(self, value):
@@ -87,6 +111,7 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
     answ_option3 = serializers.CharField()
     answ_option4 = serializers.CharField()
     duration = serializers.DurationField(validators=[CorrectDurationValidator()])
+    is_reading = serializers.BooleanField()
 
     def create(self, validated_data):
         question = TestQuestion.objects.create(number=validated_data['number'], text=validated_data['text'],
@@ -95,7 +120,8 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
                                                answ_option2=validated_data['answ_option2'],
                                                answ_option3=validated_data['answ_option3'],
                                                answ_option4=validated_data['answ_option4'],
-                                               duration=validated_data['duration'])
+                                               duration=validated_data['duration'],
+                                               is_reading=validated_data['is_reading'])
         return question
 
     class Meta:
@@ -109,6 +135,7 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
             'duration',
+            'is_reading'
         ]
 
 
@@ -116,7 +143,8 @@ class TestQuestionReading(serializers.ModelSerializer):
     class Meta:
         model = ReadingTest
         fields = [
-            'text'
+            'text',
+            'time_recommended',
         ]
 
 
@@ -125,4 +153,5 @@ class TestQuestionReadingEmpty(serializers.ModelSerializer):
         model = ReadingTest
         read_only_fields = [
             'text',
+            'time_recommended',
         ]

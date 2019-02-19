@@ -1,8 +1,8 @@
 from rest_framework import generics
 from student_answer.models import StudentAnswer
-from .serializers import StudentAnswerSerializer, StudentAnswerSerializerEmpty
+from .serializers import StudentAnswerSerializer, StudentAnswerSerializerEmpty, StudentAnswerAPISerializer
 from django.db.models import Q
-from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission
+from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission, IsStudentWithPut
 from user_pref.models import UserPreferences, Preference
 
 
@@ -13,8 +13,9 @@ class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
         if self.request.user.is_authenticated:
             qs = UserPreferences.objects.all()
             qs = qs.filter(Q(user=self.request.user))
-            if qs[0].user_preference == Preference.STUDENT or \
-                    qs[0].user_preference == Preference.ADMIN or \
+            if qs[0].user_preference == Preference.STUDENT:
+                return StudentAnswerAPISerializer
+            elif qs[0].user_preference == Preference.ADMIN or \
                     qs[0].user_preference == Preference.TEACHER:
                 return StudentAnswerSerializer
         return StudentAnswerSerializerEmpty
@@ -60,7 +61,7 @@ class StudentAnswerRudView(generics.RetrieveUpdateDestroyAPIView):
             qs = UserPreferences.objects.all()
             qs = qs.filter(Q(user=self.request.user))
             if qs[0].user_preference == Preference.STUDENT:
-                return [IsStudent()]
+                return [IsStudentWithPut()]
             elif qs[0].user_preference == Preference.ADMIN or \
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
