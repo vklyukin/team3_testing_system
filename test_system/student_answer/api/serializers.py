@@ -14,6 +14,8 @@ class StudentAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentAnswer
         fields = [
+            'pk',
+            'number',
             'answer',
             'user',
             'question',
@@ -31,6 +33,7 @@ class StudentAnswerSerializerEmpty(serializers.ModelSerializer):
         model = StudentAnswer
         exclude = [
             'answer',
+            'number',
             'user',
             'question',
             'started',

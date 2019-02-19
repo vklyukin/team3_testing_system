@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.urls import path
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,4 +26,5 @@ urlpatterns = [
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
     path('api/answer/', include('student_answer.api.urls', namespace='api-student-answer')),
+    path('front_test/', TemplateView.as_view(template_name="test_system.html")),
 ]
