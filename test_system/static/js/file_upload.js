@@ -4,7 +4,7 @@ const SendQuestions = () => {
     reader.onload = function (event) { //event that reacts on successful data read
         let contents = event.target.result; //result of the file read
         data.append('file', contents); //append data to the wrapper
-        fetch('http://localhost:5000/api/file_upload/', { //fetch post request to load file on the server side
+        fetch('http://localhost:5000/api/file_uploader/text/', { //fetch post request to load file on the server side
             method: 'POST',
             credentials: "same-origin", //take cookies with this request
             headers: {
