@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+        <meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="{% static 'css/common.css' %}" rel="stylesheet">
+		<link href="{% static 'css/test_system.css' %}" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	  	<script src="{% static 'js/test_system.js' %}"></script>  
+		<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+ 		<title>Тестирование</title>
+  </head>
+	  
+	  
+	  
+	  
+  <body onload="init();"> 
+  	<div class="container-fluid">
+ 		<div class="row"> 
+            <div class="UpBackGroundPart"></div>
+		    <div class="col-lg-2"></div>
+			<div class="col-lg-8 ">	
+                <div class="time" id="tmb"><span class="timetext" id="tm" >00:00:00</span></div>
+                <div class="list">  
+                <div class="task">
+                <div class="number" id="num"></div> 
+                
+                <div class="text" id="txt"></div> 
+                </div>    
+                <div class="anser" id="anszero" onclick="test(0);">
+                <div class="decorationlft"></div>
+                <div class="anstable" id="first">
+                </div>
+                </div>   
+                <div class="anser" id="ansone"onclick="test(1);">
+                    <div class="decorationlft"></div>
+                     <div class="anstable" id="second">
+                </div></div>   
+                <div class="anser" id="anstwo" onclick="test(2);">
+                    <div class="decorationlft"></div>
+                     <div class="anstable" id="third">
+                </div></div>   
+                 <div class="anser" id="ansthre" onclick="test(3);">
+                     <div class="decorationlft"></div>
+                     <div class="anstable"  id="fourth">
+                </div></div>   
+                     <button class="right" id="endbu" onclick="Next();">Next question</button>
+                
+                </div>  
+			</div>
+			<div class="col-lg-2"></div>
+  		</div>   
+ 	</div>    	
+  </body>
+</html>
