@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'test_editor',
     'user_pref',
     'file_uploader',
+    'student_answer'
 ]
 
 MIDDLEWARE = [

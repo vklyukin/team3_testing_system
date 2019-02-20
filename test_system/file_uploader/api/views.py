@@ -7,7 +7,7 @@ from rest_framework import status
 from .serializers import FileSerializer
 from test_question.models import TestQuestion
 from django.http import HttpResponseRedirect
-
+from datetime import timedelta
 
 questions = []
 
@@ -90,6 +90,7 @@ class KeysUploadView(APIView):
                    answ_option2=question.answers[1],
                    answ_option3=question.answers[2],
                    answ_option4=question.answers[3],
+                   duration = timedelta(seconds=30),
                )
 
            return HttpResponseRedirect('http://localhost:5000/test_editor/')
