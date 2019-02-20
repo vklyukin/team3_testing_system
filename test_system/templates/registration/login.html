@@ -29,6 +29,9 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">You are allready logged in!</h1>
                   </div>
+                  <div class="text-center">
+                    <a class="dropdown-item" href="http://localhost:5000/test_editor/">Back to the editor</a>
+                  </div>
                   {% else %}
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
@@ -45,10 +48,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
+                    <a class="small" href="http://localhost:5000/api/registration/signup/">Create an Account!</a>
                   </div>
                   {% endif %}
                 </div>
