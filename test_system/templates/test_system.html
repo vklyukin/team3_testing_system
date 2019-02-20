@@ -15,38 +15,46 @@
 	  
 	  
 	  
-	  
-  <body onload="init();"> 
+  <body onload="initialization();"> 
   	<div class="container-fluid">
  		<div class="row"> 
             <div class="UpBackGroundPart"></div>
 		    <div class="col-lg-2"></div>
 			<div class="col-lg-8 ">	
+                 
                 <div class="time" id="tmb"><span class="timetext" id="tm" >00:00:00</span></div>
-                <div class="list">  
+                <div class="listtext"id="rdng">
+                <div class="taskr" >
+                <div class="numberr" id="readingheader"></div> 
+                <div class="textr" id="reading"></div> 
+                </div> 
+                <button class="backbutton" id="back" onclick="onqsnsmenuswitch();">Show tasks</button>
+                </div> 
+                <div class="list" id="qsns">  
                 <div class="task">
                 <div class="number" id="num"></div> 
                 
                 <div class="text" id="txt"></div> 
                 </div>    
-                <div class="anser" id="anszero" onclick="test(0);">
+                <div class="anser" id="anszero" onclick="select(0);">
                 <div class="decorationlft"></div>
                 <div class="anstable" id="first">
                 </div>
                 </div>   
-                <div class="anser" id="ansone"onclick="test(1);">
+                <div class="anser" id="ansone"onclick="select(1);">
                     <div class="decorationlft"></div>
                      <div class="anstable" id="second">
                 </div></div>   
-                <div class="anser" id="anstwo" onclick="test(2);">
+                <div class="anser" id="anstwo" onclick="select(2);">
                     <div class="decorationlft"></div>
                      <div class="anstable" id="third">
                 </div></div>   
-                 <div class="anser" id="ansthre" onclick="test(3);">
+                 <div class="anser" id="ansthre" onclick="select(3);">
                      <div class="decorationlft"></div>
                      <div class="anstable"  id="fourth">
-                </div></div>   
-                     <button class="right" id="endbu" onclick="Next();">Next question</button>
+                </div></div>  
+                    <button class="textbu" id="textbu" onclick="ontetxmenuswitch();">Show text</button>
+                     <button class="right" id="endbu" onclick="next();">Next question</button>
                 
                 </div>  
 			</div>
