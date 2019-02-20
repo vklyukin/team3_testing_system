@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'test_question',
     'test_editor',
     'user_pref',
-    'student_answer'
+    'student_answer',
+    'users_exam',
+    'test_text'
 ]
 
 MIDDLEWARE = [

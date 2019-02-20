@@ -1,3 +1,4 @@
 from django.contrib import admin
+from exam.models import ExamSession
 
-# Register your models here.
+admin.site.register(ExamSession)
