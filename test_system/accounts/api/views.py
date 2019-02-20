@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .permissions import IsNotAuthenticated
 from user_pref.models import UserPreferences
 from user_pref.models import Preference
+from django.http import HttpResponseRedirect
 
 
 class UserCreate(CreateAPIView):
@@ -27,6 +28,8 @@ class UserCreate(CreateAPIView):
                 user_preference = Preference.STUDENT,
             )
             del response['password']
-            return Response(response, status=status.HTTP_201_CREATED)
+            del response['first_name']
+            del response['last_name']
+            return HttpResponseRedirect('http://localhost:5000/account/login/')
         else:
-            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponseRedirect('http://localhost:5000/api/registration/signup/')
