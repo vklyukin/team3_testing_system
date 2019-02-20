@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.urls import path
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,6 +24,8 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     path('api/question/', include('test_question.api.urls', namespace='api-test-question')),
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
+    path('api/file_uploader/', include('file_uploader.api.urls', namespace='api-file-uploader')),
+    path('test_upload/', TemplateView.as_view(template_name="file_upload.html")),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
     path('api/answer/', include('student_answer.api.urls', namespace='api-student-answer')),
 ]
