@@ -27,5 +27,7 @@ urlpatterns = [
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
     path('api/answer/', include('student_answer.api.urls', namespace='api-student-answer')),
     path('api/time/', include('api_time.urls', namespace='api-time')),
+    path('api/exam/', include('exam.api.urls', namespace='api-exam')),
+    path('api/user-exam/', include('users_exam.api.urls', namespace='api-user-exam')),
     path('front_test/', TemplateView.as_view(template_name="test_system.html")),
 ]
