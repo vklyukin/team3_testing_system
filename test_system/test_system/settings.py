@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'test_question',
     'test_editor',
     'user_pref',
+    'file_uploader',
     'student_answer'
 ]
 
@@ -132,3 +133,11 @@ STATICFILES_DIRS = [
 
 LOGIN_REDIRECT_URL = '/test_editor/'
 LOGOUT_REDIRECT_URL = '/account/login/'
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
