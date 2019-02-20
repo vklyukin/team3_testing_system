@@ -1,22 +1,10 @@
-<!DOCTYPE HTML>
+{% extends 'admin_base.html' %}
+{% block content %}
 {% load static %}
-<html>
-<head>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script type="text/javascript" src="{% static 'js/file_upload.js' %}"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/file_upload.css' %}">
-  <meta name="viewport"
-content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <title>Test upload</title>
-</head>
+<script type="text/javascript" src="{% static 'js/file_upload.js' %}"></script>
 
-<body>
-  <header id="header" class="header">
-    <div class="row">
-      <div class="col-lg-2">
-      </div>
-      <div class="col-lg-8">
+<div class="row">
+      <div class="col-lg-12">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h3 class="m-0 font-weight-bold text-primary">Загрузка условий теста</h3>
@@ -48,9 +36,6 @@ content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=
           </div>
         </div>
       </div>
-      <div class="col-lg-2">
-      </div>
     </div>
-  </header>
-</body>
-</html>
+
+{% endblock %}

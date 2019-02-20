@@ -1,6 +1,5 @@
 import fulltext
 import re
-from pprint import pprint
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -77,7 +76,6 @@ class KeysUploadView(APIView):
            with fi.file:
                answers = fulltext.get(fi.file)
                for line in answers.split('\n'):
-                   print(line)
                    if re.match(r'\(\d+\) [a-d]', line):
                        questions[
                            int(re.findall(r'\d+', line)[0]) - 1
