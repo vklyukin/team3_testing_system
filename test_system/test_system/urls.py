@@ -28,4 +28,6 @@ urlpatterns = [
     path('test_upload/', TemplateView.as_view(template_name="file_upload.html")),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
     path('api/answer/', include('student_answer.api.urls', namespace='api-student-answer')),
+    path('account/', include('account.urls', namespace='account')),
+    path('api/registration/', include('accounts.api.urls', namespace='api-registration')),
 ]
