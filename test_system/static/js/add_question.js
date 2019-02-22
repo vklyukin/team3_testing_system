@@ -1,6 +1,6 @@
-function Start(){
-  q_duration_div = document.getElementById('q_durr');
-  q_duration_container = document.getElementById('q_durr_cont');
+const Start = () => {
+  const q_duration_div = document.getElementById('q_durr');
+  const q_duration_container = document.getElementById('q_durr_cont');
   const picker = new Picker(q_duration_div, {
     format: 'HH:mm:ss',
     container: q_duration_container,
@@ -9,9 +9,9 @@ function Start(){
     headers: true,
     rows: 3
   });
-}
+};
 
-function SendPost() {
+const SendPost = () => {
   let formData  = new FormData();
   const q_number = document.getElementById('q_number').innerHTML;
   const q_text = document.getElementById('q_text').value;
@@ -45,7 +45,7 @@ function SendPost() {
         window.location.href = "http://localhost:5000/test_editor/";
       }
     })
-}
+};
 
 const getCookie = name => {
     let cookieValue = null;
