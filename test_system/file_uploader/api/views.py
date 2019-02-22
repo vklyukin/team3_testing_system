@@ -13,94 +13,135 @@ from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
 from django.shortcuts import render
+from test_text.models import ReadingTest
+from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
+
 
 questions = []
 
 
 class TextUploadView(APIView):
-   parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser)
 
-   def post(self, request, *args, **kwargs):
-       global questions
-       file_serializer = FileSerializer(data=request.data)
-       if file_serializer.is_valid():
 
-           fi = file_serializer.save()
-           fi.file.open(mode='rb')
-           with fi.file:
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                return [IsStudentOrNotAuth()]
+            elif qs[0].user_preference == Preference.ADMIN or \
+                    qs[0].user_preference == Preference.TEACHER:
+                return [IsTeacherOrAdmin()]
+        return [IsTeacherOrAdmin()]
 
-               pattern_line = r"[A-Za-z- _’'\"”’‘,.?!()0-9]+"
-               pattern_headline = r"\(\d+\)" + pattern_line
-               pattern_answer = r"([a-d]\))" + pattern_line
 
-               test, reading = load_test(fi.file)
+    def post(self, request, *args, **kwargs):
+        # I'll refactor this later
+        global questions
+        file_serializer = FileSerializer(data=request.data)
+        if file_serializer.is_valid():
 
-               questions = []
+            fi = file_serializer.save()
+            fi.file.open(mode='rb')
+            with fi.file:
 
-               test = iter(test.split("\n"))
-               try:
-                   line = next(test).strip()
-                   while True:
-                       if re.match(pattern_headline, line):
-                           questions.append(Question(line))
+                pattern_line = r"[A-Za-z- _’'\"”’‘,.?!()0-9]+"
+                pattern_headline = r"\(\d+\)" + pattern_line
+                pattern_answer = r"([a-d]\))" + pattern_line
 
-                           line = next(test).strip()
-                           if not re.match(pattern_answer, line):
-                               questions[-1].text += " " + line
-                           else:
-                               continue
-                       elif re.match(pattern_answer, line):
-                           questions[-1].answers.append(line)
-                           line = next(test).strip()
-                           if not (re.match(pattern_answer, line) or
-                                   re.match(pattern_headline, line)):
-                               questions[-1].answers[-1] += " " + line
-                           else:
-                               continue
-                       line = next(test).strip()
-               except Exception as ex:
-                   pass
+                test, reading = load_test(fi.file)
 
-           return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
-       else:
-           return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                questions = []
+
+                test = iter(test.split("\n"))
+                try:
+                    line = next(test).strip()
+                    while True:
+                        if re.match(pattern_headline, line):
+                            questions.append(Question(line))
+
+                            line = next(test).strip()
+                            if not re.match(pattern_answer, line):
+                                questions[-1].text += " " + line
+                            else:
+                                continue
+                        elif re.match(pattern_answer, line):
+                            questions[-1].answers.append(line)
+                            line = next(test).strip()
+                            if not (re.match(pattern_answer, line) or
+                                    re.match(pattern_headline, line)):
+                                questions[-1].answers[-1] += " " + line
+                            else:
+                                continue
+                        line = next(test).strip()
+
+                except Exception as ex:
+                    pass
+
+                    for i in range(20, 25):
+                        questions[i].is_reading = True
+
+                    ReadingTest.objects.create(
+                        text=reading,
+                        time_recommended=timedelta(minutes=20),
+                    )
+
+
+            return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class KeysUploadView(APIView):
-   parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser)
 
-   def post(self, request, *args, **kwargs):
-       global questions
-       if questions == []:
-           return Response({"status": "Keys can not be pasted before questions."}, status=status.HTTP_400_BAD_REQUEST)
 
-       file_serializer = FileSerializer(data=request.data)
-       if file_serializer.is_valid():
-           fi = file_serializer.save()
-           fi.file.open(mode='rb')
-           with fi.file:
-               answers = fulltext.get(fi.file)
-               for line in answers.split('\n'):
-                   if re.match(r'\(\d+\) [a-d]', line):
-                       questions[
-                           int(re.findall(r'\d+', line)[0]) - 1
-                       ].answ_correct = re.findall(r'[a-d]', line)[0]
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                return [IsStudentOrNotAuth()]
+            elif qs[0].user_preference == Preference.ADMIN or \
+                    qs[0].user_preference == Preference.TEACHER:
+                return [IsTeacherOrAdmin()]
+        return [IsTeacherOrAdmin()]
 
-           for question in questions:
-               TestQuestion.objects.create(
-                   number=question.number,
-                   text=question.text,
-                   answ_correct=question.answ_corr(),
-                   answ_option1=question.answers[0],
-                   answ_option2=question.answers[1],
-                   answ_option3=question.answers[2],
-                   answ_option4=question.answers[3],
-                   duration = timedelta(seconds=30),
-               )
 
-           return HttpResponseRedirect('http://localhost:5000/test_editor/')
-       else:
-           return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, *args, **kwargs):
+        global questions
+        if questions == []:
+            return Response({"status": "Keys can not be pasted before questions."}, status=status.HTTP_400_BAD_REQUEST)
+
+        file_serializer = FileSerializer(data=request.data)
+        if file_serializer.is_valid():
+            fi = file_serializer.save()
+            fi.file.open(mode='rb')
+            with fi.file:
+                answers = fulltext.get(fi.file)
+                for line in answers.split('\n'):
+                    if re.match(r'\(\d+\) [a-d]', line):
+                        questions[
+                            int(re.findall(r'\d+', line)[0]) - 1
+                        ].answ_correct = re.findall(r'[a-d]', line)[0]
+
+            for question in questions:
+                TestQuestion.objects.create(
+                    number=question.number,
+                    text=question.text,
+                    answ_correct=question.answ_corr(),
+                    answ_option1=question.answers[0],
+                    answ_option2=question.answers[1],
+                    answ_option3=question.answers[2],
+                    answ_option4=question.answers[3],
+                    duration=timedelta(seconds=30),
+                    is_reading=question.is_reading,
+                )
+
+            return HttpResponseRedirect('http://localhost:5000/test_editor/')
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class Question():
@@ -115,6 +156,7 @@ class Question():
 
         self.answers = []
         self.answ_correct = ""
+        self.is_reading = False
 
     def __str__(self):
         res = f"({self.number}) {self.text}\n"
