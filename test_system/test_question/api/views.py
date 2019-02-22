@@ -1,4 +1,4 @@
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
 from django.core.exceptions import PermissionDenied
 from test_question.models import TestQuestion
 from test_text.models import ReadingTest
@@ -96,10 +96,14 @@ class TestQuestionRudView(generics.RetrieveUpdateDestroyAPIView):
 
         filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
         obj = get_object_or_404(queryset, **filter_kwargs)
-        sa = StudentAnswer.objects.get(user=self.request.user, question=obj)
-        if not sa.time_started:
-            sa.time_started = localtime(now())
-            sa.save()
+        try:
+            sa = StudentAnswer.objects.get(user=self.request.user, question=obj)
+            if not sa.time_started:
+                sa.time_started = localtime(now())
+                sa.save()
+        except StudentAnswer.DoesNotExist:
+            pass
+
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
 
