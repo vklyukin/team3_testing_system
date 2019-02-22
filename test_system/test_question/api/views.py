@@ -143,6 +143,3 @@ class TestQuestionReadingView(generics.RetrieveUpdateDestroyAPIView):
                     return ReadingTest.objects.none()
             elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
                 return ReadingTest.objects.all()
-
-    def put(self, request, *args, **kwargs):
-        
