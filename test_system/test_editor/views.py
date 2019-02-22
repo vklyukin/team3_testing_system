@@ -13,3 +13,12 @@ def redirect(request):
         return render(request, 'test_editor.html', {})
     else:
         return HttpResponseRedirect('http://localhost:5000/')
+
+@login_required
+def redirect_add(request):
+    qs = UserPreferences.objects.all()
+    qs = qs.filter(Q(user=request.user))
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'add_question.html', {})
+    else:
+        return HttpResponseRedirect('http://localhost:5000/')
