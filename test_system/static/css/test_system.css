@@ -1,11 +1,9 @@
-body
-{
-    background:white;
+body {
+    background: white;
 }
 
 
-.UpBackGroundPart
-{
+.UpBackGroundPart {
     background-color: white;
     width: 100%;
     min-height: 8vh;
@@ -13,10 +11,9 @@ body
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
 }
 
-.list
-{
+.list {
     background: #f8f9fc;
-    position: absolute; 
+    position: absolute;
     width: 96%;
     height: 86vh;
     top: 3vh;
@@ -26,9 +23,9 @@ body
     align-content: center;
     border-radius: 5px;
 }
-.task
-{   
-    position:relative;
+
+.task {
+    position: relative;
     background: #f8f9fc;
     width: 98%;
     height: 16vh;
@@ -40,9 +37,8 @@ body
     border-radius: 5px;
 }
 
-.anser
-{
-    position:relative;
+.anser {
+    position: relative;
     background: white;
     width: 98%;
     height: 14vh;
@@ -51,7 +47,7 @@ body
     margin-top: 2vh;
     left: 1%;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
-    word-wrap: break-word; 
+    word-wrap: break-word;
     vertical-align: middle;
     font-size: 1.75vh;
     font-family: monospace;
@@ -60,12 +56,11 @@ body
     padding-bottom: 1vh;
     padding-top: 1vh;
     border-radius: 5px;
-     transition:all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-.anserr
-{
-    position:relative;
+.anserr {
+    position: relative;
     width: 98%;
     height: 14vh;
     z-index: 2;
@@ -73,7 +68,7 @@ body
     margin-top: 2vh;
     left: 1%;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
-    word-wrap: break-word; 
+    word-wrap: break-word;
     vertical-align: middle;
     font-size: 1.75vh;
     font-family: monospace;
@@ -83,16 +78,13 @@ body
     padding-top: 1vh;
     border-radius: 5px;
     background: #4e73df;
-    transition:all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
-
-
-.time
-{
+.time {
     background: #4e73df;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 40%;
     height: 4vh;
     top: -6vh;
@@ -100,44 +92,33 @@ body
     z-index: 1;
     display: none;
     border-radius: 5px;
-    
+
 }
 
-
-.timetext
-{
+.timetext {
     color: white;
-    font-size: 3vh; 
+    font-size: 3vh;
     font-family: monospace;
 }
 
-
-
-
-
-
-.rightbutton
-{
-    position: absolute; 
-    width:100%;
+.rightbutton {
+    position: absolute;
+    width: 100%;
     height: 100%;
     background: none;
     border: none;
-     font-size: 5vh;
+    font-size: 5vh;
     color: #4e73df;
-  border-radius: 5px;
-transform: scale(-1, 1);
+    border-radius: 5px;
+    transform: scale(-1, 1);
 }
 
-
-
-.right
-{
-   background: #4e73df;
+.right {
+    background: #4e73df;
     border: none;
     color: white;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 40%;
     height: 4vh;
     bottom: 1vh;
@@ -146,18 +127,17 @@ transform: scale(-1, 1);
     font-size: 2vh;
     border-radius: 5px;
     font-family: monospace;
-   
+
 }
 
-.rightWide
-{
- width: 40%;
+.rightWide {
+    width: 40%;
     left: 30%;
-     background: #4e73df;
+    background: #4e73df;
     border: none;
     color: white;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     height: 4vh;
     bottom: 1vh;
     z-index: 1;
@@ -166,14 +146,13 @@ transform: scale(-1, 1);
     font-family: monospace;
 }
 
-.textbu
-{
+.textbu {
     background: #4e73df;
     display: block;
     border: none;
     color: white;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 40%;
     height: 4vh;
     bottom: 1vh;
@@ -181,46 +160,42 @@ transform: scale(-1, 1);
     z-index: 1;
     font-size: 2vh;
     border-radius: 5px;
-    font-family: monospace;   
+    font-family: monospace;
 }
 
-.textbuHide
-{
+.textbuHide {
     width: 0%;
     left: 0%;
 }
 
-.number
-{
+.number {
     background: #f8f9fc;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 100%;
     height: 26%;
     top 1%;
     z-index: 3;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     vertical-align: middle;
     font-size: 3vh;
     font-family: monospace;
-    
+
     z-index: 12;
     margin-bottom: 1%;
     margin-top: 1%;
-  
+
     font-family: monospace;
-     border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
     border-top: 2px solid #4e73df;
 }
 
-
-.text
-{
+.text {
     text-align: center;
     background: white;
-    position: absolute; 
+    position: absolute;
     top: 28%;
     width: 100%;
     height: 75%;
@@ -233,31 +208,27 @@ transform: scale(-1, 1);
     padding-bottom: 1%;
     padding-top: 2%;
     border-bottom-left-radius: 5px;
-    border-bottom-right-radius:5px; 
+    border-bottom-right-radius: 5px;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
 
 }
 
-
-.anstable
-{
-    position:relative;
+.anstable {
+    position: relative;
     display: table-cell;
     background: none;
     height: 12vh;
-    width:inherit;
+    width: inherit;
     max-width: inherit;
     z-index: 4;
     word-break: break-word;
     vertical-align: middle;
     font-size: 1.5vh;
-    font-family: monospace; 
+    font-family: monospace;
 }
 
 
-
-.decorationlft
-{
+.decorationlft {
     background: #4e73df;
     position: absolute;
     width: 10px;
@@ -271,46 +242,42 @@ transform: scale(-1, 1);
     border-bottom-left-radius: 5px;
 }
 
-.decorationw
-{
+.decorationw {
     background: red;
 }
 
 
-
-.texthide
-{
+.texthide {
     position: fixed;
     margin-left: -1000px;
     z-index: 0;
 }
-.backbutton
-{
+
+.backbutton {
     position: fixed;
     margin-left: 0px;
-    left:30%;
+    left: 30%;
     z-index: 100;
     background: #4e73df;
     border: none;
     color: white;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 40%;
     height: 4vh;
     bottom: 1vh;
     font-size: 2vh;
     border-radius: 5px;
-    font-family: monospace;   
+    font-family: monospace;
 }
 
 
-.strtendbut
-{
-   background: #4e73df;
+.strtendbut {
+    background: #4e73df;
     border: none;
     color: white;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 60%;
     height: 10vh;
     bottom: 40vh;
@@ -318,25 +285,22 @@ transform: scale(-1, 1);
     z-index: 1;
     font-size: 2vh;
     border-radius: 5px;
-    font-family: monospace;  
+    font-family: monospace;
 }
 
 
-
-.textshow
-{
+.textshow {
     position: fixed;
     display: block;
     margin-left: 0px;
-    left:50%;
-    top:35%;
+    left: 50%;
+    top: 35%;
     z-index: 100;
 }
 
-.listtext
-{
+.listtext {
     background: #f8f9fc;
-    position: absolute; 
+    position: absolute;
     width: 96%;
     height: 86vh;
     top: 3vh;
@@ -348,10 +312,9 @@ transform: scale(-1, 1);
     border-radius: 5px;
 }
 
-.liststart
-{
+.liststart {
     background: #f8f9fc;
-    position: absolute; 
+    position: absolute;
     width: 96%;
     height: 86vh;
     top: 3vh;
@@ -362,10 +325,9 @@ transform: scale(-1, 1);
     border-radius: 5px;
 }
 
-.listend
-{
+.listend {
     background: #f8f9fc;
-    position: absolute; 
+    position: absolute;
     width: 96%;
     height: 86vh;
     top: 3vh;
@@ -375,10 +337,10 @@ transform: scale(-1, 1);
     align-content: center;
     border-radius: 5px;
 }
-.listclear
-{
+
+.listclear {
     background: #f8f9fc;
-    position: absolute; 
+    position: absolute;
     width: 96%;
     height: 86vh;
     top: 3vh;
@@ -389,9 +351,8 @@ transform: scale(-1, 1);
     border-radius: 5px;
 }
 
-.taskr
-{   
-    position:relative;
+.taskr {
+    position: relative;
     background: #f8f9fc;
     width: 98%;
     height: 82vh;
@@ -404,37 +365,35 @@ transform: scale(-1, 1);
 }
 
 
-.numberr
-{
+.numberr {
     background: #f8f9fc;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     width: 100%;
     height: 10%;
     top 1%;
     z-index: 3;
-    word-wrap: break-word; 
+    word-wrap: break-word;
     vertical-align: middle;
     font-size: 3vh;
     font-family: monospace;
-    
+
     z-index: 12;
     margin-bottom: 1%;
     margin-top: 1%;
-  
+
     font-family: monospace;
-     border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
     border-top: 2px solid #4e73df;
 }
 
 
-.textr
-{
-    text-align: center;
+.textr {
+    text-align: left;
     background: white;
-    position: absolute; 
+    position: absolute;
     top: 11%;
     width: 100%;
     height: 86%;
@@ -447,28 +406,28 @@ transform: scale(-1, 1);
     padding-bottom: 1%;
     padding-top: 2%;
     border-bottom-left-radius: 5px;
-    border-bottom-right-radius:5px; 
+    border-bottom-right-radius: 5px;
     overflow-y: scroll;
 }
 
 
 /* width */
 ::-webkit-scrollbar {
-  width: 1%;
+    width: 1%;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f8f9fc; 
+    background: #f8f9fc;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #4e73df; 
+    background: #4e73df;
     border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #4e73df; 
+    background: #4e73df;
 }
