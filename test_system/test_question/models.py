@@ -14,6 +14,7 @@ class TestQuestion(models.Model):
     answ_option3 = models.TextField()
     answ_option4 = models.TextField()
     duration = models.DurationField(default=timedelta(seconds=30))
+    is_reading = models.BooleanField(default=False)
 
     def __str__(self):
         res = f"({self.number}) {self.text}\n"
@@ -35,7 +36,3 @@ class TestQuestion(models.Model):
 
     def __repr__(self):
         return self.__str__()
-
-
-class ReadingTest(models.Model):
-    text = models.TextField()
