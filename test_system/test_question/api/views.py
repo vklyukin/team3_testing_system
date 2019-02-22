@@ -13,7 +13,6 @@ from user_pref.models import UserPreferences, Preference
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now, localtime
 from users_exam.models import UsersExam
-from exam.models import ExamSession
 
 
 class TestQuestionAPIView(generics.ListAPIView, generics.CreateAPIView):
