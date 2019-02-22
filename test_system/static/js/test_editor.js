@@ -11,7 +11,7 @@ const SendGet = () => { //function that get all questions from the server side
         return response.json(); //reading request like a json object
       })
       .then(function (json) {
-        if (json.length == undefined){
+        if (json.length === undefined){
           let but = document.getElementById('sub_but');
           let add_butt = document.getElementById('add_butt');
           let table = document.getElementById('q_table');
@@ -226,7 +226,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
   }
 };
 
-function SendDelete(pk) {
+const SendDelete = pk => {
   fetch('http://localhost:5000/api/question/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
       method: "DELETE",
       credentials: "same-origin", //including cookie information
@@ -240,11 +240,11 @@ function SendDelete(pk) {
         location.reload();
       }
     })
-}
+};
 
-function AddQ() {
+const AddQ = () => {
   location.href = "http://localhost:5000/test_editor/add";
-}
+};
 
 //function that retutn cookie by its name, taken from django documentation
 const getCookie = name => {
