@@ -1,9 +1,9 @@
 from rest_framework import permissions
 
 
-class IsTeacher(permissions.BasePermission):
+class IsTeacherOrAdmin(permissions.BasePermission):
     """
-    Teacher's actions permission
+    Teacher's and Admin's actions permission towards Mark object
     """
 
     def has_permission(self, request, view):
@@ -13,15 +13,14 @@ class IsTeacher(permissions.BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS or request.method == 'PUT' or request.method == 'POST':
+        if request.user.is_authenticated or request.method == 'PUT':
                 return True
         return False
 
 
 class IsStudent(permissions.BasePermission):
     """
-    Student's actions permission
+    Student's actions permission towards Mark object
     """
 
     def has_permission(self, request, view):
@@ -37,26 +36,9 @@ class IsStudent(permissions.BasePermission):
         return False
 
 
-class IsAdmin(permissions.BasePermission):
-    """
-    Admin's actions permission
-    """
-
-    def has_permission(self, request, view):
-        if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS or request.method == 'POST':
-                return True
-        return False
-
-    def has_object_permission(self, request, view, obj):
-        if request.user.is_authenticated:
-            return True
-        return False
-
-
 class EmptyPermission(permissions.BasePermission):
     """
-    Anonymous user actions permission
+    Anonymous user actions permission towards Mark object
     """
 
     def has_permission(self, request, view):
