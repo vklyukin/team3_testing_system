@@ -44,8 +44,10 @@ INSTALLED_APPS = [
     'test_question',
     'test_editor',
     'user_pref',
+    'student_answer',
+    'users_exam',
+    'test_text'
     'file_uploader',
-    'student_answer'
 ]
 
 MIDDLEWARE = [
@@ -114,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

@@ -1,14 +1,26 @@
 from rest_framework import serializers
 from student_answer.models import StudentAnswer
+from test_question.models import TestQuestion
+from django.utils.timezone import now, localtime
+from rest_framework.exceptions import PermissionDenied
+from django.db.models import Q
+from datetime import timedelta
+
+delta = timedelta(seconds=3)
 
 
 class StudentAnswerSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
-        if not instance.started:
-            print("=======2========")
-            instance.started = True
-            instance.answer = validated_data.get('answer', instance.answer)
-            instance.save()
+        if instance.time_started:
+            q = TestQuestion.objects.all()
+            q = q.filter(Q(number__exact=instance.question.number))
+            if localtime(now()) - instance.time_started < q[0].duration + delta:
+                instance.answer = validated_data.get('answer', instance.answer)
+                instance.save()
+            else:
+                raise PermissionDenied()
+        else:
+            raise PermissionDenied()
         return instance
 
     class Meta:
@@ -19,13 +31,22 @@ class StudentAnswerSerializer(serializers.ModelSerializer):
             'answer',
             'user',
             'question',
-            'started'
+            'time_started'
         ]
-        read_only_fields = ('started',)
-        # read_only_fields = [
-        #     'user',
-        #     'question',
-        # ]
+        read_only_fields = ('time_started',)
+
+
+class StudentAnswerAPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentAnswer
+        fields = [
+            'pk',
+            'number',
+            'answer',
+            'user',
+            'time_started'
+        ]
+        read_only_fields = ('time_started', 'question')
 
 
 class StudentAnswerSerializerEmpty(serializers.ModelSerializer):
@@ -36,5 +57,5 @@ class StudentAnswerSerializerEmpty(serializers.ModelSerializer):
             'number',
             'user',
             'question',
-            'started',
+            'time_started',
         ]
