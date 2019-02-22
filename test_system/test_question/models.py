@@ -36,8 +36,3 @@ class TestQuestion(models.Model):
 
     def __repr__(self):
         return self.__str__()
-
-
-class ReadingTest(models.Model):
-    text = models.TextField()
-    time_recommended = models.DurationField(default=timedelta(minutes=20))

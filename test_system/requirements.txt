@@ -3,4 +3,4 @@ future
 djangorestframework
 markdown
 django-filter
-
+fulltext
