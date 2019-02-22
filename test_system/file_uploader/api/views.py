@@ -8,10 +8,13 @@ from .serializers import FileSerializer
 from test_question.models import TestQuestion
 from django.http import HttpResponseRedirect
 from datetime import timedelta
-from test_text.models import ReadingTest
-from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
+from django.shortcuts import render
+from test_text.models import ReadingTest
+from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 
 
 questions = []
@@ -83,7 +86,7 @@ class TextUploadView(APIView):
                         text=reading,
                         time_recommended=timedelta(minutes=20),
                     )
- 
+
 
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
         else:
@@ -186,3 +189,12 @@ def load_test(fi) -> tuple:
     reading = test[test.lower().find("read the text below"):test.find("(21)")]
     test = test.replace(reading, "")
     return test, reading
+
+@login_required
+def redirect(request):
+    qs = UserPreferences.objects.all()
+    qs = qs.filter(Q(user=request.user))
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'file_upload.html', {})
+    else:
+        return HttpResponseRedirect('http://localhost:5000/')

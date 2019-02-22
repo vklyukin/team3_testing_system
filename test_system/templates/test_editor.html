@@ -29,7 +29,16 @@
   <div class="col-lg-12">
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h3 class="m-0 font-weight-bold text-primary">Question Editor</h3>
+        <div class="row">
+          <div class="col-lg-11">
+            <h1 class="m-0 font-weight-bold text-primary">Question Editor</h1>
+          </div>
+          <div class="col-lg-1">
+            <button class="btn" type="button" name="button" id="add_butt" onclick="AddQ()">
+              <i class="fas fa-plus fa-2x text-gray-300"></i>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="card-body" id="card-body-table">
           <div class="table-responsive">
@@ -42,6 +51,8 @@
                   <th scope="col">Options</th>
                   <th scope="col">Correct</th>
                   <th scope="col">Duration</th>
+                  <th scope="col">Reading</th>
+                  <th scope="col">Delete</th>
                 </tr>
               </thead>
               <tbody id=q_table_body>
