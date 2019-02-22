@@ -141,6 +141,16 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
         ]
 
 
+class TestQuestionReadingAPISerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReadingTest
+        fields = [
+            'pk',
+            'text',
+            'time_recommended',
+        ]
+
+
 class TestQuestionReading(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.text = validated_data.get('text', instance.text)
