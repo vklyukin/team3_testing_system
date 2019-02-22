@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from test_question.models import TestQuestion, ReadingTest
+from test_question.models import TestQuestion
+from test_text.models import ReadingTest
+from datetime import timedelta
 
 
 class TeacherQuestionSerializer(serializers.ModelSerializer):
@@ -98,7 +100,7 @@ class CorrectAnswerValidator(object):
 
 class CorrectDurationValidator(object):
     def __call__(self, duration):
-        if duration <= 0:
+        if duration <= timedelta(seconds=0):
             raise serializers.ValidationError("Duration field should be positive")
 
 
@@ -140,6 +142,12 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
 
 
 class TestQuestionReading(serializers.ModelSerializer):
+    def update(self, instance, validated_data):
+        instance.text = validated_data.get('text', instance.text)
+        instance.time_recommended = validated_data.get('time_recommended', instance.time_recommended)
+        instance.save()
+        return instance
+
     class Meta:
         model = ReadingTest
         fields = [

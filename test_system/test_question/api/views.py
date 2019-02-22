@@ -1,5 +1,7 @@
 from rest_framework import generics, mixins
-from test_question.models import TestQuestion, ReadingTest
+from django.core.exceptions import PermissionDenied
+from test_question.models import TestQuestion
+from test_text.models import ReadingTest
 from student_answer.models import StudentAnswer
 from .serializers import TeacherQuestionSerializer, StudentQuestionSerializer, EmptyQuestionSerializer, \
     TestQuestionCreateSerializer, TestQuestionReading, TestQuestionReadingEmpty, StudentQuestionAPISerializer
@@ -10,6 +12,8 @@ from .permissions import IsStudent, IsAdmin, IsTeacher, EmptyPermission
 from user_pref.models import UserPreferences, Preference
 from django.shortcuts import get_object_or_404
 from django.utils.timezone import now, localtime
+from users_exam.models import UsersExam
+from exam.models import ExamSession
 
 
 class TestQuestionAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -103,6 +107,7 @@ class TestQuestionRudView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class TestQuestionReadingView(generics.RetrieveUpdateDestroyAPIView):
+    lookup_field = 'pk'
 
     def get_serializer_class(self):
         if self.request.user.is_authenticated:
@@ -122,4 +127,19 @@ class TestQuestionReadingView(generics.RetrieveUpdateDestroyAPIView):
         return [EmptyPermission()]
 
     def get_queryset(self):
-        return ReadingTest.objects.all()
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                if UsersExam.objects.filter(user__exact=self.request.user).count() > 0:
+                    u_exam = UsersExam.objects.get(user__exact=self.request.user)
+                    exam = u_exam.exam
+                    _now = localtime(now())
+                    if exam.start <= _now <= exam.finish:
+                        return ReadingTest.objects.all()
+                    else:
+                        raise PermissionDenied
+                else:
+                    return ReadingTest.objects.none()
+            elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
+                return ReadingTest.objects.all()
