@@ -6,7 +6,7 @@ let notime;
 let count=0;
 let anser=-1;
 let stop=false;
-
+let havetime=false;
 let curtask;
 let curans;
 
@@ -106,7 +106,26 @@ function gettask(num)
 function gettext()
 {
     //
-    return texttest;
+    return "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq100";
+}
+
+
+function isreading(task)
+{
+        if(task["is_reading"]==true) {
+        document.getElementById("reading").textContent=gettext();
+        document.getElementById("reading").style.fontSize="2vh";
+        document.getElementById("textbu").style.display="inline";
+        document.getElementById("endbu").style.width="40%";
+        document.getElementById("endbu").style.right="5%";
+    }
+    else {
+        document.getElementById("reading").textContent=gettext();
+        document.getElementById("reading").style.fontSize="2vh";
+        document.getElementById("textbu").style.display="none";
+        document.getElementById("endbu").style.width="40%";
+        document.getElementById("endbu").style.right="30%";
+    }
 }
 
 
@@ -117,8 +136,76 @@ function sendanswer(json)
     put("http://localhost:5000/api/answer/"+nm+"/",json);
 }
 
+function sizes(curtask)
+{
+    if((+curtask["answ_option1"].length>0)
+        &(+curtask["answ_option2"].length>0)
+        &(+curtask["answ_option3"].length>0)
+        &(+curtask["answ_option4"].length>0)
+        &(+curtask["text"].length>0))
+    {
+    document.getElementById("txt").style.fontSize="2vh";
+	document.getElementById("first").style.fontSize="2.15vh";
+	document.getElementById("second").style.fontSize="2.15vh";
+	document.getElementById("third").style.fontSize="2.15vh";
+	document.getElementById("fourth").style.fontSize="2.15vh";
+    }
+        if((+curtask["answ_option1"].length>50)
+        &(+curtask["answ_option2"].length>50)
+        &(+curtask["answ_option3"].length>50)
+        &(+curtask["answ_option4"].length>50)
+        &(+curtask["text"].length>50))
+    {
+    document.getElementById("txt").style.fontSize="1.75vh";
+	document.getElementById("first").style.fontSize="2vh";
+	document.getElementById("second").style.fontSize="2vh";
+	document.getElementById("third").style.fontSize="2vh";
+	document.getElementById("fourth").style.fontSize="2vh";
+    }
+    
+        if((+curtask["answ_option1"].length>150)
+        &(++curtask["answ_option2"].length>150)
+        &(+curtask["answ_option3"].length>150)
+        &(+curtask["answ_option4"].length>150)
+        &(+curtask["text"].length>150))
+    {
+    document.getElementById("txt").style.fontSize="1.5vh";
+	document.getElementById("first").style.fontSize="1.7vh";
+	document.getElementById("second").style.fontSize="1.7vh";
+	document.getElementById("third").style.fontSize="1.7vh";
+	document.getElementById("fourth").style.fontSize="1.7vh";
+    }
+    
+        if((+curtask["answ_option1"].length>250)
+        &(+curtask["answ_option2"].length>250)
+        &(+curtask["answ_option3"].length>250)
+        &(+curtask["answ_option4"].length>250)
+        &(+curtask["text"].length>250))
+    {
+    document.getElementById("txt").style.fontSize="1.2vh";
+	document.getElementById("first").style.fontSize="1.4vh";
+	document.getElementById("second").style.fontSize="1.4vh";
+	document.getElementById("third").style.fontSize="1.4vh";
+	document.getElementById("fourth").style.fontSize="1.4vh";
+    }
+        if((+curtask["answ_option1"].length>350)
+        &(+curtask["answ_option2"].length>350)
+        &(+curtask["answ_option3"].length>350)
+        &(+curtask["answ_option4"].length>350)
+        &(+curtask["text"].length>350))
+    {
+    document.getElementById("txt").style.fontSize="1vh";
+	document.getElementById("first").style.fontSize="1.2vh";
+	document.getElementById("second").style.fontSize="1.2vh";
+	document.getElementById("third").style.fontSize="1.2vh";
+	document.getElementById("fourth").style.fontSize="1.2vh";
+    }
+}
+
+
 function fillquastion(json)
 {
+    sizes(json);
     document.getElementById("num").innerHTML        = "Task № "+json["number"];
     document.getElementById("txt").innerHTML        = json["text"];
     document.getElementById("first").innerHTML      = json["answ_option1"];
@@ -138,8 +225,8 @@ function timerstart(sectime)
     secnds=seconds-houres*3600-minutes*60;
     document.getElementById("tm").textContent=houres+':'+minutes+':'+(secnds-seconds%1+1);
     document.getElementById("tmb").style.background = "#4e73df";
-    seconds-=0.025;
-    setTimeout(function () {timerwork(seconds,seconds,curent)}, 25);
+    seconds-=1;
+    setTimeout(function () {timerwork(seconds,seconds,curent)}, 1000);
 }
 
 function timerend()
@@ -164,9 +251,9 @@ function timerwork(seconds,maxseconds,number)
         if(num<142)
         document.getElementById("tmb").style.background = "rgb("+(78+num)+", 115, 223)";
         else document.getElementById("tmb").style.background = "rgb(220, 115, "+(223-num+142)+")";
-		seconds-=0.025;
+		seconds-=1;
         procesed=false;
-		setTimeout(function () {timerwork(seconds,maxseconds,number)}, 25);
+		setTimeout(function () {timerwork(seconds,maxseconds,number)}, 1000);
     }
     else 
     {
@@ -229,33 +316,54 @@ function next()
     procesed=true;
     if (document.getElementById("anszero").className=="anserr"||document.getElementById("ansone").className=="anserr"||document.getElementById("anstwo").className=="anserr"||document.getElementById("ansthre").className=="anserr"||endtime)
     {
-    if (count<orderrow.length)
+    if (count<orderrow.length-1)
         {
         count++;
-        //if(gettask(+getanswer(+orderrow[count]["pk"])["question"])["is_reading"]=="true"&&gettask(+getanswer(+orderrow[count-1]["pk"])["question"])["is_reading"]=="false")    
-        //{
-        //    alert("Text");  
-        //}   
+        /*
+        if(curtask["is_reading"]=="true"&&gettask(+getanswer(+orderrow[count-1]["pk"])["question"])["is_reading"]=="false")    
+        {
+            alert("Text");  
+            document.getElementById("tmb").style.display="block"; 
+            document.getElementById("lstr").style.zIndex=0;
+            document.getElementById("rdng").style.zIndex=1;
+            document.getElementById("qsns").style.zIndex=0;
+            document.getElementById("lend").style.zIndex=0;
+        }   */
              let g= new answer(curent["pk"],curent["number"],anser,curent["user"],curent["question"],curent["time_started"]);
              sendanswer(JSON.stringify(g)); 
-             curent=getanswer(+orderrow[count]["pk"]); 
-             curans=getanswer(+orderrow[count]["pk"]); 
-             curtask=gettask(+curent["question"]);
-             fillquastion(curans);
-             timerstart(curtask["duration"]);
-             if(curtask["is_reading"]==true) {    
-                document.getElementById("reading").textContent="ssss";
-                document.getElementById("textbu").style.display="inline";
-                document.getElementById("endbu").style.width="40%";
-                document.getElementById("endbu").style.right="5%";
-             }   
-             else {
-                document.getElementById("reading").textContent="ssss";
-                document.getElementById("textbu").style.display="none";
-                document.getElementById("endbu").style.width="40%";
-                document.getElementById("endbu").style.right="30%";
-             }
-             if(count==orderrow.length-1) document.getElementById("endbu").innerHTML="End session";
+            
+            
+            
+if(count==-1)
+        {
+            document.getElementById("tmb").style.display="none"; 
+            document.getElementById("lstr").style.zIndex=1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=-1;
+            document.getElementById("clear").style.zIndex=0;
+        }
+    else if(count==orderrow.length)
+        {
+            document.getElementById("tmb").style.display="none"; 
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=1;
+            document.getElementById("clear").style.zIndex=0;
+            
+        }
+    else{
+    document.getElementById("tmb").style.display="block"; 
+    curent=getanswer(+orderrow[count]["pk"]); 
+    curans=getanswer(+orderrow[count]["pk"]); 
+    curtask=gettask(+curent["question"]);
+    fillquastion(curtask);
+    timerstart(curtask["duration"]);
+    document.getElementById("rdng").style.zIndex=1;
+    document.getElementById("qsns").style.zIndex=2;
+    isreading(curtask);
+    }
              document.getElementById("anszero").className="anser";
              document.getElementById("ansone").className="anser";
              document.getElementById("anstwo").className="anser";
@@ -264,6 +372,18 @@ function next()
              endtime=false;
              anser=-1;
              stop=false;
+            
+        }
+        else
+        {
+            document.getElementById("tmb").style.display="none"; 
+            let g= new answer(curent["pk"],curent["number"],anser,curent["user"],curent["question"],curent["time_started"]);
+            sendanswer(JSON.stringify(g)); 
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=1;
+            document.getElementById("clear").style.zIndex=0;
         }
 }
 }
@@ -275,8 +395,11 @@ function ontetxmenuswitch()
         if(!procesed)
         {
             procesed=true;
-            document.getElementById("rdng").style.zIndex=2;
-            document.getElementById("qsns").style.zIndex=1;
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=-1;
+            document.getElementById("clear").style.zIndex=0;
             procesed=false;
         }
 }
@@ -286,30 +409,128 @@ function onqsnsmenuswitch()
     if(!procesed)
     {
             procesed=true;
-            document.getElementById("rdng").style.zIndex=1;
-            document.getElementById("qsns").style.zIndex=2;
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=1;
+            document.getElementById("lend").style.zIndex=-1;
+            document.getElementById("clear").style.zIndex=0;
             procesed=false;
     }
 
 }
 
-function findstop()
+function gettime(ans,tsk)
 {
-    for(i=0;i<orderrow.length;i++)
-    {
-        if(orderrow[i]["time_started"]==null)  {
-            return i;
-        }
-    }
-    return orderrow.length-1;
+    let str=JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let mas=str.split(':');
+    let houres=(+mas[0].substring(mas[0].length-2,mas[0].length));
+    let minutes=(+mas[1]);
+    let secnds=(+mas[2].substring(0,2));
+    let delta=houres*3600+minutes*60+secnds;
+    str=ans["time_started"];
+    mas=str.split(':');
+    houres=(+mas[0].substring(mas[0].length-2,mas[0].length));
+    minutes=(+mas[1]);
+    secnds=(+mas[2].substring(0,2));
+    delta=delta-(houres*3600+minutes*60+secnds);
+    str=tsk["duration"];
+    mas=str.split(':');
+    houres=(+mas[0]);
+    minutes=(+mas[1]);
+    secnds=(+mas[2]);
+    delta=delta-(houres*3600+minutes*60+secnds);
+    if (delta<0) return true;
+    else return false;
+}
+
+function stillhavetime(ans,tsk)
+{
+    let str=JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let mas=str.split(':');
+    let houres=(+mas[0].substring(mas[0].length-2,mas[0].length));
+    let minutes=(+mas[1]);
+    let secnds=(+mas[2].substring(0,2));
+    let delta=houres*3600+minutes*60+secnds;
+    str=ans["time_started"];
+    mas=str.split(':');
+    houres=(+mas[0].substring(mas[0].length-2,mas[0].length));
+    minutes=(+mas[1]);
+    secnds=(+mas[2].substring(0,2));
+    delta=delta-(houres*3600+minutes*60+secnds);
+    str=tsk["duration"];
+    mas=str.split(':');
+    houres=(+mas[0]);
+    minutes=(+mas[1]);
+    secnds=(+mas[2]);
+    delta=(houres*3600+minutes*60+secnds)-delta;
+    houres=delta/3600;
+    minutes=(delta-houres*3600)/60;
+    secnds=delta-minutes*60-houres*3600;
+    return houres+":"+minutes+":"+secnds;
 }
 
 
 
-function initialization()
+function findstop()
 {
-    orderrow=getanswers();
-    count=findstop();
+    havetime=false;
+    for(i=0;i<orderrow.length;i++)
+    {
+        if(orderrow[i]["time_started"]==null)  {
+            if(i>0)
+            {
+                let ans=getanswer(+orderrow[i-1]["pk"]); 
+                let tsk=gettask(+ans["question"]);
+                if (gettime(ans,tsk))
+                {
+                    havetime=true;
+                        break;
+                }
+                else 
+                {
+                    break;
+                }
+            }
+            else {
+                break;}
+            
+        }
+    }
+    if (havetime)i--;
+    if(i==0&&orderrow[i]["time_started"]==null) return -1;
+    if(i==0&&orderrow[i]["time_started"]!=null) return i;
+    if (i==orderrow.length)
+    {
+
+        let ans=getanswer(+orderrow[i-1]["pk"]); 
+        let tsk=gettask(+ans["question"]);
+        if(orderrow[i-1]["time_started"]==null){
+            return i-1;
+        }
+        if(gettime(ans,tsk)&&ans["answer"]!=0&&ans["answer"]!=1&&ans["answer"]!=2&&ans["answer"]!=3){
+            havetime=true;
+            return i-1;
+        }
+        else{
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=1;
+            document.getElementById("clear").style.zIndex=0;
+    return orderrow.length;
+        }
+    } else return i;
+
+}
+
+function endsession()
+{
+    alert("End Session");
+}
+
+function startsession()
+{
+    count=0;
     curent=getanswer(+orderrow[count]["pk"]); 
     curans=getanswer(+orderrow[count]["pk"]); 
     curtask=gettask(+curent["question"]);
@@ -317,84 +538,54 @@ function initialization()
     timerstart(curtask["duration"]);
     document.getElementById("rdng").style.zIndex=1;
     document.getElementById("qsns").style.zIndex=2;
-    if(curtask["is_reading"]==true) {
-        document.getElementById("reading").textContent="gettext()";
-        document.getElementById("textbu").style.display="inline";
-        document.getElementById("endbu").style.width="40%";
-        document.getElementById("endbu").style.right="5%";
-    }
-    else {
-        document.getElementById("reading").textContent="gettext()";
-        document.getElementById("textbu").style.display="none";
-        document.getElementById("endbu").style.width="40%";
-        document.getElementById("endbu").style.right="30%";
-    }
+    isreading(curtask);
+     document.getElementById("tmb").style.display="block"; 
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=1;
+            document.getElementById("lend").style.zIndex=-1;
+            document.getElementById("clear").style.zIndex=0;
 }
 
-/*
-function sizes()
+
+
+function initialization()
 {
-    if((+Allinfo[curNumber]["answ_option1"].length>0)
-        &(+Allinfo[curNumber]["answ_option2"].length>0)
-        &(+Allinfo[curNumber]["answ_option3"].length>0)
-        &(+Allinfo[curNumber]["answ_option4"].length>0)
-        &(+Allinfo[curNumber]["text"].length>0))
-    {
-    document.getElementById("txt").style.fontSize="2vh";
-	document.getElementById("first").style.fontSize="2.15vh";
-	document.getElementById("second").style.fontSize="2.15vh";
-	document.getElementById("third").style.fontSize="2.15vh";
-	document.getElementById("fourth").style.fontSize="2.15vh";
+document.getElementById("tmb").style.display="none"; 
+document.getElementById("clear").style.zIndex=100;
+
+    orderrow=getanswers();
+    count=findstop();
+    if(count==-1)
+        {
+            document.getElementById("tmb").style.display="none"; 
+            document.getElementById("lstr").style.zIndex=1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=-1;
+            document.getElementById("clear").style.zIndex=0;
+        }
+    else if(count==orderrow.length)
+        {
+            document.getElementById("tmb").style.display="none"; 
+            document.getElementById("lstr").style.zIndex=-1;
+            document.getElementById("rdng").style.zIndex=-1;
+            document.getElementById("qsns").style.zIndex=-1;
+            document.getElementById("lend").style.zIndex=1;
+            document.getElementById("clear").style.zIndex=0;
+        }
+    else{
+    document.getElementById("tmb").style.display="block"; 
+    curent=getanswer(+orderrow[count]["pk"]); 
+    curans=getanswer(+orderrow[count]["pk"]); 
+    curtask=gettask(+curent["question"]);
+    fillquastion(curtask);
+    if(havetime) timerstart(stillhavetime(curans,curtask));
+    else timerstart(curtask["duration"]);
+    document.getElementById("rdng").style.zIndex=1;
+    document.getElementById("qsns").style.zIndex=2;
+    isreading(curtask);
     }
-        if((+Allinfo[curNumber]["answ_option1"].length>50)
-        &(+Allinfo[curNumber]["answ_option2"].length>50)
-        &(+Allinfo[curNumber]["answ_option3"].length>50)
-        &(+Allinfo[curNumber]["answ_option4"].length>50)
-        &(+Allinfo[curNumber]["text"].length>50))
-    {
-    document.getElementById("txt").style.fontSize="1.75vh";
-	document.getElementById("first").style.fontSize="2vh";
-	document.getElementById("second").style.fontSize="2vh";
-	document.getElementById("third").style.fontSize="2vh";
-	document.getElementById("fourth").style.fontSize="2vh";
-    }
-    
-        if((+Allinfo[curNumber]["answ_option1"].length>150)
-        &(+Allinfo[curNumber]["answ_option2"].length>150)
-        &(+Allinfo[curNumber]["answ_option3"].length>150)
-        &(+Allinfo[curNumber]["answ_option4"].length>150)
-        &(+Allinfo[curNumber]["text"].length>150))
-    {
-    document.getElementById("txt").style.fontSize="1.5vh";
-	document.getElementById("first").style.fontSize="1.75vh";
-	document.getElementById("second").style.fontSize="1.75vh";
-	document.getElementById("third").style.fontSize="1.75vh";
-	document.getElementById("fourth").style.fontSize="1.75vh";
-    }
-    
-        if((+Allinfo[curNumber]["answ_option1"].length>250)
-        &(+Allinfo[curNumber]["answ_option2"].length>250)
-        &(+Allinfo[curNumber]["answ_option3"].length>250)
-        &(+Allinfo[curNumber]["answ_option4"].length>250)
-        &(+Allinfo[curNumber]["text"].length>250))
-    {
-    document.getElementById("txt").style.fontSize="1.25vh";
-	document.getElementById("first").style.fontSize="1.5vh";
-	document.getElementById("second").style.fontSize="1.5vh";
-	document.getElementById("third").style.fontSize="1.5vh";
-	document.getElementById("fourth").style.fontSize="1.5vh";
-    }
-        if((+Allinfo[curNumber]["answ_option1"].length>350)
-        &(+Allinfo[curNumber]["answ_option2"].length>350)
-        &(+Allinfo[curNumber]["answ_option3"].length>350)
-        &(+Allinfo[curNumber]["answ_option4"].length>350)
-        &(+Allinfo[curNumber]["text"].length>350))
-    {
-    document.getElementById("txt").style.fontSize="1vh";
-	document.getElementById("first").style.fontSize="1.25vh";
-	document.getElementById("second").style.fontSize="1.25vh";
-	document.getElementById("third").style.fontSize="1.25vh";
-	document.getElementById("fourth").style.fontSize="1.25vh";
-    }
+    document.getElementById("clear").style.zIndex=0;
 }
-*/
+

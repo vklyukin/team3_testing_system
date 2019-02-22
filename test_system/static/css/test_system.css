@@ -21,7 +21,7 @@ body
     height: 86vh;
     top: 3vh;
     left: 2%;
-    z-index: 1;
+    z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
     border-radius: 5px;
@@ -98,7 +98,7 @@ body
     top: -6vh;
     left: 30%;
     z-index: 1;
-       
+    display: none;
     border-radius: 5px;
     
 }
@@ -263,7 +263,7 @@ transform: scale(-1, 1);
     width: 10px;
     height: 10px;
     display: block;
-    z-index: 100;
+    z-index: 20;
     left: 0%;
     top: 0%;
     height: 14vh;
@@ -282,14 +282,13 @@ transform: scale(-1, 1);
 {
     position: fixed;
     margin-left: -1000px;
-    z-index: 100;
+    z-index: 0;
 }
 .backbutton
 {
     position: fixed;
     margin-left: 0px;
     left:30%;
-    top:vh;
     z-index: 100;
     background: #4e73df;
     border: none;
@@ -303,6 +302,27 @@ transform: scale(-1, 1);
     border-radius: 5px;
     font-family: monospace;   
 }
+
+
+.strtendbut
+{
+   background: #4e73df;
+    border: none;
+    color: white;
+    text-align: center;
+    position: absolute; 
+    width: 60%;
+    height: 10vh;
+    bottom: 40vh;
+    right: 20%;
+    z-index: 1;
+    font-size: 2vh;
+    border-radius: 5px;
+    font-family: monospace;  
+}
+
+
+
 .textshow
 {
     position: fixed;
@@ -321,9 +341,10 @@ transform: scale(-1, 1);
     height: 86vh;
     top: 3vh;
     left: 2%;
-    z-index: 100;
+    z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
+    font-size: 5vh;
     border-radius: 5px;
 }
 
@@ -335,7 +356,7 @@ transform: scale(-1, 1);
     height: 86vh;
     top: 3vh;
     left: 2%;
-    z-index: 10000;
+    z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
     border-radius: 5px;
@@ -349,7 +370,20 @@ transform: scale(-1, 1);
     height: 86vh;
     top: 3vh;
     left: 2%;
-    z-index: 10000;
+    z-index: 0;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+    align-content: center;
+    border-radius: 5px;
+}
+.listclear
+{
+    background: #f8f9fc;
+    position: absolute; 
+    width: 96%;
+    height: 86vh;
+    top: 3vh;
+    left: 2%;
+    z-index: 1;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
     border-radius: 5px;
