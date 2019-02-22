@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'user_pref',
     'student_answer',
     'users_exam',
-    'test_text'
+    'test_text',
     'file_uploader',
 ]
 
