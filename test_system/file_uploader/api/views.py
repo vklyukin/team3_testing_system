@@ -81,9 +81,10 @@ class TextUploadView(APIView):
 
                     for i in range(20, 25):
                         questions[i].is_reading = True
+                        questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
-                        text=reading,
+                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.<\p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .<\p>", "").replace("<p>.<\p>", ""),
                         time_recommended=timedelta(minutes=20),
                     )
 
@@ -135,7 +136,7 @@ class KeysUploadView(APIView):
                     answ_option2=question.answers[1],
                     answ_option3=question.answers[2],
                     answ_option4=question.answers[3],
-                    duration=timedelta(seconds=30),
+                    duration=question.duration,
                     is_reading=question.is_reading,
                 )
 
@@ -157,6 +158,7 @@ class Question():
         self.answers = []
         self.answ_correct = ""
         self.is_reading = False
+        self.duration = timedelta(seconds=30)
 
     def __str__(self):
         res = f"({self.number}) {self.text}\n"
