@@ -4,6 +4,7 @@ let procesed;
 let notime;
 let count = 0;
 let anser = -1;
+let k=0;
 let stop = false;
 let have_unused_time = false;
 let current_task;
@@ -177,13 +178,14 @@ function set_font_sizes(current_task) {
 
 function fill_question_form(json) {
     set_font_sizes(json);
-    document.getElementById("num").innerHTML = "Task № " + json["number"];
+    document.getElementById("num").innerHTML = "Task № " + (count+1);
     document.getElementById("txt").innerHTML = json["text"];
     document.getElementById("first").innerHTML = json["answ_option1"];
     document.getElementById("second").innerHTML = json["answ_option2"];
     document.getElementById("third").innerHTML = json["answ_option3"];
     document.getElementById("fourth").innerHTML = json["answ_option4"];
     document.getElementById("tmb").style.background = "#4e73df";
+   // k++;
 }
 
 function start_timer(sectime) {
@@ -424,7 +426,7 @@ function findstop() {
     }
     if (have_unused_time) i--;
     if (i === 0 && orderrow[i]["time_started"] == null) return -1;
-    if (i === 0 && orderrow[i]["time_started"] != null) return i;
+    if (i === 0 && orderrow[i]["time_started"] != null) {return i;}
     if (i === orderrow.length) {
 
         let ans = get_answer(+orderrow[i - 1]["pk"]);
