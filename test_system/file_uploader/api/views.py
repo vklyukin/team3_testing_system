@@ -8,12 +8,16 @@ from .serializers import FileSerializer
 from test_question.models import TestQuestion
 from django.http import HttpResponseRedirect
 from datetime import timedelta
-from test_text.models import ReadingTest
-from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
+from django.shortcuts import render
+from test_text.models import ReadingTest
+from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 
 
+BASE_PATH = 'http://localhost:5000/'
 questions = []
 
 
@@ -78,12 +82,13 @@ class TextUploadView(APIView):
 
                     for i in range(20, 25):
                         questions[i].is_reading = True
+                        questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
-                        text=reading,
+                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.<\p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .<\p>", "").replace("<p>.<\p>", ""),
                         time_recommended=timedelta(minutes=20),
                     )
- 
+
 
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
         else:
@@ -132,11 +137,11 @@ class KeysUploadView(APIView):
                     answ_option2=question.answers[1],
                     answ_option3=question.answers[2],
                     answ_option4=question.answers[3],
-                    duration=timedelta(seconds=30),
+                    duration=question.duration,
                     is_reading=question.is_reading,
                 )
 
-            return HttpResponseRedirect('http://localhost:5000/test_editor/')
+            return HttpResponseRedirect(BASE_PATH + 'test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -154,6 +159,7 @@ class Question():
         self.answers = []
         self.answ_correct = ""
         self.is_reading = False
+        self.duration = timedelta(seconds=30)
 
     def __str__(self):
         res = f"({self.number}) {self.text}\n"
@@ -186,3 +192,12 @@ def load_test(fi) -> tuple:
     reading = test[test.lower().find("read the text below"):test.find("(21)")]
     test = test.replace(reading, "")
     return test, reading
+
+@login_required
+def redirect(request):
+    qs = UserPreferences.objects.all()
+    qs = qs.filter(Q(user=request.user))
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'file_upload.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + '')

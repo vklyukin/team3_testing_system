@@ -1,40 +1,44 @@
 {% extends 'admin_base.html' %}
 {% block content %}
 {% load static %}
-<script type="text/javascript" src="{% static 'js/file_upload.js' %}"></script>
 <div class="row">
-      <div class="col-lg-12">
-        <div class="card shadow mb-4">
-          <div class="card-header py-3">
-            <h3 class="m-0 font-weight-bold text-primary">Upload test conditions</h3>
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Attach test conditions and click Submit.</h3>
+      </div>
+      <div class="card-body">
+        <iframe name="formDestination" hidden></iframe>
+        <form id="file_load" action="{% url 'api-file-uploader:file-text-upload' %}" target="formDestination" enctype="multipart/form-data" method="POST" onsubmit="PreSubmit()">
+          {% csrf_token %}
+          <div class="custom-file">
+            <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
+            <label id="file_l" class="custom-file-label" for="validatedCustomFile">Choose file...</label>
           </div>
-          <div class="card-body">
-            <iframe name="formDestination" hidden></iframe>
-
-            <h5 class="m-0 font-weight-bold text-primary">Сюда прикрепите условия теста и нажмите Submit</h5>
-            <form id="file_load" action="http://localhost:5000/api/file_uploader/text/" target="formDestination" enctype="multipart/form-data" method="POST">
-              {% csrf_token %}
-              <div class="custom-file">
-                <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
-                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-              </div>
-              <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
-            </form>
-
-
-            <h5 class="m-0 font-weight-bold text-primary">После этого прикрепите ключи к тесту и нажмите Submit</h5>
-            <form id="file_load" action="http://localhost:5000/api/file_uploader/keys/" enctype="multipart/form-data" method="POST">
-              {% csrf_token %}
-              <div class="custom-file">
-                <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
-                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
-              </div>
-              <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
-            </form>
-
-          </div>
-        </div>
+          <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
+        </form>
       </div>
     </div>
-
+  </div>
+</div>
+<div id="second_stage" class="row" style="display: none;">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">After that, attach the keys to the test and click Submit.</h3>
+      </div>
+      <div class="card-body">
+        <form id="file_load" action="{% url 'api-file-uploader:file-keys-upload' %}" enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          <div class="custom-file">
+            <input name="file" type="file" class="custom-file-input" id="test_keys" accept=".doc">
+            <label id="keys_l" class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+          </div>
+          <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{% static 'js/file_upload.js' %}"></script>
 {% endblock %}

@@ -1,10 +1,10 @@
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, status
 from django.core.exceptions import PermissionDenied
 from test_question.models import TestQuestion
 from test_text.models import ReadingTest
 from student_answer.models import StudentAnswer
 from .serializers import TeacherQuestionSerializer, StudentQuestionSerializer, EmptyQuestionSerializer, \
-    TestQuestionCreateSerializer, TestQuestionReading, TestQuestionReadingEmpty, StudentQuestionAPISerializer
+    TestQuestionCreateSerializer, TestQuestionReading, TestQuestionReadingEmpty, StudentQuestionAPISerializer, TestQuestionReadingAPISerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
@@ -96,23 +96,63 @@ class TestQuestionRudView(generics.RetrieveUpdateDestroyAPIView):
 
         filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
         obj = get_object_or_404(queryset, **filter_kwargs)
-        sa = StudentAnswer.objects.get(user=self.request.user, question=obj)
-        if not sa.time_started:
-            sa.time_started = localtime(now())
-            sa.save()
+        try:
+            sa = StudentAnswer.objects.get(user=self.request.user, question=obj)
+            if not sa.time_started:
+                sa.time_started = localtime(now())
+                sa.save()
+        except StudentAnswer.DoesNotExist:
+            pass
+
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
 
         return obj
 
 
-class TestQuestionReadingView(generics.RetrieveUpdateDestroyAPIView):
+class TestQuestionReadingRudView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
     def get_serializer_class(self):
         if self.request.user.is_authenticated:
             return TestQuestionReading
         return TestQuestionReadingEmpty
+
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                return [IsStudent()]
+            elif qs[0].user_preference == Preference.ADMIN:
+                return [IsAdmin()]
+            elif qs[0].user_preference == Preference.TEACHER:
+                return [IsTeacher()]
+        return [EmptyPermission()]
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                if UsersExam.objects.filter(user__exact=self.request.user).count() > 0:
+                    u_exam = UsersExam.objects.get(user__exact=self.request.user)
+                    exam = u_exam.exam
+                    _now = localtime(now())
+                    if exam.start <= _now <= exam.finish:
+                        return ReadingTest.objects.all()
+                    else:
+                        raise PermissionDenied
+                else:
+                    return ReadingTest.objects.none()
+            elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
+                return ReadingTest.objects.all()
+
+
+class TestQuestionReadingAPIView(generics.ListAPIView, generics.CreateAPIView):
+    lookup_field = 'pk'
+    serializer_class = TestQuestionReadingAPISerializer
+
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
