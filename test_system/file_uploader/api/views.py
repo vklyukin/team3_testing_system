@@ -17,6 +17,7 @@ from test_text.models import ReadingTest
 from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 
 
+BASE_PATH = 'http://localhost:5000/'
 questions = []
 
 
@@ -140,7 +141,7 @@ class KeysUploadView(APIView):
                     is_reading=question.is_reading,
                 )
 
-            return HttpResponseRedirect('http://localhost:5000/test_editor/')
+            return HttpResponseRedirect(BASE_PATH + 'test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -199,4 +200,4 @@ def redirect(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'file_upload.html', {})
     else:
-        return HttpResponseRedirect('http://localhost:5000/')
+        return HttpResponseRedirect(BASE_PATH + '')
