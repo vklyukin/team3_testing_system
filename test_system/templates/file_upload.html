@@ -12,7 +12,7 @@
             <iframe name="formDestination" hidden></iframe>
 
             <h5 class="m-0 font-weight-bold text-primary">Сюда прикрепите условия теста и нажмите Submit</h5>
-            <form id="file_load" action="http://localhost:5000/api/file_uploader/text/" target="formDestination" enctype="multipart/form-data" method="POST">
+            <form id="file_load" action="{% url 'api-file-uploader:file-text-upload' %}" target="formDestination" enctype="multipart/form-data" method="POST">
               {% csrf_token %}
               <div class="custom-file">
                 <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
@@ -23,7 +23,7 @@
 
 
             <h5 class="m-0 font-weight-bold text-primary">После этого прикрепите ключи к тесту и нажмите Submit</h5>
-            <form id="file_load" action="http://localhost:5000/api/file_uploader/keys/" enctype="multipart/form-data" method="POST">
+            <form id="file_load" action="{% url 'api-file-uploader:file-keys-upload' %}" enctype="multipart/form-data" method="POST">
               {% csrf_token %}
               <div class="custom-file">
                 <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
