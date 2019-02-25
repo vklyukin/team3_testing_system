@@ -12,6 +12,7 @@ class ExamSessionAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamSession
         fields = [
+            'pk',
             'start',
             'finish',
             'stream',
@@ -29,6 +30,7 @@ class ExamSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamSession
         fields = [
+            'pk',
             'start',
             'finish',
             'stream',
