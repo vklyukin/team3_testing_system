@@ -1,3 +1,4 @@
+const BASE_PATH = 'http://localhost:5000/';
 const Start = () => {
   const q_duration_div = document.getElementById('q_durr');
   const q_duration_container = document.getElementById('q_durr_cont');
@@ -32,7 +33,7 @@ const SendPost = () => {
   formData.append("answ_option4", q_answ_4);
   formData.append("duration", q_durr);
   formData.append("is_reading", q_reading);
-  fetch('http://localhost:5000/api/question/', {
+  fetch(BASE_PATH + 'api/question/', {
       method: "POST",
       credentials: "same-origin", //including cookie information
       headers: {
@@ -42,7 +43,7 @@ const SendPost = () => {
       body: JSON.stringify({number: q_number, text: q_text, answ_correct: selected, answ_option1: q_answ_1, answ_option2: q_answ_2, answ_option3: q_answ_3, answ_option4: q_answ_4, duration: q_durr, is_reading: q_reading,})
     }).then(function (response) {
       if(response.status === 201){
-        window.location.href = "http://localhost:5000/test_editor/";
+        window.location.href = BASE_PATH + 'test_editor/';
       }
     })
 };

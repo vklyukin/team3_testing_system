@@ -4,13 +4,15 @@ from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
 
+BASE_PATH = 'http://localhost:5000/'
+
 @login_required
 def redirect(request):
     qs = UserPreferences.objects.all()
     qs = qs.filter(Q(user=request.user))
     if qs[0].user_preference == Preference.ADMIN:
-        return HttpResponseRedirect('http://localhost:5000/admin/')
+        return HttpResponseRedirect(BASE_PATH + 'admin/')
     elif qs[0].user_preference == Preference.TEACHER:
-        return HttpResponseRedirect('http://localhost:5000/test_editor/')
+        return HttpResponseRedirect(BASE_PATH + 'test_editor/')
     else:
-        return HttpResponseRedirect('http://localhost:5000/')
+        return HttpResponseRedirect(BASE_PATH + '')
