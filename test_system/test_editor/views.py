@@ -5,6 +5,8 @@ from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
 from django.shortcuts import render
 
+BASE_PATH = 'http://localhost:5000/'
+
 @login_required
 def redirect(request):
     qs = UserPreferences.objects.all()
@@ -12,7 +14,7 @@ def redirect(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'test_editor.html', {})
     else:
-        return HttpResponseRedirect('http://localhost:5000/')
+        return HttpResponseRedirect(BASE_PATH + '')
 
 @login_required
 def redirect_add(request):
@@ -21,4 +23,4 @@ def redirect_add(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'add_question.html', {})
     else:
-        return HttpResponseRedirect('http://localhost:5000/')
+        return HttpResponseRedirect(BASE_PATH + '')
