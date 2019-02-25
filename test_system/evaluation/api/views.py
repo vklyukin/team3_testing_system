@@ -6,7 +6,6 @@ from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission
 from django.core.exceptions import PermissionDenied
 from evaluation.models import Mark, SpeakingLevel, TestLevel
 from mark_scaler.models import Scaler
-from mark_scaler.api.serializers import ScalerSerializer
 from student_answer.models import StudentAnswer
 from test_question.models import TestQuestion
 from django.http import HttpResponse
