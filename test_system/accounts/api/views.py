@@ -7,6 +7,7 @@ from .permissions import IsNotAuthenticated
 from user_pref.models import UserPreferences
 from user_pref.models import Preference
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 
 class UserCreate(CreateAPIView):
@@ -33,3 +34,6 @@ class UserCreate(CreateAPIView):
             return HttpResponseRedirect('http://localhost:5000/account/login/')
         else:
             return HttpResponseRedirect('http://localhost:5000/api/registration/signup/')
+
+def redirect(request):
+    return render(request, 'signup.html')
