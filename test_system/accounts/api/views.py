@@ -9,6 +9,7 @@ from user_pref.models import Preference
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
+BASE_PATH = 'http://localhost:5000/'
 
 class UserCreate(CreateAPIView):
     """
@@ -31,9 +32,9 @@ class UserCreate(CreateAPIView):
             del response['password']
             del response['first_name']
             del response['last_name']
-            return HttpResponseRedirect('http://localhost:5000/account/login/')
+            return HttpResponseRedirect(BASE_PATH + 'account/login/')
         else:
-            return HttpResponseRedirect('http://localhost:5000/api/registration/signup/')
+            return HttpResponseRedirect(BASE_PATH + 'api/registration/signup/')
 
 def redirect(request):
     return render(request, 'signup.html')
