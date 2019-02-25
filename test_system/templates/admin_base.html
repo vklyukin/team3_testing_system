@@ -30,13 +30,13 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-          <a class="nav-link" href="http://localhost:5000/test_editor/">
+          <a class="nav-link" href="{% url 'test-editor:redirect' %}">
             <i class="fas fa-fw fa-edit"></i>
             <span>Editor</span></a>
         </li>
 
         <li class="nav-item active">
-          <a class="nav-link" href="http://localhost:5000/test_upload/">
+          <a class="nav-link" href="{% url 'api-file-uploader:redirect' %}">
             <i class="fas fa-fw fa-upload"></i>
             <span>Upload</span></a>
         </li>

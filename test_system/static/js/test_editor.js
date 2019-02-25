@@ -1,10 +1,11 @@
+const BASE_PATH = 'http://localhost:5000/';
 history.pushState(null, null, location.href);
     window.onpopstate = function () {
         history.go(1);
     };
 
 const SendGet = () => { //function that get all questions from the server side
-  return fetch('http://localhost:5000/api/question/', { //fetch get request to get array of questions
+  return fetch(BASE_PATH + 'api/question/', { //fetch get request to get array of questions
     method: 'get'
   })
       .then(function (response) {
@@ -208,7 +209,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
     let selected = q_corr.options[q_corr.selectedIndex].value - 1; //getting question's correct answer
     let q_dur = document.getElementById('q_dur_' + q_pk);
     let q_reading = document.getElementById('q_reading_' + q_pk);
-    fetch('http://localhost:5000/api/question/' + q_pk + '/', { //sending fetch put request to add changed question to the Data Base
+    fetch(BASE_PATH + 'api/question/' + q_pk + '/', { //sending fetch put request to add changed question to the Data Base
         method: "PUT",
         credentials: "same-origin", //including cookie information
         headers: {
@@ -227,7 +228,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
 };
 
 const SendDelete = pk => {
-  fetch('http://localhost:5000/api/question/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
+  fetch(BASE_PATH + 'api/question/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
       method: "DELETE",
       credentials: "same-origin", //including cookie information
       headers: {
@@ -243,7 +244,7 @@ const SendDelete = pk => {
 };
 
 const AddQ = () => {
-  location.href = "http://localhost:5000/test_editor/add";
+  location.href = BASE_PATH + 'test_editor/add/';
 };
 
 //function that retutn cookie by its name, taken from django documentation
