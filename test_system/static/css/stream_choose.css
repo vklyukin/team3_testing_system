@@ -1,0 +1,165 @@
+body
+{
+    background: #4e73df;
+}
+
+
+.upbar 
+{
+    position: fixed;
+    width: 100%;
+    height: 8vh;
+    background: white;  
+    left: 0;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.28);
+}
+
+.list
+{
+    position: absolute;
+    width: 98%;
+    height: 87vh;
+    top: 10vh;
+    left: 1%;
+    background: white;
+    border-radius: 10px;
+    overflow-y: scroll;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.28);
+    font-size: 5vh;
+    text-align: center;
+    border-top-color: #4e73df;
+    border-top-width: 3px;
+    border-top-style: solid;
+    border-bottom-color: #4e73df;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
+    vertical-align: top;
+    
+}
+.header
+{
+    position: relative;
+    display: block;
+    width: 98%;
+    height: 7vh;
+    top: 0vh;
+    left: 1%;
+    background: none;
+    border-radius: 10px;
+    font-size: 4vh;
+    text-align: center;
+    margin-top: 5vh;
+    margin-bottom: 20vh;
+}
+
+.variant
+{
+    position: relative;
+    display:inline-block;
+    width: 200px;
+    height: 150px;
+    margin: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.28);
+    text-align: center;
+    border-color: #4e73df;
+    border-style: solid;
+    border-width: 4px;
+    transition: 0.05s;
+    vertical-align: top;
+}
+
+.variant:active
+{
+    height: 200px;
+}
+
+
+.choose
+{
+    position:absolute;
+    display: none;
+    width: 200px;
+    height: 50px;
+    margin: 0px;
+    background: white;
+    border-radius: 10px;
+    font-size: 20px;
+    text-align: center;
+    border-color: #4e73df;
+    border-style: solid;
+    border-width: 4px;
+    z-index: 10;
+    bottom: -4px;
+    left: -4px;
+}
+
+.textform
+{
+    position:absolute;
+    background: white;
+    border-radius: 10px;
+    width: 192px;
+    height: 142px;
+    left: 0px;
+    font-size: 20px;
+    padding-top: 1vh;
+}
+
+.user
+{
+    position:fixed;
+    display: inline-block;
+    width: auto;
+    height: 6vh;
+    right:1vh;
+    top:1vh;
+    background: white;
+}
+
+.userinfo
+{
+    text-align: right;
+    position:fixed;
+    display: inline-block;
+    right:7vh;
+    top:2.5vh;
+    width: 80%;
+    font-size: 2vh;
+    background: none;
+    background: white;
+}
+
+.userbox
+{
+    position: fixed;
+    background: white;
+    right:2vh;
+    width: 30%;
+    height:6vh;
+    top: 1vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 1%;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: white;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #4e73df;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #4e73df;
+}

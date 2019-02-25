@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/question/', include('test_question.api.urls', namespace='api-test-question')),
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
     path('api/file_uploader/', include('file_uploader.api.urls', namespace='api-file-uploader')),
-    path('test_upload/', TemplateView.as_view(template_name="file_upload.html")),
+    path('test_upload/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
     path('api/answer/', include('student_answer.api.urls', namespace='api-student-answer')),
     path('api/time/', include('api_time.urls', namespace='api-time')),
@@ -35,4 +35,5 @@ urlpatterns = [
     path('account/', include('account.urls', namespace='account')),
     path('api/registration/', include('accounts.api.urls', namespace='api-registration')),
     path('api/mark/', include('evaluation.api.urls', namespace='api-marks')),
+    path('stream_choose/', TemplateView.as_view(template_name="stream_choose.html")),
 ]
