@@ -22,17 +22,18 @@ body
     top: 10vh;
     left: 1%;
     background: white;
-    border-radius: 10px;
+    border-radius: 5px;
     overflow-y: scroll;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.28);
     font-size: 5vh;
     text-align: center;
-    border-top-color: #4e73df;
+    border-top-color: black;
     border-top-width: 3px;
     border-top-style: solid;
-    border-bottom-color: #4e73df;
+    border-bottom-color: black;
     border-bottom-width: 3px;
     border-bottom-style: solid;
+    border:none;
     vertical-align: top;
     
 }
@@ -143,20 +144,18 @@ body
 
 /* width */
 ::-webkit-scrollbar {
-    width: 1%;
+    width: 3px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: white;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    background: none;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #4e73df;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
