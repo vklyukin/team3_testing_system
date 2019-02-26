@@ -75,7 +75,7 @@ python3 manage.py runserver
 > For the testing interface you should go to
 
 ```
-<base_url>/front_test/test/
+<base_url>/test_system/test/
 ```
 
 > For the teacher interface you should go to
