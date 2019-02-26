@@ -1,11 +1,29 @@
 {% extends 'admin_base.html' %}
 {% block content %}
 {% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/file_upload.css' %}">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can upload test conditions and keys to the system</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-lg-12">
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h3 class="m-0 font-weight-bold text-primary">Attach test conditions and click Submit.</h3>
+        <h3 class="m-0 font-weight-bold text-primary">Attach test conditions and click Submit</h3>
       </div>
       <div class="card-body">
         <iframe name="formDestination" hidden></iframe>
@@ -15,7 +33,7 @@
             <input name="file" type="file" class="custom-file-input" id="test_file" accept=".doc">
             <label id="file_l" class="custom-file-label" for="validatedCustomFile">Choose file...</label>
           </div>
-          <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
+          <button type="submit" class="btn btn-outline-primary" id="sub_but1" style="display: none;">Submit</button>
         </form>
       </div>
     </div>
@@ -25,7 +43,7 @@
   <div class="col-lg-12">
     <div class="card shadow mb-4">
       <div class="card-header py-3">
-        <h3 class="m-0 font-weight-bold text-primary">After that, attach the keys to the test and click Submit.</h3>
+        <h3 class="m-0 font-weight-bold text-primary">After that, attach the keys to the test and click Submit</h3>
       </div>
       <div class="card-body">
         <form id="file_load" action="{% url 'api-file-uploader:file-keys-upload' %}" enctype="multipart/form-data" method="POST">
@@ -34,7 +52,7 @@
             <input name="file" type="file" class="custom-file-input" id="test_keys" accept=".doc">
             <label id="keys_l" class="custom-file-label" for="validatedCustomFile">Choose file...</label>
           </div>
-          <button type="submit" class="btn btn-outline-primary" id="sub_but">Submit</button>
+          <button type="submit" class="btn btn-outline-primary" id="sub_but2" style="display: none;">Submit</button>
         </form>
       </div>
     </div>
