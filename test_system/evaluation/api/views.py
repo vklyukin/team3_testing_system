@@ -9,6 +9,7 @@ from mark_scaler.models import Scaler
 from student_answer.models import StudentAnswer
 from test_question.models import TestQuestion
 from django.http import HttpResponse
+from rest_framework.response import Response
 
 
 class MarkAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -107,16 +108,16 @@ class CountMarksView(generics.ListAPIView):
         return [EmptyPermission()]
 
     @staticmethod
-    def evaluate(mark):
+    def evaluate(test_mark, mark):
         bounds = Scaler.objects.all()
         for bound in bounds:
-            if bound.lower <= mark.test_mark <= bound.upper:
+            if bound.lower <= test_mark <= bound.upper:
                 Mark.objects.filter(pk=mark.pk).update(test_level=TestLevel.get_enum(bound.level))
                 return TestLevel.get_value(bound.level)
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            pref = UserPreferences.objects.filter(user=self.request.user)
+            pref = UserPreferences.objects.get(user=self.request.user)
             if pref.user_preference == Preference.STUDENT:
                 raise PermissionDenied
             elif pref.user_preference == Preference.TEACHER or pref.user_preference == Preference.ADMIN:
@@ -126,13 +127,15 @@ class CountMarksView(generics.ListAPIView):
                         answers = StudentAnswer.objects.filter(user=mark.user)
                         count = 0
                         for ans in answers:
-                            question = TestQuestion.objects.get(pk=ans.question)
+                            question = TestQuestion.objects.get(pk=ans.question.pk)
                             if question.answ_correct == ans.answer:
                                 count += 1
                         Mark.objects.filter(pk=mark.pk).update(test_mark=count)
+                        sp_mark = 1
+                        t_mark = self.evaluate(count, mark)
                         if mark.speaking_mark:
                             sp_mark = SpeakingLevel.get_value(mark.speaking_mark)
-                            t_mark = self.evaluate(mark)
-                            Mark.objects.filter(pk=mark.pk).update(TestLevel.rev_vals()[int(sp_mark + t_mark)])
-                except Exception:
-                    return HttpResponse('Unknown error', status=520)
+                        Mark.objects.filter(pk=mark.pk).update(level=TestLevel.rev_vals()[int(sp_mark + t_mark)])
+                    return Mark.objects.all()
+                except AttributeError:
+                    return HttpResponse('Unknown error', status=500)
