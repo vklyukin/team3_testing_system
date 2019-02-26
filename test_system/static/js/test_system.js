@@ -93,18 +93,18 @@ function get_task(num) {
 }
 
 function get_text() {
-    return (JSON.parse(get(BASE_PATH + 'api/question/text/1/')))["text"];
+    return (JSON.parse(get(BASE_PATH + 'api/question/text/')))[0]["text"];
 }
 
 function is_reading(task) {
     if (task["is_reading"] === true) {
-        document.getElementById("reading").textContent = get_text();
+        document.getElementById("reading").innerHTML = get_text();
         document.getElementById("reading").style.fontSize = "2vh";
         document.getElementById("textbu").style.display = "inline";
         document.getElementById("endbu").style.width = "40%";
         document.getElementById("endbu").style.right = "5%";
     } else {
-        document.getElementById("reading").textContent = get_text();
+        document.getElementById("reading").innerHTML  = get_text();
         document.getElementById("reading").style.fontSize = "2vh";
         document.getElementById("textbu").style.display = "none";
         document.getElementById("endbu").style.width = "40%";
@@ -186,7 +186,6 @@ function fill_question_form(json) {
     document.getElementById("third").innerHTML = json["answ_option3"];
     document.getElementById("fourth").innerHTML = json["answ_option4"];
     document.getElementById("tmb").style.background = "#4e73df";
-    // k++;
 }
 
 function start_timer(sectime) {
@@ -205,6 +204,8 @@ function start_timer(sectime) {
 }
 
 function stop_timer() {
+    let g = new answer(curent["pk"], curent["number"], anser, curent["user"], curent["question"], curent["time_started"]);
+    send_answer(JSON.stringify(g));
     endtime = true;
     stop = true;
 }
@@ -509,4 +510,3 @@ function initialization() {
     }
     document.getElementById("clear").style.zIndex = 0;
 }
-
