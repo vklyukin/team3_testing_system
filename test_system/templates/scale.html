@@ -1,0 +1,140 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/scale.css' %}">
+<script type="text/javascript" src="{% static 'js/bootstrap-validate.js' %}"></script>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h3 class="m-0 font-weight-bold text-primary">Grading scale</h3>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-borderless">
+        <tbody>
+          <tr>
+            <td class="right"><h2>Beginner:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_B_l" value=0 readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_B_l', 'regex:^[0-9]+$:Only positive numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_B_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_B_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="right"><h2>Elementary:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_E_l" value="0" readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_E_l', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_E_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_E_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="right"><h2>Pre - Intermediate:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_PI_l" value="0" readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_PI_l', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_PI_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_PI_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="right"><h2>Intermediate:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_I_l" value="0" readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_I_l', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_I_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_I_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="right"><h2>Upper - Intermediate:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_UI_l" value="0" readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_UI_l', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_UI_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_UI_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="right"><h2>Advanced:</h2></td>
+            <td></td>
+            <td class="center">
+              <input type="text" class="form-control" id="scale_A_l" value="0" readonly>
+              <script type="text/javascript">
+                bootstrapValidate('#scale_A_l', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+            <td class="center">
+              <h2> - </h2>
+            </td>
+            <td class="center">
+              <input type="number" class="form-control" id="scale_A_h" min="0" value="0">
+              <script type="text/javascript">
+                bootstrapValidate('#scale_A_h', 'regex:^[0-9]+$:Only numbers')
+              </script>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-outline-primary" type="submit" name="button" onclick="Send()">Submit</button>
+</div>
+
+<script type="text/javascript" src="{% static 'js/scale.js' %}"></script>
+{% endblock %}
