@@ -433,21 +433,22 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-    width: 1%;
+    width: 3px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f8f9fc;
+    background: none;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: #4e73df;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #4e73df;
 }
+

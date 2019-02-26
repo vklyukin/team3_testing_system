@@ -85,7 +85,7 @@ class TextUploadView(APIView):
                         questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
-                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.<\p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .<\p>", "").replace("<p>.<\p>", ""),
+                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.</p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace("<p>.</p>", ""),
                         time_recommended=timedelta(minutes=20),
                     )
 
