@@ -16,14 +16,12 @@ from django.shortcuts import render
 from test_text.models import ReadingTest
 from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 
-
 BASE_PATH = 'http://localhost:5000/'
 questions = []
 
 
 class TextUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -35,7 +33,6 @@ class TextUploadView(APIView):
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         return [IsTeacherOrAdmin()]
-
 
     def post(self, request, *args, **kwargs):
         # I'll refactor this later
@@ -85,10 +82,11 @@ class TextUploadView(APIView):
                         questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
-                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.<\p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .<\p>", "").replace("<p>.<\p>", ""),
+                        text=''.join(map(lambda x: '<p>' + x.replace("\n", " ") + '.</p>',
+                                         re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace(
+                            "<p>.</p>", ""),
                         time_recommended=timedelta(minutes=20),
                     )
-
 
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
         else:
@@ -97,7 +95,6 @@ class TextUploadView(APIView):
 
 class KeysUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -109,7 +106,6 @@ class KeysUploadView(APIView):
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         return [IsTeacherOrAdmin()]
-
 
     def post(self, request, *args, **kwargs):
         global questions
@@ -126,7 +122,7 @@ class KeysUploadView(APIView):
                     if re.match(r'\(\d+\) [a-d]', line):
                         questions[
                             int(re.findall(r'\d+', line)[0]) - 1
-                        ].answ_correct = re.findall(r'[a-d]', line)[0]
+                            ].answ_correct = re.findall(r'[a-d]', line)[0]
             TestQuestion.objects.all().delete()
             for question in questions:
                 TestQuestion.objects.create(
@@ -192,6 +188,7 @@ def load_test(fi) -> tuple:
     reading = test[test.lower().find("read the text below"):test.find("(21)")]
     test = test.replace(reading, "")
     return test, reading
+
 
 @login_required
 def redirect(request):
