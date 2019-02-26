@@ -36,4 +36,5 @@ urlpatterns = [
     path('api/registration/', include('accounts.api.urls', namespace='api-registration')),
     path('api/mark/', include('evaluation.api.urls', namespace='api-marks')),
     path('stream_choose/', TemplateView.as_view(template_name="stream_choose.html")),
+    path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
 ]

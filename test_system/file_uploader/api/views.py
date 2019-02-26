@@ -127,7 +127,7 @@ class KeysUploadView(APIView):
                         questions[
                             int(re.findall(r'\d+', line)[0]) - 1
                         ].answ_correct = re.findall(r'[a-d]', line)[0]
-
+            TestQuestion.objects.all().delete()
             for question in questions:
                 TestQuestion.objects.create(
                     number=question.number,
