@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 BASE_PATH = 'http://localhost:5000/'
 
+
 class UserCreate(CreateAPIView):
     """
     Creates the user.
@@ -26,8 +27,8 @@ class UserCreate(CreateAPIView):
             user = serialized.save()
             response = serialized.data
             UserPreferences.objects.create(
-                user = user,
-                user_preference = Preference.STUDENT,
+                user=user,
+                user_preference=Preference.STUDENT.name
             )
             del response['password']
             del response['first_name']
@@ -35,6 +36,7 @@ class UserCreate(CreateAPIView):
             return HttpResponseRedirect(BASE_PATH + 'account/login/')
         else:
             return HttpResponseRedirect(BASE_PATH + 'api/registration/signup/')
+
 
 def redirect(request):
     return render(request, 'signup.html')
