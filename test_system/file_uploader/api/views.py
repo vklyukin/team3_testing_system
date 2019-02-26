@@ -195,9 +195,8 @@ def load_test(fi) -> tuple:
 
 @login_required
 def redirect(request):
-    qs = UserPreferences.objects.all()
-    qs = qs.filter(Q(user=request.user))
+    qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'file_upload.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + '')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/')
