@@ -79,8 +79,9 @@ class SpeakingLevel(Enum):
 
     @staticmethod
     def vals():
-        return {'A1p': 1, 'A2p': 2, 'B1p': 3, 'B2p': 4, 'C1p': 5, 'C2p': 6, 'A1m': 0.5, 'A2m': 1.5, 'B1m': 2.5,
-                'B2m': 3.5, 'C1m': 4.5, 'C2m': 5.5}
+        return {'SpeakingLevel.A1p': 1, 'SpeakingLevel.A2p': 2, 'SpeakingLevel.B1p': 3, 'SpeakingLevel.B2p': 4,
+                'SpeakingLevel.C1p': 5, 'SpeakingLevel.C2p': 6, 'SpeakingLevel.A1m': 0.5, 'SpeakingLevel.A2m': 1.5,
+                'SpeakingLevel.B1m': 2.5, 'SpeakingLevel.B2m': 3.5, 'SpeakingLevel.C1m': 4.5, 'SpeakingLevel.C2m': 5.5}
 
     def __ge__(self, other):
         if self.__class__ is other.__class__:
@@ -111,14 +112,14 @@ class SpeakingLevel(Enum):
 
 
 class Mark(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     test_mark = models.IntegerField(default=0)
     test_level = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in TestLevel],
         default=TestLevel.A1)
     removed = models.BooleanField(default=False)
-    speaking = models.ForeignKey(TeacherSpeaking, on_delete=models.CASCADE)
+    speaking = models.ForeignKey(TeacherSpeaking, on_delete=models.CASCADE, null=True, blank=True)
     speaking_mark = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in SpeakingLevel],

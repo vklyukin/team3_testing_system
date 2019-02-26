@@ -16,14 +16,12 @@ from django.shortcuts import render
 from test_text.models import ReadingTest
 from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 
-
 BASE_PATH = 'http://localhost:5000/'
 questions = []
 
 
 class TextUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -35,7 +33,6 @@ class TextUploadView(APIView):
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         return [IsTeacherOrAdmin()]
-
 
     def post(self, request, *args, **kwargs):
         # I'll refactor this later
@@ -89,7 +86,6 @@ class TextUploadView(APIView):
                         time_recommended=timedelta(minutes=20),
                     )
 
-
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -97,7 +93,6 @@ class TextUploadView(APIView):
 
 class KeysUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
-
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -109,7 +104,6 @@ class KeysUploadView(APIView):
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         return [IsTeacherOrAdmin()]
-
 
     def post(self, request, *args, **kwargs):
         global questions
@@ -126,8 +120,8 @@ class KeysUploadView(APIView):
                     if re.match(r'\(\d+\) [a-d]', line):
                         questions[
                             int(re.findall(r'\d+', line)[0]) - 1
-                        ].answ_correct = re.findall(r'[a-d]', line)[0]
-
+                            ].answ_correct = re.findall(r'[a-d]', line)[0]
+            TestQuestion.objects.all().delete()
             for question in questions:
                 TestQuestion.objects.create(
                     number=question.number,
@@ -193,11 +187,11 @@ def load_test(fi) -> tuple:
     test = test.replace(reading, "")
     return test, reading
 
+
 @login_required
 def redirect(request):
-    qs = UserPreferences.objects.all()
-    qs = qs.filter(Q(user=request.user))
+    qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'file_upload.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + '')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
