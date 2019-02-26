@@ -1,10 +1,11 @@
 from rest_framework import generics
-from .serializers import ExamSessionAPISerializer, ExamSessionSerializer
+from .serializers import ExamSessionAPISerializer, ExamSessionSerializer, ExamSessionStudentAPISerializer
 from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
 from exam.models import ExamSession
 from rest_framework.response import Response
+from user_major.models import Major, UserMajor
 from rest_framework import status
 
 
@@ -12,7 +13,15 @@ class ExamSessionAPIView(generics.ListAPIView, generics.CreateAPIView):
     lookup_field = 'pk'
 
     def get_serializer_class(self):
-        return ExamSessionAPISerializer
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0].user_preference == Preference.STUDENT:
+                return ExamSessionStudentAPISerializer
+            elif pref[0].user_preference == Preference.ADMIN or \
+                    pref[0].user_preference == Preference.TEACHER:
+                return ExamSessionAPISerializer
+        else:
+            return ExamSessionStudentAPISerializer
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -26,7 +35,15 @@ class ExamSessionAPIView(generics.ListAPIView, generics.CreateAPIView):
         return [IsTeacherOrAdmin()]
 
     def get_queryset(self):
-        return ExamSession.objects.all()
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0].user_preference == Preference.STUDENT:
+                major = UserMajor.objects.filter(user=self.request.user)
+                return ExamSession.objects.filter(major=major[0].user_major)
+            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
+                return ExamSession.objects.all()
+            else:
+                return ExamSession.objects.none()
 
     def create(self, request, *args, **kwargs):
         serialized = ExamSessionAPISerializer(data=request.data)
@@ -56,4 +73,12 @@ class ExamSessionRUDView(generics.RetrieveUpdateDestroyAPIView):
         return [IsStudentOrNotAuth()]
 
     def get_queryset(self):
-        return ExamSession.objects.all()
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0].user_preference == Preference.STUDENT:
+                major = UserMajor.objects.filter(user=self.request.user)
+                return ExamSession.objects.filter(major=major[0].user_major)
+            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
+                return ExamSession.objects.all()
+            else:
+                return ExamSession.objects.none()
