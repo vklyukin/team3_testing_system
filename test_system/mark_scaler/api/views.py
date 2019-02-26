@@ -60,4 +60,4 @@ def redirect(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'scale.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + 'stream_choose/')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
