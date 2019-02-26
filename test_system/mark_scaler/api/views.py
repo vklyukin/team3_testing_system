@@ -3,6 +3,12 @@ from mark_scaler.models import Scaler
 from user_pref.models import UserPreferences, Preference
 from .permissions import EmptyPermission, IsTeacherOrAdmin
 from .serializers import ScalerSerializer
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+
+
+BASE_PATH = 'http://localhost:5000/'
 
 
 class ScalerAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -47,3 +53,11 @@ class ScalerRudView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         if self.request.user.is_authenticated:
             return Scaler.objects.all()
+
+@login_required
+def redirect(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'scale.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/')
