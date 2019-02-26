@@ -44,21 +44,50 @@ function parseinfo(txt1,txt2,stream)
     text=text+time[0]+":"+time[1];
     return text;
 }
+
+
+function checkstreamtime(stream) {
+    let cur = JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let tst = stream["finish"];
+    let cdatetime=cur.split("T");
+    let cdate=cdatetime[0].split("-");
+    let cdatetime2=cdatetime[1].split("+");
+    let ctime=cdatetime2[0].split(":");
+
+    let tdatetime=tst.split("T");
+    let tdate=tdatetime[0].split("-");
+    let tdatetime2=tdatetime[1].split("+");
+    let ttime=tdatetime2[0].split(":");
+
+    if ((+cdate[0])<(+tdate[0])||((+cdate[1])<(+tdate[1])&&(+cdate[0])<=(+tdate[0]))||((+cdate[2])<(+tdate[2])&&(+cdate[1])<=(+tdate[1])&&(+cdate[0])<=(+tdate[0])))
+    {
+        return true;
+    }
+    else   if ((+cdate[0])===(+tdate[0])&&(+cdate[1])===(+tdate[1])&&(+cdate[2])===(+tdate[2]))
+    {
+       if((+ctime[0])*3600+(+ctime[1])*60+(+ctime[2])-(+ttime[0])*3600-(+ttime[1])*60-(+ttime[2])<0)
+       return true;
+    }
+    else return false;
+}
+
+
 function test()
 {
     mas=getinfo();
     for(i=0;i<mas.length;i++)
     {
-    let text=parseinfo(mas[i]["start"],mas[i]["finish"],mas[i]["stream"]);   
+    if(checkstreamtime(mas[i])){
+    let text=parseinfo(mas[i]["start"],mas[i]["finish"],mas[i]["stream"]);
     let obj=document.createElement("div");
     obj.setAttribute("class","variant");
     obj.setAttribute("id","var"+i);
-    
+
     let objtext=document.createElement("div");
-    objtext.setAttribute("class","textform"); 
-    objtext.innerHTML=text;  
+    objtext.setAttribute("class","textform");
+    objtext.innerHTML=text;
     //objtext.style.background="white";
-        
+
     let objin=document.createElement("button");
     objin.style.color="#858796";
     objin.setAttribute("class","choose");
@@ -69,19 +98,19 @@ function test()
        sendchoose(this.id);
     }
     obj.appendChild(objtext);
-    obj.appendChild(objin);  
-    
+    obj.appendChild(objin);
+
     obj.onclick=function()
     {
         if(this.style.height==="200px") {
             document.getElementById(this.id+"btn").style.display="none";
             this.style.height="150px";
         }
-        else 
+        else
         {
             this.style.height="200px";
          document.getElementById(this.id+"btn").style.display="inline-block";
-         
+
          for(j=0;j<mas.length;j++)
          {
             if(+(this.id).substring(3)!==j)
@@ -91,9 +120,10 @@ function test()
             }
          }
         }
-    }  
-    
+    }
+
     document.getElementById("tst").appendChild(obj);
+    }
     }
 }
 
@@ -112,7 +142,7 @@ const getCookie = name => {
     }
     return cookieValue;
 };
-    
+
 function sendchoose(id)
 {
     id=id.substr(0, id.length - 3);
