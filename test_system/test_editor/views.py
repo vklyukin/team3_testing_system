@@ -12,7 +12,7 @@ def redirect(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'test_editor.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + '')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
 
 @login_required
 def redirect_add(request):
@@ -20,4 +20,4 @@ def redirect_add(request):
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'add_question.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + 'stream_choose/')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
