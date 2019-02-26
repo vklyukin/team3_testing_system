@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'file_uploader',
     'mark_scaler',
     'evaluation',
-    'speaking_queue'
+    'speaking_queue',
+    'user_major',
 ]
 
 MIDDLEWARE = [
