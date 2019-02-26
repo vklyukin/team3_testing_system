@@ -1,3 +1,5 @@
+const but = document.getElementById('sub_but1');
+
 history.pushState(null, null, location.href);
     window.onpopstate = function () {
         history.go(1);
@@ -20,6 +22,7 @@ input_f.addEventListener('change', updateLabelF);
 input_k.addEventListener('change', updateLabelK);
 
 const PreSubmit = () => {
+  but.style.display = "none";
   const div = document.getElementById('second_stage');
   div.style.display = "block";
 };
