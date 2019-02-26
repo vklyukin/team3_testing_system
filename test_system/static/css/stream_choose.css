@@ -162,3 +162,23 @@ body
 ::-webkit-scrollbar-thumb:hover {
     background: #4e73df;
 }
+
+.spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    top:0vh;
+    margin: auto;
+    border: 2px solid rgba(0,0,0,0.5);
+    border-top-color: transparent;
+    border-radius: 100%;
+
+    animation: spin 1s infinite linear;
+ }
+ 
+
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
