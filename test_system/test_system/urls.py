@@ -34,7 +34,8 @@ urlpatterns = [
     path('front_test/', TemplateView.as_view(template_name="test_system.html")),
     path('account/', include('account.urls', namespace='account')),
     path('api/registration/', include('accounts.api.urls', namespace='api-registration')),
-    path('scale/', TemplateView.as_view(template_name="scale.html")),
+    path('scale/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('api/mark/', include('evaluation.api.urls', namespace='api-marks')),
     path('stream_choose/', TemplateView.as_view(template_name="stream_choose.html")),
+    path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
 ]
