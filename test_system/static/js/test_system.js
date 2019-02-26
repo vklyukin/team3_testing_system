@@ -1,10 +1,11 @@
+const BASE_PATH = 'http://localhost:5000/';
 let user;
 let orderrow;
 let procesed;
 let notime;
 let count = 0;
 let anser = -1;
-let k=0;
+let k = 0;
 let stop = false;
 let have_unused_time = false;
 let current_task;
@@ -80,19 +81,19 @@ function sortByKey(array, key) {
 }
 
 function get_answers() {
-    return sortByKey(JSON.parse(get("http://localhost:5000/api/answer/")), "number");
+    return sortByKey(JSON.parse(get(BASE_PATH + 'api/answer/')), "number");
 }
 
 function get_answer(num) {
-    return JSON.parse(get("http://localhost:5000/api/answer/" + num + "/"));
+    return JSON.parse(get(BASE_PATH + 'api/answer/' + num + "/"));
 }
 
 function get_task(num) {
-    return JSON.parse(get("http://localhost:5000/api/question/" + num + "/"));
+    return JSON.parse(get(BASE_PATH + 'api/question/' + num + "/"));
 }
 
 function get_text() {
-    return (JSON.parse(get("http://localhost:5000/api/question/text/")))[0]["text"];
+    return (JSON.parse(get(BASE_PATH + 'api/question/text/')))[0]["text"];
 }
 
 function is_reading(task) {
@@ -112,7 +113,7 @@ function is_reading(task) {
 }
 
 function send_answer(json) {
-    put("http://localhost:5000/api/answer/" + (JSON.parse(json)["pk"]) + "/", json);
+    put(BASE_PATH + 'api/answer/' + (JSON.parse(json)["pk"]) + "/", json);
 }
 
 function set_font_sizes(current_task) {
@@ -178,7 +179,7 @@ function set_font_sizes(current_task) {
 
 function fill_question_form(json) {
     set_font_sizes(json);
-    document.getElementById("num").innerHTML = "Task № " + (count+1);
+    document.getElementById("num").innerHTML = "Task № " + (count + 1);
     document.getElementById("txt").innerHTML = json["text"];
     document.getElementById("first").innerHTML = json["answ_option1"];
     document.getElementById("second").innerHTML = json["answ_option2"];
@@ -211,7 +212,7 @@ function stop_timer() {
 
 
 function timer_work_mode(seconds, maxseconds, number) {
-    if (number == curent) {
+    if (number === curent) {
         if (seconds > 0) {
             houres = (seconds - seconds % 3600) / 3600;
             minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
@@ -244,25 +245,25 @@ function timer_work_mode(seconds, maxseconds, number) {
 function select(num) {
     if (!procesed) {
         procesed = true;
-        if (num == 0 && !stop) {
+        if (num === 0 && !stop) {
             document.getElementById("anszero").className = "anserr";
             document.getElementById("ansone").className = "anser";
             document.getElementById("anstwo").className = "anser";
             document.getElementById("ansthre").className = "anser";
             anser = 0;
-        } else if (num == 1 && !stop) {
+        } else if (num === 1 && !stop) {
             document.getElementById("anszero").className = "anser";
             document.getElementById("ansone").className = "anserr";
             document.getElementById("anstwo").className = "anser";
             document.getElementById("ansthre").className = "anser";
             anser = 1;
-        } else if (num == 2 && !stop) {
+        } else if (num === 2 && !stop) {
             document.getElementById("anszero").className = "anser";
             document.getElementById("ansone").className = "anser";
             document.getElementById("anstwo").className = "anserr";
             document.getElementById("ansthre").className = "anser";
             anser = 2;
-        } else if (num == 3 && !stop) {
+        } else if (num === 3 && !stop) {
 
             document.getElementById("anszero").className = "anser";
             document.getElementById("ansone").className = "anser";
@@ -358,7 +359,7 @@ function onqsnsmenuswitch() {
 }
 
 function gettime(ans, tsk) {
-    let str = JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let str = JSON.parse(get(BASE_PATH + 'api/time/'))["time"]
     let mas = str.split(':');
     let houres = (+mas[0].substring(mas[0].length - 2, mas[0].length));
     let minutes = (+mas[1]);
@@ -381,7 +382,7 @@ function gettime(ans, tsk) {
 }
 
 function stillhavetime(ans, tsk) {
-    let str = JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let str = JSON.parse(get(BASE_PATH + 'api/time/'))["time"];
     let mas = str.split(':');
     let houres = (+mas[0].substring(mas[0].length - 2, mas[0].length));
     let minutes = (+mas[1]);
@@ -427,7 +428,9 @@ function findstop() {
     }
     if (have_unused_time) i--;
     if (i === 0 && orderrow[i]["time_started"] == null) return -1;
-    if (i === 0 && orderrow[i]["time_started"] != null) {return i;}
+    if (i === 0 && orderrow[i]["time_started"] != null) {
+        return i;
+    }
     if (i === orderrow.length) {
 
         let ans = get_answer(+orderrow[i - 1]["pk"]);
@@ -435,7 +438,7 @@ function findstop() {
         if (orderrow[i - 1]["time_started"] == null) {
             return i - 1;
         }
-        if (gettime(ans, tsk) && ans["answer"] !== 0 && ans["answer"] !==1 && ans["answer"] !==2 && ans["answer"] !== 3) {
+        if (gettime(ans, tsk) && ans["answer"] !== 0 && ans["answer"] !== 1 && ans["answer"] !== 2 && ans["answer"] !== 3) {
             have_unused_time = true;
             return i - 1;
         } else {
@@ -451,7 +454,7 @@ function findstop() {
 }
 
 function endsession() {
-    alert("End Session");
+    //
 }
 
 function startsession() {
@@ -507,4 +510,3 @@ function initialization() {
     }
     document.getElementById("clear").style.zIndex = 0;
 }
-
