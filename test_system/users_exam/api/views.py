@@ -38,7 +38,8 @@ class UsersExamAPIView(generics.ListAPIView, generics.CreateAPIView):
                 return UsersExam.objects.all()
 
     def create(self, request, *args, **kwargs):
-        serialized = UsersExamAPISerializer(data=request.data)
+        serialized = UsersExamAPISerializer(data=request.data, context={'request': request})
+        print(serialized.is_valid())
         if serialized.is_valid():
             users_exam = serialized.save()
             response = serialized.data

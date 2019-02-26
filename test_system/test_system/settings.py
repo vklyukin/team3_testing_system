@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     'users_exam',
     'test_text',
     'file_uploader',
+    'mark_scaler',
+    'evaluation',
+    'speaking_queue'
 ]
 
 MIDDLEWARE = [
