@@ -31,10 +31,11 @@ urlpatterns = [
     path('api/time/', include('api_time.urls', namespace='api-time')),
     path('api/exam/', include('exam.api.urls', namespace='api-exam')),
     path('api/user-exam/', include('users_exam.api.urls', namespace='api-user-exam')),
-    path('front_test/', TemplateView.as_view(template_name="test_system.html")),
+    path('front_test/', include('student_answer.api.urls', namespace='api-student-answer')),
     path('account/', include('account.urls', namespace='account')),
     path('api/registration/', include('accounts.api.urls', namespace='api-registration')),
+    path('scale/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('api/mark/', include('evaluation.api.urls', namespace='api-marks')),
-    path('stream_choose/', TemplateView.as_view(template_name="stream_choose.html")),
+    path('stream_choose/', include('users_exam.api.urls', namespace='api-user-exam')),
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
 ]
