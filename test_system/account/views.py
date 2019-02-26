@@ -5,6 +5,7 @@ from user_pref.models import UserPreferences, Preference
 
 BASE_PATH = 'http://localhost:5000/'
 
+
 @login_required
 def redirect(request):
     qs = UserPreferences.objects.filter(user=request.user)
@@ -13,4 +14,4 @@ def redirect(request):
     elif qs[0].user_preference == Preference.TEACHER:
         return HttpResponseRedirect(BASE_PATH + 'test_editor/')
     else:
-        return HttpResponseRedirect(BASE_PATH + 'stream_choose/')
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')

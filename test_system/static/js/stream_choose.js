@@ -1,3 +1,4 @@
+const BASE_PATH = 'http://localhost:5000/';
 let mas=[];
 
 class exam {
@@ -23,12 +24,7 @@ function post(path,json) {
 
 function getinfo()
 {
-    return JSON.parse(get("http://localhost:5000/api/exam/"));
-}
-
-function sendinfo()
-{
-    //
+    return JSON.parse(get(BASE_PATH + 'api/exam/'));
 }
 
 
@@ -101,21 +97,6 @@ function test()
     }
 }
 
-/*
-function post(path) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', path, false);
-    xhr.send();
-    return xhr.response;
-}
-
-
-function getinfo()
-{
-    return JSON.parse(get("http://localhost:5000/api/exam/"));
-}
-*/
-
 
 const getCookie = name => {
     let cookieValue = null;
@@ -131,30 +112,25 @@ const getCookie = name => {
     }
     return cookieValue;
 };
-function put(path, json) {
-    fetch(path, {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-            "Accept": "application/json",
-            'Content-Type': 'application/json'
-        },
-        body: json
-    })
-}
     
 function sendchoose(id)
 {
     id=id.substr(0, id.length - 3);
     id=id.substr(3, id.length);
     let jsn=JSON.stringify(new exam(mas[id]["pk"]));
-    alert(jsn);
-    put("http://localhost:5000/api/user-exam/",jsn);
-    alert("sended");
-    alert("nextpage");
+    fetch(BASE_PATH + 'api/user-exam/', { //sending fetch put request to add changed question to the Data Base
+        method: "POST",
+        credentials: "same-origin", //including cookie information
+        headers: {
+          "X-CSRFToken": getCookie("csrftoken"), //token to check user validation
+          "Accept": "application/json",
+          'Content-Type': 'application/json'
+        },
+        //making json from data that was piked on the lines above
+        body: jsn
+      }).then(function (response) {
+        if(response.status === 201){
+            window.location.href = BASE_PATH + 'test_system/test/'
+        }
+      })
 }
-
-/*
-        <div class="userinfo">PesSobachij&nbsp;<p><img src="{% static 'img/profile.png' %}" alt="user" class="user"></p></div>
-*/
