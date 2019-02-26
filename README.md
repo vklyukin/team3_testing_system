@@ -5,6 +5,7 @@
 
 - [Main](#main)
 - [Getting started](#getting-started)
+- [Usage](#usage)
 - [Browser support](#browser-support)
 
 ## Main
@@ -57,6 +58,42 @@ DEBUG = True
 
 ```shell
 python3 manage.py runserver
+```
+
+[⬆ Back to top](#table-of-contents)
+
+## Usage
+
+##### *Here is short description of how to use this testing system*
+
+> For the admin interface you should go to
+
+```
+<base_url>/admin
+```
+
+> For the testing interface you should go to
+
+```
+<base_url>/front_test/test/
+```
+
+> For the teacher interface you should go to
+
+```
+<base_url>/test_editor/
+```
+
+> For the file upload interface you should go to
+
+```
+<base_url>/test_upload/
+```
+
+> For the grade scaling interface you should go to
+
+```
+<base_url>/scale/edit/
 ```
 
 [⬆ Back to top](#table-of-contents)

@@ -4,7 +4,12 @@ from .serializers import StudentAnswerSerializer, StudentAnswerSerializerEmpty, 
 from django.db.models import Q
 from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission, IsStudentWithPut
 from user_pref.models import UserPreferences, Preference
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
+
+BASE_PATH = 'http://localhost:5000/'
 
 class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
     lookup_field = 'pk'
@@ -78,3 +83,11 @@ class StudentAnswerRudView(generics.RetrieveUpdateDestroyAPIView):
             elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
                 sa = StudentAnswer.objects.all()
                 return sa
+
+@login_required
+def redirect(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.STUDENT:
+        return render(request, 'test_system.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'test_editor/')

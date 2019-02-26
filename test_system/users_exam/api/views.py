@@ -6,6 +6,12 @@ from django.db.models import Q
 from users_exam.models import UsersExam
 from rest_framework.response import Response
 from rest_framework import status
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+
+
+BASE_PATH = 'http://localhost:5000/'
 
 
 class UsersExamAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -77,3 +83,11 @@ class UsersExamRUDView(generics.RetrieveUpdateDestroyAPIView):
             elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
                 sa = UsersExam.objects.all()
                 return sa
+
+@login_required
+def redirect(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.STUDENT:
+        return render(request, 'stream_choose.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'test_editor/')
