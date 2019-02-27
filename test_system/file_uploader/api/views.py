@@ -143,7 +143,7 @@ class KeysUploadView(APIView):
                     is_reading=question.is_reading,
                 )
 
-            return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+            return HttpResponseRedirect(BASE_PATH + 'dashboard/test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
