@@ -1,5 +1,6 @@
 import fulltext
 import re
+import xlrd
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -14,7 +15,10 @@ from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
 from django.shortcuts import render
 from test_text.models import ReadingTest
-from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
+from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth, EmptyPermission
+from user_major.models import UserMajor, Major
+from accounts.api.serializers import UserSerializer
+from evaluation.models import Mark
 
 BASE_PATH = 'http://localhost:5000/'
 questions = []
@@ -82,7 +86,9 @@ class TextUploadView(APIView):
                         questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
-                        text=''.join(map(lambda x : '<p>' + x.replace("\n", " ") + '.</p>', re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace("<p>.</p>", ""),
+                        text=''.join(map(lambda x: '<p>' + x.replace("\n", " ") + '.</p>',
+                                         re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace(
+                            "<p>.</p>", ""),
                         time_recommended=timedelta(minutes=20),
                     )
 
@@ -103,7 +109,7 @@ class KeysUploadView(APIView):
             elif qs[0].user_preference == Preference.ADMIN or \
                     qs[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
-        return [IsTeacherOrAdmin()]
+        return [IsStudentOrNotAuth()]
 
     def post(self, request, *args, **kwargs):
         global questions
@@ -138,6 +144,65 @@ class KeysUploadView(APIView):
             return HttpResponseRedirect(BASE_PATH + 'test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FileUserCreate(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0] == Preference.STUDENT:
+                return [EmptyPermission()]
+            elif pref[0] == Preference.ADMIN or pref[0] == Preference.TEACHER:
+                return [IsTeacherOrAdmin()]
+        else:
+            return [EmptyPermission()]
+
+    def post(self, request, *args, **kwargs):
+        form = FileSerializer(data=request.data)
+        if form.is_valid():
+            form.save()
+            input_excel = request.FILES['file']
+            workbook = xlrd.open_workbook(file_contents=input_excel.read())
+            sheet = workbook.sheet_by_index(0)
+            if sheet.nrows < 2:
+                return Response({'message': 'There is no users in file'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                for i in range(2, sheet.nrows):
+                    student_id = sheet.cell(i, 0).value
+                    last_name = sheet.cell(i, 1).value
+                    first_name = sheet.cell(i, 2).value
+                    major_string = sheet.cell(i, 4).value
+                    email = sheet.cell(i, 6).value
+                    if major_string.lower().strip() == 'программная инженерия':
+                        major = Major.SE.name
+                    else:
+                        major = Major.AMI.name
+                    username = email.split("@")[0].strip()
+                    data = {
+                        'username': username,
+                        'first_name': first_name,
+                        'last_name': last_name,
+                        'email': email,
+                        'password': student_id,
+                    }
+                    serialized = UserSerializer(data=data)
+                    if serialized.is_valid():
+                        user = serialized.save()
+                        response = serialized.data
+                        UserPreferences.objects.create(
+                            user=user,
+                            user_preference=Preference.STUDENT.name
+                        )
+                        UserMajor.objects.create(
+                            user=user,
+                            user_major=major
+                        )
+                        Mark.objects.create(user=self.request.user)
+                        del response['password']
+                        del response['first_name']
+                        del response['last_name']
 
 
 class Question():
