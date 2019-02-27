@@ -9,6 +9,7 @@ from user_pref.models import Preference
 from user_major.models import UserMajor, Major
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from evaluation.models import Mark
 
 BASE_PATH = 'http://localhost:5000/'
 
@@ -34,6 +35,7 @@ class UserCreate(CreateAPIView):
                 user=user,
                 user_major=Major.get_name(request.data['major'])
             )
+            Mark.objects.create(user=self.request.user)
             del response['password']
             del response['first_name']
             del response['last_name']
