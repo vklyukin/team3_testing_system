@@ -1,0 +1,70 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<link href="{% static 'css/stream-settings.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'js/stream-settings.js' %}"></script>
+<!--
+<link rel="stylesheet" type="text/css" href="{% static 'css/test_editor.css' %}">
+<script type="text/javascript" src="{% static 'js/test_editor.js' %}"></script>-->
+<script type="text/javascript" src="{% static 'js/picker.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/picker.min.css' %}">
+<script type="text/javascript">
+   SendGet();
+</script>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can edit all the questions that have been downloaded to the system</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-11">
+            <h1 class="m-0 font-weight-bold text-primary">Question Editor</h1>
+          </div>
+          <div class="col-lg-1">
+            <button class="btn" type="button" name="button" id="add_butt" onclick="AddQ()">
+              <i class="fas fa-plus fa-2x text-gray-300"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" id="card-body-table">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="q_table">
+              <thead>
+                <tr>
+                  <th scope="col" hidden="hidden">id</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Major</th>
+                  <th scope="col">Stream</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Start time</th>
+                  <th scope="col">Finish time</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody id=q_table_body>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-outline-primary" id="sub_but" onclick="SendChanges()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
