@@ -15,3 +15,23 @@ class IsNotAuthenticated(permissions.BasePermission):
 
         # Instance must have an attribute named `owner`.
         return obj.owner == request.user
+
+
+class IsTeacherOrAdmin(permissions.BasePermission):
+    """
+    Teacher's and Admin's actions permission towards Mark object
+    """
+
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_authenticated:
+                return True
+        return False
+
+
+class EmptyPermission(permissions.BasePermission):
+    """
+    Anonymous user actions permission towards Mark object
+    """
+
+    def has_object_permission(self, request, view, obj):
+        return False

@@ -13,7 +13,8 @@ class IsTeacherOrAdmin(permissions.BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        if request.user.is_authenticated or request.method == 'PUT':
+        if request.user.is_authenticated:
+            if request.method in permissions.SAFE_METHODS or request.method == 'PUT':
                 return True
         return False
 
