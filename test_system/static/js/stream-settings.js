@@ -79,11 +79,11 @@ const SendGet = () => { //function that get all questions from the server side
             q_corr2.innerHTML = "Software Engineering";
             const q_corr3 = document.createElement("option");
             q_corr3.innerHTML = "Applied Mathematics and Information Science";
-            if (json[i].answ_correct === 0) { //choose which option will be choosen by default based on the json
+            if (json[i].major === "---") { //choose which option will be choosen by default based on the json
               q_corr1.setAttribute("selected", "selected");
-            } else if (json[i].answ_correct === 1) {
+            } else if (json[i].major === "SE") {
               q_corr2.setAttribute("selected", "selected");
-            } else if (json[i].answ_correct === 2) {
+            } else if (json[i].major === "AMI") {
               q_corr3.setAttribute("selected", "selected");
             } 
             q_corr_wrapper.appendChild(q_corr1);
@@ -186,6 +186,9 @@ const SendChanges = () => { //function that checks for the changes in the questi
     let q_pk = document.getElementById('q_pk_' + i).innerHTML; //getting question's pk
     let q_number = document.getElementById('q_' + q_pk); //getting question's number
     let q_major = document.getElementById('q_major_' + q_pk); //getting question's text
+    let major="---";
+    if (q_major.value=="Software Engineering") major="SE";
+    if (q_major.value=="Applied Mathematics and Information Science") major="AMI";
     let q_stream = document.getElementById('q_stream_' + q_pk); //getting question's answer option 1
     let q_date = document.getElementById('q_date_' + q_pk);
     let q_start = document.getElementById('q_start_' + q_pk); //getting question's correct answer wrapper
@@ -199,7 +202,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
           'Content-Type': 'application/json'
         },
         //making json from data that was piked on the lines above
-        body:JSON.stringify({pk:q_pk  ,major:  q_major.value, stream: q_stream.textContent, start: (q_date.textContent+"T"+q_start.textContent+":00+03:00"), finish: (q_date.textContent+"T"+q_finish.textContent+":00+03:00")})
+        body:JSON.stringify({pk:q_pk  ,major:  major, stream: q_stream.value, start: (q_date.textContent+"T"+q_start.textContent+":00+03:00"), finish: (q_date.textContent+"T"+q_finish.textContent+":00+03:00")})
       }).then(function (response) {
         if(response.status === 200 && i === elem_count - 2){
           location.reload();
