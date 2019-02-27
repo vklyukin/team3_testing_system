@@ -40,6 +40,7 @@ urlpatterns = [
     path('stream_choose/', include('users_exam.api.urls', namespace='api-user-exam')),
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
-    path('logpass-front/', TemplateView.as_view(template_name="logpass-front.html")),
+    path('studlist/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('stream-settings/', TemplateView.as_view(template_name="stream-settings.html")),
+    path('add-exam/', TemplateView.as_view(template_name="add-exam.html")),
 ]
