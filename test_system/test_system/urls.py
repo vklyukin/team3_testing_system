@@ -41,4 +41,5 @@ urlpatterns = [
     path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('logpass-front/', TemplateView.as_view(template_name="logpass-front.html")),
     path('stream-settings/', TemplateView.as_view(template_name="stream-settings.html")),
+    path('add-exam/', TemplateView.as_view(template_name="add-exam.html")),
 ]

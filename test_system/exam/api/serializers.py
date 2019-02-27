@@ -5,7 +5,7 @@ from exam.models import ExamSession
 class ExamSessionAPISerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
-        user = ExamSession.objects.create(start=validated_data['start'], finsih=validated_data['finish'],
+        user = ExamSession.objects.create(start=validated_data['start'], finish=validated_data['finish'],
                                           stream=validated_data['stream'], major=validated_data['major'])
         return user
 
