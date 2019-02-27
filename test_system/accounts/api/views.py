@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .permissions import IsNotAuthenticated
 from user_pref.models import UserPreferences
 from user_pref.models import Preference
+from user_major.models import UserMajor, Major
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
@@ -21,7 +22,6 @@ class UserCreate(CreateAPIView):
     queryset = User.objects.all()
 
     def create(self, request, *args, **kwargs):
-        # try:
         serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
             user = serialized.save()
@@ -29,6 +29,10 @@ class UserCreate(CreateAPIView):
             UserPreferences.objects.create(
                 user=user,
                 user_preference=Preference.STUDENT.name
+            )
+            UserMajor.objects.create(
+                user=user,
+                user_major=Major.get_name(request.data['major'])
             )
             del response['password']
             del response['first_name']
