@@ -112,7 +112,7 @@ class CountMarksView(generics.ListAPIView):
         bounds = Scaler.objects.all()
         for bound in bounds:
             if bound.lower <= test_mark <= bound.upper:
-                Mark.objects.filter(pk=mark.pk).update(test_level=TestLevel.get_enum(bound.level))
+                Mark.objects.filter(pk=mark.pk).update(test_level=TestLevel.get_enum(bound.level).name)
                 return TestLevel.get_value(bound.level)
 
     def get_queryset(self):
