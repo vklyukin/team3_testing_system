@@ -18,7 +18,7 @@ class TestLevel(Enum):
 
     @staticmethod
     def rev_vals():
-        return {1: TestLevel.A1, 2: TestLevel.A2, 3: TestLevel.B1, 4: TestLevel.B2, 5: TestLevel.C1, 6: TestLevel.C2}
+        return {1: TestLevel.A1.name, 2: TestLevel.A2.name, 3: TestLevel.B1.name, 4: TestLevel.B2.name, 5: TestLevel.C1.name, 6: TestLevel.C2.name}
 
     def __ge__(self, other):
         if self.__class__ is other.__class__:
@@ -79,9 +79,9 @@ class SpeakingLevel(Enum):
 
     @staticmethod
     def vals():
-        return {'SpeakingLevel.A1p': 1, 'SpeakingLevel.A2p': 2, 'SpeakingLevel.B1p': 3, 'SpeakingLevel.B2p': 4,
-                'SpeakingLevel.C1p': 5, 'SpeakingLevel.C2p': 6, 'SpeakingLevel.A1m': 0.5, 'SpeakingLevel.A2m': 1.5,
-                'SpeakingLevel.B1m': 2.5, 'SpeakingLevel.B2m': 3.5, 'SpeakingLevel.C1m': 4.5, 'SpeakingLevel.C2m': 5.5}
+        return {'A1p': 1, 'A2p': 2, 'B1p': 3, 'B2p': 4,
+                'C1p': 5, 'C2p': 6, 'A1m': 0.5, 'A2m': 1.5,
+                'B1m': 2.5, 'B2m': 3.5, 'C1m': 4.5, 'C2m': 5.5}
 
     def __ge__(self, other):
         if self.__class__ is other.__class__:
@@ -117,14 +117,14 @@ class Mark(models.Model):
     test_level = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in TestLevel],
-        default=TestLevel.A1)
+        default=TestLevel.A1.name)
     removed = models.BooleanField(default=False)
     speaking = models.ForeignKey(TeacherSpeaking, on_delete=models.CASCADE, null=True, blank=True)
     speaking_mark = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in SpeakingLevel],
-        default=SpeakingLevel.A1m)
+        default=SpeakingLevel.A1m.name)
     level = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in TestLevel],
-        default=TestLevel.A1)
+        default=TestLevel.A1.name)
