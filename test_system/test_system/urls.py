@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     path('api/question/', include('test_question.api.urls', namespace='api-test-question')),
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('api/file_uploader/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('test_upload/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
