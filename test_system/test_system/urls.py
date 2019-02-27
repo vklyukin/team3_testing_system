@@ -38,5 +38,6 @@ urlpatterns = [
     path('api/mark/', include('evaluation.api.urls', namespace='api-marks')),
     path('stream_choose/', include('users_exam.api.urls', namespace='api-user-exam')),
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
+    path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('logpass-front/', TemplateView.as_view(template_name="logpass-front.html")),
 ]
