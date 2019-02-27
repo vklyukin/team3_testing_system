@@ -51,14 +51,49 @@ const SendGet = () => { //function that get all questions from the server side
             q_number.innerHTML = i + 1;
 
             const q_major = document.createElement("textarea");
+              /*
+            const q_major = document.createElement("select");
+    
+            const q_major_opt1 = document.createElement("option");
+            q_major_opt1.textContent="---";
+            const q_major_opt2 = document.createElement("option");
+            q_major_opt2.textContent="Software Engineering";
+            const q_major_opt3 = document.createElement("option");
+            q_major_opt3.textContent="Applied Mathematics and Information Science";
+            let q_str1 = "q_major_";
+              *//*
             let q_str1 = "q_major_";
             const q_major_wrapper = document.createElement("td");
             q_major.setAttribute("id", q_str1.concat(json[i].pk));
             q_major.setAttribute("class", "form-control");
             q_major.innerHTML = json[i].major;
             q_major_wrapper.appendChild(q_major);
-            q_tr.appendChild(q_major_wrapper);
+            q_tr.appendChild(q_major_wrapper);*/
+            const q_corr_wrapper = document.createElement("select");
+            let q_corr = "q_major_";
+            q_corr_wrapper.setAttribute("class", "custom-select form-control");
+            q_corr_wrapper.setAttribute("id", q_corr.concat(json[i].pk));
+            const q_corr1 = document.createElement("option");
+            q_corr1.innerHTML = "---";
+            const q_corr2 = document.createElement("option");
+            q_corr2.innerHTML = "Software Engineering";
+            const q_corr3 = document.createElement("option");
+            q_corr3.innerHTML = "Applied Mathematics and Information Science";
+            if (json[i].answ_correct === 0) { //choose which option will be choosen by default based on the json
+              q_corr1.setAttribute("selected", "selected");
+            } else if (json[i].answ_correct === 1) {
+              q_corr2.setAttribute("selected", "selected");
+            } else if (json[i].answ_correct === 2) {
+              q_corr3.setAttribute("selected", "selected");
+            } 
+            q_corr_wrapper.appendChild(q_corr1);
+            q_corr_wrapper.appendChild(q_corr2);
+            q_corr_wrapper.appendChild(q_corr3);
+            const q_corr_wrapper_th = document.createElement("td");
+            q_corr_wrapper_th.appendChild(q_corr_wrapper);
+            q_tr.appendChild(q_corr_wrapper_th);
 
+              
             const q_stream = document.createElement("textarea");
             let q_strr1 = "q_stream_";
             const q_stream_wrapper = document.createElement("td");
@@ -145,6 +180,7 @@ const SendGet = () => { //function that get all questions from the server side
 };
 
 const SendChanges = () => { //function that checks for the changes in the questions and send them to the server side
+         
   let elem_count = document.getElementById("q_table").rows.length; //number of questions
   for (let i = 0; i < elem_count - 1; ++i) { //loop that check all questions
     let q_pk = document.getElementById('q_pk_' + i).innerHTML; //getting question's pk
@@ -154,9 +190,8 @@ const SendChanges = () => { //function that checks for the changes in the questi
     let q_date = document.getElementById('q_date_' + q_pk);
     let q_start = document.getElementById('q_start_' + q_pk); //getting question's correct answer wrapper
     let q_finish = document.getElementById('q_finish_' + q_pk);
-      alert(JSON.stringify({pk:q_pk  ,major:  q_major.textContent, stream: q_stream.textContent, start: (q_date.textContent+"T"+q_start.textContent+":00+03:00"), finish: (q_date.textContent+"T"+q_finish.textContent+":00+03:00")}));
-    fetch(BASE_PATH + 'admin/exam/examsession/' + q_pk + '/change/', { //sending fetch put request to add changed question to the Data Base
-        method: "POST",
+    fetch(BASE_PATH + 'api/exam/' + q_pk + '/', { //sending fetch put request to add changed question to the Data Base
+        method: "PUT",
         credentials: "same-origin", //including cookie information
         headers: {
           "X-CSRFToken": getCookie("csrftoken"), //token to check user validation
@@ -164,7 +199,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
           'Content-Type': 'application/json'
         },
         //making json from data that was piked on the lines above
-        body:JSON.stringify({pk:q_pk  ,major:  q_major.textContent, stream: q_stream.textContent, start: (q_date.textContent+"T"+q_start.textContent+":00+03:00"), finish: (q_date.textContent+"T"+q_finish.textContent+":00+03:00")})
+        body:JSON.stringify({pk:q_pk  ,major:  q_major.value, stream: q_stream.textContent, start: (q_date.textContent+"T"+q_start.textContent+":00+03:00"), finish: (q_date.textContent+"T"+q_finish.textContent+":00+03:00")})
       }).then(function (response) {
         if(response.status === 200 && i === elem_count - 2){
           location.reload();
@@ -174,7 +209,7 @@ const SendChanges = () => { //function that checks for the changes in the questi
 };
 
 const SendDelete = pk => {
-  fetch(BASE_PATH + 'api/question/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
+  fetch(BASE_PATH + 'api/exam/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
       method: "DELETE",
       credentials: "same-origin", //including cookie information
       headers: {
@@ -190,7 +225,7 @@ const SendDelete = pk => {
 };
 
 const AddQ = () => {
-  location.href = BASE_PATH + 'test_editor/add/';
+  location.href = BASE_PATH + 'add-exam/';
 };
 
 //function that retutn cookie by its name, taken from django documentation
@@ -224,3 +259,4 @@ function daterebuild(str)
     let cdatetime2=cdatetime[0].split("-");
     return cdatetime2[0]+"-"+cdatetime2[1]+"-"+cdatetime2[2];
 }
+

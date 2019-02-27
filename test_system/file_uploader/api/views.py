@@ -144,7 +144,7 @@ class KeysUploadView(APIView):
                     is_reading=question.is_reading,
                 )
 
-            return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+            return HttpResponseRedirect(BASE_PATH + 'dashboard/test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -263,5 +263,13 @@ def redirect(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
         return render(request, 'file_upload.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def redirect_add(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'logpass-front.html', {})
     else:
         return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')

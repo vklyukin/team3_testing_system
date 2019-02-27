@@ -1,0 +1,101 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/picker.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/add-exam.css' %}">
+<script type="text/javascript" src="{% static 'js/picker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/add-exam.js' %}"></script>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can add the exam to the system</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Add</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" id="card-body-table">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="q_table">
+              <thead>
+                <tr>
+                  <th scope="col" hidden="hidden">id</th>
+                    <th scope="col" hidden="hidden">#</th>
+                  <th scope="col">Major</th>
+                  <th scope="col">Stream</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Start time</th>
+                  <th scope="col">Finish time</th>
+                </tr>
+              </thead>
+              <tbody id=q_table_body>
+                <tr>
+                  <td hidden="hidden">
+                    <div id="q_number">1</div>
+                  </td>
+                  <td>
+                    <select class="custom-select form-control" id="q_major">
+                      <option selected="selected">---</option>
+                      <option>Software Engineering</option>
+                      <option>Applied Mathematics and Information Science</option>
+                    </select>
+                  </td>
+                    
+                  <td>
+                    <textarea id="q_stream" class="form-control" name="name"></textarea>
+                  </td>
+                  <td>
+
+                    <div class="js-inline-picker" id="q_date">2019-01-01</div>
+                    <div class="picker-container" id="q_date_cont">
+                    </div>
+                    <script type="text/javascript">
+                      Startt();
+                    </script> 
+                      
+                  </td>
+                  <td>
+                    <div class="js-inline-picker" id="q_start">12:00</div>
+                    <div class="picker-container" id="q_start_cont">
+                    </div>
+                    <script type="text/javascript">
+                      Start();
+                    </script>
+                  </td>
+                  <td>
+                      <div class="js-inline-picker" id="q_finish">12:00</div>
+                    <div class="picker-container" id="q_finish_cont">
+                    </div>
+                    <script type="text/javascript">
+                      Starttt();
+                    </script>
+                      
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button type="button" class="btn btn-outline-primary" id="sub_but" onclick="SendPost()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
