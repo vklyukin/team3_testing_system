@@ -2,7 +2,26 @@
 {% block content %}
 {% load static %}
 <link href="{% static 'css/download_form.css' %}" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
 <script src="{% static 'js/download_form.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/chart.js' %}"></script>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can download test results and view infographic</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-lg-12">
     <div class="card shadow mb-4">
@@ -10,10 +29,69 @@
         <h3 class="m-0 font-weight-bold text-primary">Download results</h3>
       </div>
       <div class="card-body download">
-        <iframe name="formDestination" hidden></iframe>
-          <a id="invisible" style="display:none;" href="{% static 'patches/patch.txt' %}" download="results.txt"></a>
-          <div class="download-card">If you want to download Excel file with results, press the button</div>
-          <button type="submit" class="btn btn-outline-primary download-button" id="sub_but" onclick="download();">Download</button>
+          <a id="invisible" style="display: none;" href="{% static 'patches/patch.xlsx' %}" download="results.xlsx"></a>
+          <div class="download-card">Press the button to download Excel file with results</div>
+          <button class="btn btn-outline-primary download-button" id="sub_but" onclick="Download()">Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Percentage of students' language proficiency levels</h3>
+      </div>
+      <div class="card-body download">
+        <div class="chart-area">
+          <canvas id="myPieChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Percentage of students removed from the exam</h3>
+      </div>
+      <div class="card-body download">
+        <div class="chart-area">
+          <canvas id="myPieChart2"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Language proficiency / number of students</h3>
+      </div>
+      <div class="card-body download">
+        <div class="chart-area">
+          <canvas id="myAreaChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h3 class="m-0 font-weight-bold text-primary">Test evaluation histogram</h3>
+      </div>
+      <div class="card-body download">
+        <div class="chart-area">
+          <canvas id="myBarChart"></canvas>
+          <script type="text/javascript">
+            getData();
+          </script>
+        </div>
       </div>
     </div>
   </div>

@@ -61,3 +61,11 @@ def redirect(request):
         return render(request, 'scale.html', {})
     else:
         return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def redirect_info(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'download_form.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
