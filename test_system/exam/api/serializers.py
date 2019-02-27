@@ -6,9 +6,21 @@ class ExamSessionAPISerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = ExamSession.objects.create(start=validated_data['start'], finsih=validated_data['finish'],
-                                          stream=validated_data['stream'])
+                                          stream=validated_data['stream'], major=validated_data['major'])
         return user
 
+    class Meta:
+        model = ExamSession
+        fields = [
+            'pk',
+            'start',
+            'finish',
+            'stream',
+            'major'
+        ]
+
+
+class ExamSessionStudentAPISerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamSession
         fields = [
