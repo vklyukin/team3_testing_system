@@ -65,4 +65,5 @@ class ExamSessionTeacherSerializer(serializers.ModelSerializer):
             'start',
             'finish',
             'stream',
+            'major',
         ]
