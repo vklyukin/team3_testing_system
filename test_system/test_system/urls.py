@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     path('api/question/', include('test_question.api.urls', namespace='api-test-question')),
     path('test_editor/', include('test_editor.urls', namespace='test-editor')),
+    path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('api/file_uploader/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('test_upload/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('api/preferences/', include('user_pref.api.urls', namespace='api-user-preferences')),
@@ -39,7 +40,7 @@ urlpatterns = [
     path('stream_choose/', include('users_exam.api.urls', namespace='api-user-exam')),
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
-    path('logpass-front/', TemplateView.as_view(template_name="logpass-front.html")),
+    path('studlist/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('stream-settings/', TemplateView.as_view(template_name="stream-settings.html")),
     path('add-exam/', TemplateView.as_view(template_name="add-exam.html")),
 ]
