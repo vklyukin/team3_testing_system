@@ -1,6 +1,7 @@
 import fulltext
 import re
 import xlrd
+import os
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -19,6 +20,7 @@ from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth, EmptyPermission
 from user_major.models import UserMajor, Major
 from accounts.api.serializers import UserSerializer
 from evaluation.models import Mark
+from django.conf import settings
 
 BASE_PATH = 'http://localhost:5000/'
 questions = []
@@ -152,9 +154,9 @@ class FileUserCreate(APIView):
     def get_permissions(self):
         if self.request.user.is_authenticated:
             pref = UserPreferences.objects.filter(user=self.request.user)
-            if pref[0] == Preference.STUDENT:
+            if pref[0].user_preference == Preference.STUDENT:
                 return [EmptyPermission()]
-            elif pref[0] == Preference.ADMIN or pref[0] == Preference.TEACHER:
+            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         else:
             return [EmptyPermission()]
@@ -162,9 +164,9 @@ class FileUserCreate(APIView):
     def post(self, request, *args, **kwargs):
         form = FileSerializer(data=request.data)
         if form.is_valid():
-            form.save()
-            input_excel = request.FILES['file']
-            workbook = xlrd.open_workbook(file_contents=input_excel.read())
+            input = form.save()
+            path = os.path.join(settings.MEDIA_ROOT, str(input.file))
+            workbook = xlrd.open_workbook(filename=path)
             sheet = workbook.sheet_by_index(0)
             if sheet.nrows < 2:
                 return Response({'message': 'There is no users in file'}, status=status.HTTP_400_BAD_REQUEST)
@@ -203,6 +205,7 @@ class FileUserCreate(APIView):
                         del response['password']
                         del response['first_name']
                         del response['last_name']
+                return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
 
 
 class Question():
