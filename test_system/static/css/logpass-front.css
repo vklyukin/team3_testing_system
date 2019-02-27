@@ -1,3 +1,15 @@
+#sub_but1 {
+	margin-top: 1em;
+}
+
+.download {
+    text-align: center;
+}
+
+.download-button {
+   margin-top: 1em;
+}
+
 .spinner {
     display: inline-block;
     width: 30px;
@@ -11,7 +23,7 @@
 
     animation: spin 1s infinite linear;
  }
- 
+
 
 
 @keyframes spin {
