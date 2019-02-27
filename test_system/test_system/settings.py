@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'evaluation',
     'speaking_queue',
     'user_major',
+    'stud_id',
 ]
 
 MIDDLEWARE = [
