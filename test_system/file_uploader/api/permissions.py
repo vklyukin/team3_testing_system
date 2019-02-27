@@ -34,3 +34,15 @@ class IsStudentOrNotAuth(permissions.BasePermission):
             if request.method == 'GET':
                 return True
         return False
+
+
+class EmptyPermission(permissions.BasePermission):
+    """
+    Teacher's and Admin's actions permission towards ExamSession object
+    """
+
+    def has_permission(self, request, view):
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        return False

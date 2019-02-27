@@ -47,3 +47,22 @@ class ExamSessionSerializer(serializers.ModelSerializer):
             'finish',
             'stream',
         ]
+
+
+class ExamSessionTeacherSerializer(serializers.ModelSerializer):
+    def update(self, instance, validated_data):
+        instance.start = validated_data.get('start', instance.start)
+        instance.finish = validated_data.get('finish', instance.finish)
+        instance.stream = validated_data.get('stream', instance.stream)
+        instance.major = validated_data.get('major', instance.major)
+        instance.save()
+        return instance
+
+    class Meta:
+        model = ExamSession
+        fields = [
+            'pk',
+            'start',
+            'finish',
+            'stream',
+        ]
