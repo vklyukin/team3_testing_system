@@ -2,7 +2,6 @@ from rest_framework import serializers
 from users_exam.models import UsersExam
 from student_answer.models import StudentAnswer
 from test_question.models import TestQuestion
-from evaluation.models import Mark
 import numpy as np
 
 
@@ -14,7 +13,6 @@ class UsersExamAPISerializer(serializers.ModelSerializer):
             UsersExam.objects.filter(user=self.context['request'].user).update(exam=validated_data['exam'])
             user = UsersExam.objects.get(user=self.context['request'].user)
             StudentAnswer.objects.filter(user=self.context['request'].user).delete()
-            Mark.objects.filter(user=self.context['request'].user).delete()
         q_read = TestQuestion.objects.filter(is_reading=True)
         q_not_read = TestQuestion.objects.filter(is_reading=False)
         total = len(q_read) + len(q_not_read)
@@ -26,7 +24,6 @@ class UsersExamAPISerializer(serializers.ModelSerializer):
         for i in range(len(read_order)):
             StudentAnswer.objects.create(number=read_order[i],
                                          user=self.context['request'].user, question=q_read[i])
-        Mark.objects.create(user=self.context['request'].user)
         return user
 
     class Meta:

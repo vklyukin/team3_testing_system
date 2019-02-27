@@ -1,5 +1,6 @@
 from rest_framework import generics
-from .serializers import ExamSessionAPISerializer, ExamSessionSerializer, ExamSessionStudentAPISerializer
+from .serializers import ExamSessionAPISerializer, ExamSessionSerializer, ExamSessionStudentAPISerializer, \
+    ExamSessionTeacherSerializer
 from .permissions import IsTeacherOrAdmin, IsStudentOrNotAuth
 from user_pref.models import UserPreferences, Preference
 from django.db.models import Q
@@ -59,7 +60,15 @@ class ExamSessionRUDView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
     def get_serializer_class(self):
-        return ExamSessionSerializer
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0].user_preference == Preference.STUDENT:
+                return ExamSessionSerializer
+            elif pref[0].user_preference == Preference.ADMIN or \
+                    pref[0].user_preference == Preference.TEACHER:
+                return ExamSessionTeacherSerializer
+        else:
+            return ExamSessionSerializer
 
     def get_permissions(self):
         if self.request.user.is_authenticated:

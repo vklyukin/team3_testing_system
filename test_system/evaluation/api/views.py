@@ -125,17 +125,18 @@ class CountMarksView(generics.ListAPIView):
                 try:
                     for mark in marks:
                         answers = StudentAnswer.objects.filter(user=mark.user)
-                        count = 0
-                        for ans in answers:
-                            question = TestQuestion.objects.get(pk=ans.question.pk)
-                            if question.answ_correct == ans.answer:
-                                count += 1
-                        Mark.objects.filter(pk=mark.pk).update(test_mark=count)
-                        sp_mark = 1
-                        t_mark = self.evaluate(count, mark)
-                        if mark.speaking_mark:
-                            sp_mark = SpeakingLevel.get_value(mark.speaking_mark)
-                        Mark.objects.filter(pk=mark.pk).update(level=TestLevel.rev_vals()[int(sp_mark + t_mark)])
+                        if len(answers) > 0:
+                            count = 0
+                            for ans in answers:
+                                question = TestQuestion.objects.get(pk=ans.question.pk)
+                                if question.answ_correct == ans.answer:
+                                    count += 1
+                            Mark.objects.filter(pk=mark.pk).update(test_mark=count)
+                            sp_mark = 1
+                            t_mark = self.evaluate(count, mark)
+                            if mark.speaking_mark:
+                                sp_mark = SpeakingLevel.get_value(mark.speaking_mark)
+                            Mark.objects.filter(pk=mark.pk).update(level=TestLevel.rev_vals()[int(sp_mark + t_mark)])
                     return Mark.objects.all()
                 except AttributeError:
                     return HttpResponse('Unknown error', status=500)
