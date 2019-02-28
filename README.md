@@ -6,6 +6,7 @@
 - [Main](#main)
 - [Getting started](#getting-started)
 - [Usage](#usage)
+- [Table format](#table-format)
 - [Browser support](#browser-support)
 
 ## Main
@@ -15,8 +16,13 @@ test_system/
 ├── account          (login & logout)
 ├── accounts         (registration)
 ├── api_time         (time from server)
+├── dashboard        (base path for teacher console)
+├── evaluation       (getting marks after exam)
 ├── exam             (exam session)
 ├── file_uploader    (exam file upload api)
+├── mark_scaler      (grading scales)
+├── media            (files uploaded to the system)
+├── speaking_queue   (speaking queue)
 ├── static           (img, js, css files)
 ├── student_answer   (students' answers)
 ├── templates        (HTML files)
@@ -24,6 +30,7 @@ test_system/
 ├── test_question    (api for test questions)
 ├── test_system      (testing system)
 ├── test_text        (question text model)
+├── user_major       (users' majors)
 ├── user_pref        (student, teacher, admin statuses)
 ├── users_exam       (user - exam interaction)
 └── requirements.txt (required packages)
@@ -96,6 +103,42 @@ python3 manage.py runserver
 <base_url>/scale/edit/
 ```
 
+> For the results download and infographics go to
+
+```
+<base_url>/scale/result/
+```
+
+> For the students lists upload interface go to
+
+```
+<base_url>/test_upload/student/
+```
+
+> For the exam control panel go to
+
+```
+<base_url>/dashboard/manage/
+```
+
+> For the exam editor (stream adding) go to
+
+```
+<base_url>/dashboard/stream_edit/
+```
+
+[⬆ Back to top](#table-of-contents)
+
+## Table format
+
+##### *Here is an example of a student table that should be used to automatically compile a user base*
+
+|Студенческий билет|Фамилия|Имя|Отчество||||
+|---|---|---|---|---|---|---|
+|**Номер студенческого билета**||||**Образовательная программа**|**Факультет**|**Адрес студенческой почты**|
+|*М181БПИНЖ100*|*Иванов*|*Иван*|*Иванович*|*Программная инженерия*|*Факультет компьютерных наук*|iiivanov@edu.hse.ru|
+|*М181БПИНЖ101*|*Петров*|*Петр*|*Петрович*|*Прикладная математика и информатика*|*Факультет компьютерных наук*|pppetrov@edu.hse.ru|
+
 [⬆ Back to top](#table-of-contents)
 
 ## Browser support
@@ -105,6 +148,5 @@ python3 manage.py runserver
 - Safari (latest)
 - Opera (latest)
 - Edge (latest)
-- Internet Explorer 9+
 
 [⬆ Back to top](#table-of-contents)
