@@ -46,7 +46,7 @@
         <h3 class="m-0 font-weight-bold text-primary">Download authentication data</h3>
       </div>
       <div class="card-body download">
-          <a id="invisible" style="display: none;" href="{% static 'patches/patch.xlsx' %}" download="results.xlsx"></a>
+          <a id="invisible" style="display: none;" href="{% url 'api-registration:get-student-list' %}" download="results.xlsx"></a>
           <div class="download-card">If you want to download student's logins and passwords, press the button</div>
           <button class="btn btn-outline-primary download-button" id="sub_but" onclick="Download()">Download</button>
       </div>
