@@ -5,11 +5,8 @@ const BASE_PATH = 'http://localhost:5000/';
 
 function getData() {
   var countPie_one = 0;
-  var countBar_one = 0;
   var dataPie_one = [0, 0, 0, 0, 0, 0];
   var dataLine_one = [0, 0, 0, 0, 0, 0];
-  var dataBar_one = [];
-  var data = [];
   dataRemoved = [0, 0];
   fetch(BASE_PATH + 'api/mark/', {
     method: 'get'
@@ -17,9 +14,7 @@ function getData() {
     return response.json(); //reading request like a json object
   }).then(function (json) {
     for(let i = 0; i < json.length; ++i) {
-      dataBar_one[i] = json[i].test_mark;
       countPie_one += 1;
-      countBar_one += 1;
       switch (json[i].level) {
         case "A1":
           dataLine_one[0] += 1;
@@ -58,40 +53,6 @@ function getData() {
     var student_count = dataRemoved[0] + dataRemoved[1];
     dataRemoved[0] = ((dataRemoved[0] / student_count) * 100).toFixed(2);
     dataRemoved[1] = ((dataRemoved[1] / student_count) * 100).toFixed(2);
-    dataBar_one.sort();
-    var delta = dataBar_one[json.length - 1] - dataBar_one[0];
-    var num_inter = Math.floor(3.32 * Math.log10(json.length)) + 1;
-    inter_len = Math.round(delta / num_inter);
-    var iters = [];
-    var bounds = [];
-    for(var i = 0; i < num_inter; ++i){
-      data[i] = 0;
-      if (i == 0){
-        iters[i] = (dataBar_one[0] + (i * inter_len)) + ' - ' + (dataBar_one[0] + ((i + 1) * inter_len) + 1);
-        bounds[i] = [];
-        bounds[i][0] = dataBar_one[0] + (i * inter_len);
-        bounds[i][1] = dataBar_one[0] + ((i + 1) * inter_len) + 1;
-      }
-      else {
-        if ((dataBar_one[0] + (i * (inter_len + 1)) + 1) < dataBar_one[json.length - 1]){
-          iters[i] = (dataBar_one[0] + (i * (inter_len + 1)) + 1) + ' - ' + (dataBar_one[0] + ((i + 1) * (inter_len + 1)));
-          bounds[i] = [];
-          bounds[i][0] = dataBar_one[0] + (i * (inter_len + 1)) + 1;
-          bounds[i][1] = dataBar_one[0] + ((i + 1) * (inter_len + 1));
-        }
-        else {
-          num_inter -= 1;
-        }
-      }
-    }
-    for (let i = 0; i < dataBar_one.length; ++i){
-      for (let j = 0; j < num_inter; ++j){
-        if (dataBar_one[i] >= bounds[j][0] && dataBar_one[i] <= bounds[j][1]){
-          data[j] += 1
-        }
-      }
-    }
-    var max = Math.max.apply( Math, data );
     dataPie_one[0] = ((dataPie_one[0] / countPie_one) * 100).toFixed(2);
     dataPie_one[1] = ((dataPie_one[1] / countPie_one) * 100).toFixed(2);
     dataPie_one[2] = ((dataPie_one[2] / countPie_one) * 100).toFixed(2);
@@ -213,82 +174,6 @@ function getData() {
         },
         cutoutPercentage: 80,
       },
-    });
-    var ctx3 = document.getElementById("myBarChart");
-    var myBarChart = new Chart(ctx3, {
-      type: 'bar',
-      data: {
-        labels: iters,
-        datasets: [{
-          label: "Student(s)",
-          backgroundColor: "#4e73df",
-          hoverBackgroundColor: "#2e59d9",
-          borderColor: "#4e73df",
-          data: data,
-        }],
-      },
-      options: {
-        maintainAspectRatio: false,
-        layout: {
-          padding: {
-            left: 10,
-            right: 25,
-            top: 25,
-            bottom: 0
-          }
-        },
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: false,
-              drawBorder: false
-            },
-            ticks: {
-              maxTicksLimit: 6
-            },
-            maxBarThickness: 25,
-          }],
-          yAxes: [{
-            ticks: {
-              min: 0,
-              max: max,
-              padding: 10,
-              callback: function(value, index, values) {
-                return value;
-              }
-            },
-            gridLines: {
-              color: "rgb(234, 236, 244)",
-              zeroLineColor: "rgb(234, 236, 244)",
-              drawBorder: false,
-              borderDash: [2],
-              zeroLineBorderDash: [2]
-            }
-          }],
-        },
-        legend: {
-          display: false
-        },
-        tooltips: {
-          titleMarginBottom: 10,
-          titleFontColor: '#6e707e',
-          titleFontSize: 14,
-          backgroundColor: "rgb(255,255,255)",
-          bodyFontColor: "#858796",
-          borderColor: '#dddfeb',
-          borderWidth: 1,
-          xPadding: 15,
-          yPadding: 15,
-          displayColors: false,
-          caretPadding: 10,
-          callbacks: {
-            label: function(tooltipItem, chart) {
-              var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-              return tooltipItem.yLabel + ' ' + datasetLabel;
-            }
-          }
-        },
-      }
     });
     var ctx4 = document.getElementById("myPieChart2");
     var myPieChart = new Chart(ctx4, {
