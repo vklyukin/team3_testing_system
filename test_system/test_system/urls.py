@@ -41,6 +41,4 @@ urlpatterns = [
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('studlist/', include('file_uploader.api.urls', namespace='api-file-uploader')),
-    path('stream-settings/', TemplateView.as_view(template_name="stream-settings.html")),
-    path('add-exam/', TemplateView.as_view(template_name="add-exam.html")),
 ]

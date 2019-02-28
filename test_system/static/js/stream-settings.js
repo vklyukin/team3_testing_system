@@ -53,7 +53,7 @@ const SendGet = () => { //function that get all questions from the server side
             const q_major = document.createElement("textarea");
               /*
             const q_major = document.createElement("select");
-    
+
             const q_major_opt1 = document.createElement("option");
             q_major_opt1.textContent="---";
             const q_major_opt2 = document.createElement("option");
@@ -85,7 +85,7 @@ const SendGet = () => { //function that get all questions from the server side
               q_corr2.setAttribute("selected", "selected");
             } else if (json[i].major === "AMI") {
               q_corr3.setAttribute("selected", "selected");
-            } 
+            }
             q_corr_wrapper.appendChild(q_corr1);
             q_corr_wrapper.appendChild(q_corr2);
             q_corr_wrapper.appendChild(q_corr3);
@@ -93,7 +93,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_corr_wrapper_th.appendChild(q_corr_wrapper);
             q_tr.appendChild(q_corr_wrapper_th);
 
-              
+
             const q_stream = document.createElement("textarea");
             let q_strr1 = "q_stream_";
             const q_stream_wrapper = document.createElement("td");
@@ -122,8 +122,8 @@ const SendGet = () => { //function that get all questions from the server side
             });
             q_date_th.appendChild(q_date_div);
             q_date_th.appendChild(q_date_container);
-            q_tr.appendChild(q_date_th);  
-              
+            q_tr.appendChild(q_date_th);
+
             const q_start_div = document.createElement("div");
             const q_start_container = document.createElement("div");
             q_start_container.setAttribute("class", "picker-container");
@@ -144,7 +144,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_start_th.appendChild(q_start_div);
             q_start_th.appendChild(q_start_container);
             q_tr.appendChild(q_start_th);
-              
+
             const q_finish_div = document.createElement("div");
             const q_finish_container = document.createElement("div");
             q_finish_container.setAttribute("class", "picker-container");
@@ -180,7 +180,7 @@ const SendGet = () => { //function that get all questions from the server side
 };
 
 const SendChanges = () => { //function that checks for the changes in the questions and send them to the server side
-         
+
   let elem_count = document.getElementById("q_table").rows.length; //number of questions
   for (let i = 0; i < elem_count - 1; ++i) { //loop that check all questions
     let q_pk = document.getElementById('q_pk_' + i).innerHTML; //getting question's pk
@@ -228,7 +228,7 @@ const SendDelete = pk => {
 };
 
 const AddQ = () => {
-  location.href = BASE_PATH + 'add-exam/';
+  location.href = BASE_PATH + 'dashboard/add_exam/';
 };
 
 //function that retutn cookie by its name, taken from django documentation
@@ -262,4 +262,3 @@ function daterebuild(str)
     let cdatetime2=cdatetime[0].split("-");
     return cdatetime2[0]+"-"+cdatetime2[1]+"-"+cdatetime2[2];
 }
-
