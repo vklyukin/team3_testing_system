@@ -1,0 +1,67 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/picker.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/exam_manage.css' %}">
+<script type="text/javascript" src="{% static 'js/exam_manage.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-validate.js' %}"></script>
+<script type="text/javascript">
+   SendGet();
+</script>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here you can manage the exam, make grades, remove from the exam and more</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Exam Control Panel</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" id="card-body-table">
+          <div class="table-responsive">
+            <form style="margin-bottom: 1vh;" class="form-inline navbar-search">
+              <div class="input-group">
+                <input id="myInput" type="text" class="form-control" placeholder="Search for..." onkeyup="myFunction()">
+              </div>
+            </form>
+            <table class="table table-bordered" id="q_table">
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Major</th>
+                  <th scope="col">Test Mark</th>
+                  <th scope="col" style="white-space: nowrap;">Test Level</th>
+                  <th scope="col">Removed</th>
+                  <th scope="col" style="white-space: nowrap;">Speaking Level</th>
+                  <th scope="col" style="white-space: nowrap;">Overall Level</th>
+                  <th scope="col" hidden="hidden">User</th>
+                  <th scope="col">Submit</th>
+                </tr>
+              </thead>
+              <tbody id=q_table_body>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

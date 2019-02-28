@@ -13,7 +13,7 @@ class MarksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mark
-        fields = '__all__'
+        fields = ['pk', 'test_mark', 'test_level', 'removed', 'speaking_mark', 'level', 'user', 'speaking']
         # many = True
 
 
