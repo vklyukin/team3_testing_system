@@ -37,7 +37,8 @@ class UserCreate(CreateAPIView):
                 user=user,
                 user_major=Major.get_name(request.data['major'])
             )
-            Mark.objects.create(user=user)
+            Mark.objects.create(user=user, first_name=user.first_name, second_name=user.last_name,
+                                major=Major.get_name(request.data['major']))
             UserStudentID.objects.create(user=user, student_id=request.data['password'])
             del response['password']
             del response['first_name']
