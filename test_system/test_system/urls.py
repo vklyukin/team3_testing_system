@@ -41,4 +41,6 @@ urlpatterns = [
     path('api/scaler/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('info/', include('mark_scaler.api.urls', namespace='api-scaler')),
     path('studlist/', include('file_uploader.api.urls', namespace='api-file-uploader')),
+    path('api/speaking/', include('speaking_queue.api.urls', namespace='api-speaking')),
+    path('api/room/', include('room.api.urls', namespace='api-room')),
 ]
