@@ -1,42 +1,4 @@
 const BASE_PATH = 'http://localhost:5000/';
-const names = ['Матевосян Армен Арсенович',
-'Алмаев Сергей Сергеевич',
-'Степанов Евгений Вадимович',
-'Серебренников Александр Дмитриевич',
-'Оганов Григорий Сергеевич',
-'Клюкин	Валерий	Дмитриевич',
-'Дубина Дмитрий Олегович',
-'Торилов Дмитрий Михайлович',
-'Емельяненко Дмитрий Викторович',
-'Редникина Дарья Юрьевна',
-'Загитов Асгар Ильшатович',
-'Белавенцев	Валерий	Евгеньевич',
-'Оралин	Илларион Владимирович',
-'Соколов Семен Константинович',
-'Сафина	Алия Наилевна',
-'Карпин	Александр	Николаевич',
-'Измайлов	Александр	Александрович',
-'Силина	Полина Викторовна'
-]
-const majors = ['Прикладная математика и информатика',
-'Прикладная математика и информатика',
-'Прикладная математика и информатика',
-'Прикладная математика и информатика',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-'Программная инженерия',
-]
 history.pushState(null, null, location.href);
     window.onpopstate = function () {
         history.go(1);
@@ -56,14 +18,23 @@ const SendGet = () => { //function that get all questions from the server side
           q_table_body.appendChild(q_tr);
 
           let q_test_student = document.createElement("td");
-          let q_test_student_div = document.createElement("div");
-          q_test_student_div.innerHTML = names[i];
-          q_test_student.appendChild(q_test_student_div);
+          let q_test_student_FN_div = document.createElement("div");
+          q_test_student_LN_div.setAttribute("id", 'second_name_' + json[i].pk);
+          q_test_student_FN_div.setAttribute("id", 'first_name_' + json[i].pk);
+          let q_test_student_LN_div = document.createElement("div");
+          let space = document.createElement("div");
+          space.innerHTML = " ";
+          q_test_student_FN_div.innerHTML = json[i].first_name; //name
+          q_test_student_LN_div.innerHTML = json[i].second_name; //surname
+          q_test_student.appendChild(q_test_student_LN_div);
+          q_test_student.appendChild(space);
+          q_test_student.appendChild(q_test_student_FN_div);
           q_tr.appendChild(q_test_student);
 
           let q_test_major = document.createElement("td");
           let q_test_major_div = document.createElement("div");
-          q_test_major_div.innerHTML = majors[i];
+          q_test_major_div.setAttribute("id", 'major_' + json[i].pk);
+          q_test_major_div.innerHTML = json[i].major;
           q_test_major.appendChild(q_test_major_div);
           q_tr.appendChild(q_test_major);
 
@@ -247,6 +218,40 @@ const SendGet = () => { //function that get all questions from the server side
             q_tr.appendChild(q_test_user);
             q_test_user.setAttribute("hidden", "hidden");
 
+            let q_test_speaking = document.createElement("td");
+            let q_test_speaking_div = document.createElement("div");
+            q_test_speaking_div.setAttribute("id", 'q_test_speaking_' + json[i].pk);
+            q_test_speaking_div.innerHTML = json[i].speaking;
+            q_test_speaking.appendChild(q_test_speaking_div);
+            q_tr.appendChild(q_test_speaking);
+
+            let q_test_room = document.createElement("td");
+            let q_test_room_div = document.createElement("div");
+            q_test_room_div.setAttribute("id", 'q_test_room_' + json[i].pk);
+            q_test_room_div.innerHTML = json[i].room;
+            q_test_room.appendChild(q_test_room_div);
+            q_tr.appendChild(q_test_room);
+
+            let q_test_position = document.createElement("td");
+            let q_test_position_div = document.createElement("div");
+            q_test_position_div.setAttribute("id", 'q_test_position_' + json[i].pk);
+            q_test_position.innerHTML = json[i].position;
+            q_test_position.appendChild(q_test_position_div);
+            q_tr.appendChild(q_test_position);
+
+            const q_test_confident = document.createElement("input");
+            q_test_confident.setAttribute("type", "checkbox");
+            let q_test_confident_ID = "q_test_confident_";
+            q_test_confident_ID = q_test_confident_ID.concat(json[i].pk);
+            q_test_confident.setAttribute("id", q_test_confident_ID);
+            if(json[i].confident === true){
+              q_test_confident.setAttribute("checked", "checked");
+            }
+            const q_test_confident_th = document.createElement("td");
+            q_test_confident_th.setAttribute("class", "center");
+            q_test_confident_th.appendChild(q_test_confident);
+            q_tr.appendChild(q_test_confident_th);
+
             const submit_button = document.createElement("button");
             submit_button.setAttribute("class", "btn btn-outline-primary");
             submit_button.setAttribute("onclick", 'SendPut(' + json[i].pk + ')');
@@ -269,6 +274,13 @@ const SendPut = (id) => { //function that checks for the changes in the question
   let level = document.getElementById('q_level_' + id);
   let level_selected = level.options[level.selectedIndex].value;
   let user = document.getElementById('q_test_user_' + id).innerHTML;
+  let speaking = document.getElementById('q_test_speaking_' + id).innerHTML;
+  let first_name = document.getElementById('first_name_' + id).innerHTML;
+  let second_name = document.getElementById('second_name_' + id).innerHTML;
+  let room = document.getElementById('q_test_room_' + id).innerHTML;
+  let position = document.getElementById('q_test_position_' + id).innerHTML;
+  let confident = document.getElementById('q_test_confident_' + id).checked;
+  let major = document.getElementById('major_' + id).innerHTML;
 
 
   fetch(BASE_PATH + 'api/mark/' + id + '/', { //sending fetch put request to add changed question to the Data Base
@@ -280,7 +292,7 @@ const SendPut = (id) => { //function that checks for the changes in the question
         'Content-Type': 'application/json'
       },
       //making json from data that was piked on the lines above
-      body:JSON.stringify({pk: id, test_mark: test_mark, test_level: test_level_selected, removed: removed, speaking_mark: speaking_mark_selected, level: level_selected, user: user, speaking: null,})
+      body:JSON.stringify({pk: id, major: major, user: user, test_mark: test_mark, test_level: test_level_selected, removed: removed, speaking: speaking, speaking_mark: speaking_mark_selected, level: level_selected, first_name: first_name, second_name: second_name, room: room, position: position, confident: confident,})
     }).then(function (response) {
       // if(response.status === 200 && i === elem_count - 2){
       //   location.reload();
