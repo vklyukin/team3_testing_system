@@ -19,9 +19,9 @@ const SendGet = () => { //function that get all questions from the server side
 
           let q_test_student = document.createElement("td");
           let q_test_student_FN_div = document.createElement("div");
+	  let q_test_student_LN_div = document.createElement("div");
           q_test_student_LN_div.setAttribute("id", 'second_name_' + json[i].pk);
           q_test_student_FN_div.setAttribute("id", 'first_name_' + json[i].pk);
-          let q_test_student_LN_div = document.createElement("div");
           let space = document.createElement("div");
           space.innerHTML = " ";
           q_test_student_FN_div.innerHTML = json[i].first_name; //name
@@ -224,6 +224,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_test_speaking_div.innerHTML = json[i].speaking;
             q_test_speaking.appendChild(q_test_speaking_div);
             q_tr.appendChild(q_test_speaking);
+            q_test_speaking.setAttribute("hidden", "hidden");
 
             let q_test_room = document.createElement("td");
             let q_test_room_div = document.createElement("div");
@@ -231,13 +232,20 @@ const SendGet = () => { //function that get all questions from the server side
             q_test_room_div.innerHTML = json[i].room;
             q_test_room.appendChild(q_test_room_div);
             q_tr.appendChild(q_test_room);
+            q_test_room.setAttribute("hidden", "hidden");
 
-            let q_test_position = document.createElement("td");
-            let q_test_position_div = document.createElement("div");
-            q_test_position_div.setAttribute("id", 'q_test_position_' + json[i].pk);
-            q_test_position.innerHTML = json[i].position;
-            q_test_position.appendChild(q_test_position_div);
-            q_tr.appendChild(q_test_position);
+            const q_test_position_wr = document.createElement("td");
+            let q_test_position = document.createElement("input");
+            q_test_position.setAttribute("class", "form-control");
+            let q_test_position_id = 'q_test_position_' + json[i].pk;
+            q_test_position.setAttribute("id", q_test_position_id);
+            q_test_position.setAttribute("value", json[i].position);
+            let q_test_position_script = document.createElement("script");
+            q_test_position_script.innerHTML = "bootstrapValidate('#" + q_test_position_id + "', 'regex:^[0-9]+$:Only numbers')";
+            q_test_position_wr.appendChild(q_test_position);
+            q_test_position_wr.appendChild(q_test_position_script);
+            q_tr.appendChild(q_test_position_wr);
+            q_test_position_wr.setAttribute("hidden", "hidden");
 
             const q_test_confident = document.createElement("input");
             q_test_confident.setAttribute("type", "checkbox");
@@ -251,6 +259,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_test_confident_th.setAttribute("class", "center");
             q_test_confident_th.appendChild(q_test_confident);
             q_tr.appendChild(q_test_confident_th);
+            q_test_confident_th.setAttribute("hidden", "hidden");
 
             const submit_button = document.createElement("button");
             submit_button.setAttribute("class", "btn btn-outline-primary");
@@ -278,7 +287,7 @@ const SendPut = (id) => { //function that checks for the changes in the question
   let first_name = document.getElementById('first_name_' + id).innerHTML;
   let second_name = document.getElementById('second_name_' + id).innerHTML;
   let room = document.getElementById('q_test_room_' + id).innerHTML;
-  let position = document.getElementById('q_test_position_' + id).innerHTML;
+  let position = document.getElementById('q_test_position_' + id).value;
   let confident = document.getElementById('q_test_confident_' + id).checked;
   let major = document.getElementById('major_' + id).innerHTML;
 
