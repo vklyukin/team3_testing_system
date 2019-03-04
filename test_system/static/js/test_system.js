@@ -1,7 +1,7 @@
 const BASE_PATH = 'http://localhost:5000/';
 let user;
 let orderrow;
-let procesed;
+let procesed=false;
 let notime;
 let count = 0;
 let anser = -1;
@@ -285,6 +285,8 @@ function next() {
                 send_answer(JSON.stringify(g));
                 if (count === -1) {
                     document.getElementById("tmb").style.display = "none";
+                    document.getElementById("tmes").style.display = "none";
+                    document.getElementById("tmts").style.display = "none";
                     document.getElementById("lstr").style.zIndex = 1;
                     document.getElementById("rdng").style.zIndex = -1;
                     document.getElementById("qsns").style.zIndex = -1;
@@ -292,6 +294,8 @@ function next() {
                     document.getElementById("clear").style.zIndex = 0;
                 } else if (count === orderrow.length) {
                     document.getElementById("tmb").style.display = "none";
+                    document.getElementById("tmes").style.display = "none";
+                    document.getElementById("tmts").style.display =  "none";
                     document.getElementById("lstr").style.zIndex = -1;
                     document.getElementById("rdng").style.zIndex = -1;
                     document.getElementById("qsns").style.zIndex = -1;
@@ -299,7 +303,9 @@ function next() {
                     document.getElementById("clear").style.zIndex = 0;
 
                 } else {
-                    document.getElementById("tmb").style.display = "block";
+                    document.getElementById("tmb").style.display = "inline-block";
+                    document.getElementById("tmes").style.display = "inline-block";
+                    document.getElementById("tmts").style.display = "inline-block";
                     curent = get_answer(+orderrow[count]["pk"]);
                     current_answer = get_answer(+orderrow[count]["pk"]);
                     current_task = get_task(+curent["question"]);
@@ -320,6 +326,8 @@ function next() {
 
             } else {
                 document.getElementById("tmb").style.display = "none";
+                document.getElementById("tmes").style.display = "none";
+                document.getElementById("tmts").style.display =  "none";
                 let g = new answer(curent["pk"], curent["number"], anser, curent["user"], curent["question"], curent["time_started"]);
                 send_answer(JSON.stringify(g));
                 document.getElementById("lstr").style.zIndex = -1;
@@ -438,7 +446,7 @@ function findstop() {
         if (orderrow[i - 1]["time_started"] == null) {
             return i - 1;
         }
-        if (gettime(ans, tsk) && ans["answer"] !== 0 && ans["answer"] !== 1 && ans["answer"] !== 2 && ans["answer"] !== 3) {
+        if (gettime(ans, tsk)&& ans["answer"] !== -1 && ans["answer"] !== 0 && ans["answer"] !== 1 && ans["answer"] !== 2 && ans["answer"] !== 3) {
             have_unused_time = true;
             return i - 1;
         } else {
@@ -467,7 +475,9 @@ function startsession() {
     document.getElementById("rdng").style.zIndex = 1;
     document.getElementById("qsns").style.zIndex = 2;
     is_reading(current_task);
-    document.getElementById("tmb").style.display = "block";
+    document.getElementById("tmb").style.display = "inline-block";
+    document.getElementById("tmes").style.display = "inline-block";
+    document.getElementById("tmts").style.display ="inline-block";
     document.getElementById("lstr").style.zIndex = -1;
     document.getElementById("rdng").style.zIndex = -1;
     document.getElementById("qsns").style.zIndex = 1;
@@ -478,12 +488,16 @@ function startsession() {
 
 function initialization() {
     document.getElementById("tmb").style.display = "none";
+     document.getElementById("tmes").style.display = "none";
+     document.getElementById("tmts").style.display = "none";
     document.getElementById("clear").style.zIndex = 100;
 
     orderrow = get_answers();
     count = findstop();
     if (count === -1) {
         document.getElementById("tmb").style.display = "none";
+        document.getElementById("tmes").style.display = "none";
+        document.getElementById("tmts").style.display = "none";
         document.getElementById("lstr").style.zIndex = 1;
         document.getElementById("rdng").style.zIndex = -1;
         document.getElementById("qsns").style.zIndex = -1;
@@ -491,13 +505,17 @@ function initialization() {
         document.getElementById("clear").style.zIndex = 0;
     } else if (count === orderrow.length) {
         document.getElementById("tmb").style.display = "none";
+        document.getElementById("tmes").style.display = "none";
+        document.getElementById("tmts").style.display =  "none";
         document.getElementById("lstr").style.zIndex = -1;
         document.getElementById("rdng").style.zIndex = -1;
         document.getElementById("qsns").style.zIndex = -1;
         document.getElementById("lend").style.zIndex = 1;
         document.getElementById("clear").style.zIndex = 0;
     } else {
-        document.getElementById("tmb").style.display = "block";
+        document.getElementById("tmb").style.display = "inline-block";
+        document.getElementById("tmes").style.display = "inline-block";
+        document.getElementById("tmts").style.display = "inline-block";
         curent = get_answer(+orderrow[count]["pk"]);
         current_answer = get_answer(+orderrow[count]["pk"]);
         current_task = get_task(+curent["question"]);
@@ -509,4 +527,36 @@ function initialization() {
         is_reading(current_task);
     }
     document.getElementById("clear").style.zIndex = 0;
+}
+
+
+function order66() {
+procesed = true;
+    document.getElementById("assk").style.zIndex = 10;
+    if(!procesed) alert("nope");
+}
+
+function yes()
+{
+    document.getElementById("clear").style.zIndex = 1;
+    document.getElementById("lstr").style.zIndex = -1;
+    document.getElementById("rdng").style.zIndex = -1;
+    document.getElementById("qsns").style.zIndex = -1;
+    document.getElementById("lend").style.zIndex = -1;
+    document.getElementById("assk").style.zIndex = -1;
+    setTimeout(function () { for(i=count;i<orderrow.length;i++)
+    {
+        current_answer = get_answer(+orderrow[i]["pk"]);
+        current_task = get_task(+ current_answer["question"]);
+        let g = new answer( current_answer["pk"],  current_answer["number"], -1,  current_answer["user"],  current_answer["question"],  current_answer["time_started"]);
+        send_answer(JSON.stringify(g));
+    }
+    location.reload(true);}, 100);
+    procesed=false;
+}
+
+function no()
+{
+    document.getElementById("assk").style.zIndex = -1;
+    procesed=false;
 }
