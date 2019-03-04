@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'speaking_queue',
     'user_major',
     'stud_id',
+    'room',
 ]
 
 MIDDLEWARE = [

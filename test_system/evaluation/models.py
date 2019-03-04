@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from speaking_queue.models import TeacherSpeaking
 from enum import Enum
+from room.models import Room
+from user_major.models import Major
 
 
 class TestLevel(Enum):
@@ -128,3 +130,13 @@ class Mark(models.Model):
         max_length=29,
         choices=[(tag.name, tag.value) for tag in TestLevel],
         default=TestLevel.A1.name)
+    first_name = models.CharField(max_length=30)
+    second_name = models.CharField(max_length=150)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, null=True, blank=True)
+    position = models.SmallIntegerField(default=0)
+    confident = models.BooleanField(default=True)
+    major = models.CharField(
+        max_length=50,
+        choices=[(tag.name, tag.value) for tag in Major],
+        null=True, blank=True
+    )

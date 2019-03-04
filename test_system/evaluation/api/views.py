@@ -10,6 +10,7 @@ from student_answer.models import StudentAnswer
 from test_question.models import TestQuestion
 from django.http import HttpResponse
 from rest_framework.response import Response
+from speaking_queue.models import TeacherSpeaking
 
 
 class MarkAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -125,7 +126,7 @@ class CountMarksView(generics.ListAPIView):
                 try:
                     for mark in marks:
                         answers = StudentAnswer.objects.filter(user=mark.user)
-                        if len(answers) > 0:
+                        if len(answers) > 0 and not mark.removed:
                             count = 0
                             for ans in answers:
                                 question = TestQuestion.objects.get(pk=ans.question.pk)
@@ -140,3 +141,34 @@ class CountMarksView(generics.ListAPIView):
                     return Mark.objects.all()
                 except AttributeError:
                     return HttpResponse('Unknown error', status=500)
+
+
+class StudentsByRoom(generics.ListAPIView):
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.all()
+            qs = qs.filter(Q(user=self.request.user))
+            if qs[0].user_preference == Preference.STUDENT:
+                return [EmptyPermission()]
+            elif qs[0].user_preference == Preference.ADMIN or \
+                    qs[0].user_preference == Preference.TEACHER:
+                return [IsTeacherOrAdmin()]
+        return [EmptyPermission()]
+
+    def get_serializer_class(self):
+        if self.request.user.is_authenticated:
+            qs = UserPreferences.objects.filter(user=self.request.user)
+            if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+                return MarksSerializer
+            if qs[0].user_preference == Preference.STUDENT:
+                return MarkStudentSerializer
+        return MarkStudentSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.get(user=self.request.user)
+            if pref.user_preference == Preference.TEACHER or pref.user_preference == Preference.ADMIN:
+                teacher = TeacherSpeaking.objects.get(teacher=self.request.user)
+                return Mark.objects.filter(room=teacher.room)
+            return Mark.objects.none()
+        return Mark.objects.none()
