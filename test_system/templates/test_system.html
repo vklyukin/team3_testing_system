@@ -18,18 +18,23 @@
 <body onload="initialization();">
 <div class="container-fluid">
     <div class="row">
-        <div class="UpBackGroundPart">
-                    <div class="userbox">
- <div class="userinfo">{{ user.username }}&nbsp;
-     <img src="{% static 'img/profile.png' %}" alt="user" class="user"></div>
-            </div>
-        </div>
+        <div class="UpBackGroundPart"></div>
+                <div class="tmssn" id="tmes" onclick="order66();">End</div>
+                <div class="ndssn" id="tmts"><span class="timesesion" id="ts">0:0:0</span></div>
+                <div class="time" id="tmb"><span class="timetext" id="tm">0:0:0</span></div>
+               <!-- <div class="userbox"><div class="userinfo"> user.username  </div></div><img src="{% static 'img/profile.png' %}" alt="user" class="user">-->
+        
+    </div>
+        <div class="row">
         <div class="col-lg-2"></div>
         <div class="col-lg-8 ">
-
-            <div class="time" id="tmb"><span class="timetext" id="tm">00:00:00</span></div>
-            <div class="listclear" id="clear"></div>
-
+            <div class="listclear" id="clear">
+                <div class="spinner"></div>
+            </div>
+            <div class="ask" id="assk">
+                <div class="yesno" id="yes" onclick="yes();">Yes</div>
+                <div class="noyes" id="no" onclick="no();">No</div>
+            </div>
             <div class="liststart" id="lstr">
                 <button class="strtendbut" id="backk" onclick="startsession();">Start</button>
             </div>
