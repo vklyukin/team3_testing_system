@@ -202,7 +202,9 @@ class FileUserCreate(APIView):
                             user=user,
                             user_major=major
                         )
-                        Mark.objects.create(user=user)
+                        Mark.objects.create(user=user, first_name=user.first_name,
+                                            second_name=user.last_name,
+                                            major=major)
                         UserStudentID.objects.create(user=user, student_id=student_id)
                         del response['password']
                         del response['first_name']
