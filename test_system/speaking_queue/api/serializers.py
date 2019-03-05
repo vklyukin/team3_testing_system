@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from speaking_queue.models import TeacherSpeaking
+from room.models import Room
 
 
 class SpeakingSerializer(serializers.ModelSerializer):
@@ -9,6 +10,7 @@ class SpeakingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         speaking = TeacherSpeaking.objects.create(teacher=self.validate_user(), room=validated_data['room'])
+        Room.objects.filter(pk=speaking.room.pk).update(amount_teach=speaking.room.amount_teach + 1)
         return speaking
 
     class Meta:

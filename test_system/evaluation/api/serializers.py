@@ -25,11 +25,16 @@ class MarkStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mark
         fields = [
-            'pk'
+            'pk',
             'user',
             'room',
+            'position',
+            'first_name',
+            'second_name',
         ]
         read_only_fields = [
+            'user',
+            'position',
             'first_name',
             'second_name',
             'test_mark',
@@ -39,6 +44,5 @@ class MarkStudentSerializer(serializers.ModelSerializer):
             'confident',
             'removed',
             'speaking',
-            'position',
             'major',
         ]
