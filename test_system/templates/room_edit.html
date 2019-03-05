@@ -1,0 +1,76 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<script type="text/javascript" src="{% static 'js/bootstrap-validate.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/room_edit.css' %}">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can edit and add rooms for speaking part</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Room add</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <form class="form-inline">
+          <label for="number" class="form-label">Add new room number for speaking:</label>
+          <input style="margin-right: 1vh; margin-left: 1vh;" class="form-control" type="text" name="number" id="room_number" placeholder="Room Number">
+          <input type="text" name="amount_stud" value="0" id="amount_stud" hidden>
+          <input type="text" name="avg_time" value="00:02:00" id="avg_time" hidden>
+          <script type="text/javascript">
+            bootstrapValidate('#room_number', 'regex:^[0-9]+$:Only positive numbers')
+          </script>
+          <button class="btn btn-outline-primary" type="button" name="button" onclick="Submit()">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Room edit</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <tbody id="table">
+
+            </tbody>
+          </table>
+          <script type="text/javascript" src="{% static 'js/room_edit.js' %}"></script>
+          <script type="text/javascript">
+            Start();
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

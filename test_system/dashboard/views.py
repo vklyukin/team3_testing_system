@@ -37,3 +37,19 @@ def add_exam(request):
         return render(request, 'add-exam.html', {})
     else:
         return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def room_edit(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'room_edit.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def speaking(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'speaking.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
