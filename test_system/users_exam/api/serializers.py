@@ -31,7 +31,7 @@ class UsersExamAPISerializer(serializers.ModelSerializer):
         fields = [
             'exam',
         ]
-        read_only_fields = ['user', ]
+        read_only_fields = ['user',]
 
 
 class UsersExamSerializer(serializers.ModelSerializer):

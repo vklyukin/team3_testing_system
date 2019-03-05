@@ -18,20 +18,44 @@
 <body onload="initialization();">
 <div class="container-fluid">
     <div class="row">
-        <div class="UpBackGroundPart"></div>
-                <div class="tmssn" id="tmes" onclick="order66();">End</div>
-                <div class="ndssn" id="tmts"><span class="timesesion" id="ts">0:0:0</span></div>
-                <div class="time" id="tmb"><span class="timetext" id="tm">0:0:0</span></div>
-               <!-- <div class="userbox"><div class="userinfo"> user.username  </div></div><img src="{% static 'img/profile.png' %}" alt="user" class="user">-->
-        
+        <div class="UpBackGroundPart">
+ </div>
+
     </div>
         <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8 ">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-10 ">
+            
+            <div class="barpart">
+            <div class="test" id="tst">
+            <div class="inftext"></div>
+            <div class="tmssn" id="tmes" onclick="order66();">End</div>
+            </div>
+            <div class="test" id="tst">
+                <div class="inftext" id="t1">Time for test</div>
+            <div class="ndssn" id="tmts"><span class="timesesion" id="ts">0:0:0</span></div>
+            </div>
+            <div class="test" id="tst">
+                <div class="inftext" id="t2">Time for question</div>
+            <div class="ndssn" id="tmb"><span class="timetext" id="tm">0:0:0</span></div>
+            </div>
+            <div class="test" id="tst" >
+                
+                <div class="userbox">
+                    <img src="{% static 'img/profile.png' %}" alt="user" class="user">
+                <div class="userinfo"> {{user.username}}  </div>
+                
+                </div>
+            </div>
+        
+        </div>
+            
             <div class="listclear" id="clear">
                 <div class="spinner"></div>
             </div>
             <div class="ask" id="assk">
+                <div class="ggwp">                <div class="yesnotext" id="yntxt">Do you really want to leave, and finish exam?<br> Press yes, but we highly recommend you <br>to try answer other questions.<br> If you leave, all answered tasks will be checked.<br> Press no to continue exam.</div></div>
+
                 <div class="yesno" id="yes" onclick="yes();">Yes</div>
                 <div class="noyes" id="no" onclick="no();">No</div>
             </div>
@@ -81,7 +105,7 @@
 
             </div>
         </div>
-        <div class="col-lg-2"></div>
+        <div class="col-lg-1"></div>
     </div>
 </div>
 </body>
