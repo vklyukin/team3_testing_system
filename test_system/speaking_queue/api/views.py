@@ -32,7 +32,7 @@ class SpeakingAPIView(generics.ListAPIView, generics.CreateAPIView):
         return qs
 
     def create(self, request, *args, **kwargs):
-        serialized = SpeakingSerializer(data=request.data)
+        serialized = SpeakingSerializer(data=request.data, context={'request': request})
         if serialized.is_valid():
             serialized.save()
             response = serialized.data
