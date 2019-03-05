@@ -166,9 +166,10 @@ class StudentsByRoom(generics.ListAPIView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            pref = UserPreferences.objects.get(user=self.request.user)
+            pref = UserPreferences.objects.filter(user=self.request.user)[0]
             if pref.user_preference == Preference.TEACHER or pref.user_preference == Preference.ADMIN:
-                teacher = TeacherSpeaking.objects.get(teacher=self.request.user)
-                return Mark.objects.filter(room=teacher.room)
+                teacher = TeacherSpeaking.objects.filter(teacher=self.request.user)
+                if len(teacher) > 0:
+                    return Mark.objects.filter(room=teacher.room)[0]
             return Mark.objects.none()
         return Mark.objects.none()
