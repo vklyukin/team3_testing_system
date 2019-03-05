@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .permissions import *
 from .serializers import *
+from room.models import Room
 
 
 class SpeakingAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -60,3 +61,21 @@ class SpeakingRudView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return TeacherSpeaking.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        instance = self.get_object()
+        try:
+            old_room = instance.room
+            if old_room is not None and old_room.amount_teach > 0:
+                Room.objects.filter(pk=old_room.pk).update(amount_teach=old_room.amount_teach - 1)
+        except Room.DoesNotExist:
+            pass
+        serializer = self.get_serializer(instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        try:
+            room = Room.objects.get(pk=serializer.data['room'])
+            Room.objects.filter(pk=room.pk).update(amount_teach=room.amount_teach + 1)
+        except Room.DoesNotExist:
+            pass
+        return Response(serializer.data)

@@ -11,6 +11,7 @@ from test_question.models import TestQuestion
 from django.http import HttpResponse
 from rest_framework.response import Response
 from speaking_queue.models import TeacherSpeaking
+from room.models import Room
 
 
 class MarkAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -83,6 +84,36 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
             elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
                 sa = Mark.objects.all()
                 return sa
+
+    def put(self, request, *args, **kwargs):
+        pref = UserPreferences.objects.filter(user=self.request.user)[0]
+        if pref.user_preference == Preference.STUDENT:
+            instance = self.get_object()
+            position = 0
+            if instance.room is None or instance.room.pk != request.data['room']:
+                try:
+                    old_room = instance.room
+                    if old_room is not None and old_room.amount_stud > 0:
+                        Room.objects.filter(pk=old_room.pk).update(amount_stud=old_room.amount_stud - 1)
+                    if request.data['room'] != '':
+                        room = Room.objects.get(pk=request.data['room'])
+                        Room.objects.filter(pk=room.pk).update(amount_stud=room.amount_stud + 1)
+                        position = room.amount_stud + 1
+                except Room.DoesNotExist:
+                    pass
+            serializer = self.get_serializer(instance, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            Mark.objects.filter(pk=instance.pk).update(position=position)
+            response = serializer.data
+            response['position'] = position
+            return Response(response)
+        elif pref.user_preference == Preference.ADMIN or pref.user_preference == Preference.TEACHER:
+            instance = self.get_object()
+            serializer = self.get_serializer(instance, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            return Response(serializer.data)
 
 
 class CountMarksView(generics.ListAPIView):
@@ -170,6 +201,6 @@ class StudentsByRoom(generics.ListAPIView):
             if pref.user_preference == Preference.TEACHER or pref.user_preference == Preference.ADMIN:
                 teacher = TeacherSpeaking.objects.filter(teacher=self.request.user)
                 if len(teacher) > 0:
-                    return Mark.objects.filter(room=teacher.room)[0]
+                    return Mark.objects.filter(room=teacher[0].room)
             return Mark.objects.none()
         return Mark.objects.none()
