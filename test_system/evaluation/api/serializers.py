@@ -31,6 +31,7 @@ class MarkStudentSerializer(serializers.ModelSerializer):
             'position',
             'first_name',
             'second_name',
+            'removed',
         ]
         read_only_fields = [
             'user',
