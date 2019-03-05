@@ -198,12 +198,17 @@ function start_timer(sectime) {
     document.getElementById("tm").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1 + 1);
     document.getElementById("tmb").style.background = "#4e73df";
     seconds -= 1;
+    
+    let dt=current_task.duration;
+    let time=dt.split(":");
+    delta =(+time[0])*3600+(+time[1])*60+(+time[2]);
     setTimeout(function () {
-        timer_work_mode(seconds, seconds, curent)
+        timer_work_mode(seconds,delta , curent)
     }, 1000);
 }
 
 function stop_timer() {
+    document.getElementById("tmb").style.background="red";
     let g = new answer(curent["pk"], curent["number"], anser, curent["user"], curent["question"], curent["time_started"]);
     send_answer(JSON.stringify(g));
     endtime = true;
@@ -218,10 +223,6 @@ function timer_work_mode(seconds, maxseconds, number) {
             minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
             secnds = seconds - houres * 3600 - minutes * 60;
             document.getElementById("tm").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1 + 1);
-            let num = 278 - (278 * seconds / maxseconds) + (278 * seconds / maxseconds) % 1;
-            if (num < 142)
-                document.getElementById("tmb").style.background = "rgb(" + (78 + num) + ", 115, 223)";
-            else document.getElementById("tmb").style.background = "rgb(220, 115, " + (223 - num + 142) + ")";
             seconds -= 1;
             procesed = false;
             setTimeout(function () {
@@ -232,10 +233,6 @@ function timer_work_mode(seconds, maxseconds, number) {
             minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
             secnds = seconds - houres * 3600 - minutes * 60;
             document.getElementById("tm").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1);
-            let num = 278 - (278 * seconds / maxseconds) + (278 * seconds / maxseconds) % 1;
-            if (num < 142)
-                document.getElementById("tmb").style.background = "rgb(" + (78 + num) + ", 115, 223)";
-            else document.getElementById("tmb").style.background = "rgb(220, 115, " + (223 - num + 142) + ")";
             stop_timer();
         }
     }
@@ -287,6 +284,8 @@ function next() {
                     document.getElementById("tmb").style.display = "none";
                     document.getElementById("tmes").style.display = "none";
                     document.getElementById("tmts").style.display = "none";
+                    document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
                     document.getElementById("lstr").style.zIndex = 1;
                     document.getElementById("rdng").style.zIndex = -1;
                     document.getElementById("qsns").style.zIndex = -1;
@@ -296,6 +295,8 @@ function next() {
                     document.getElementById("tmb").style.display = "none";
                     document.getElementById("tmes").style.display = "none";
                     document.getElementById("tmts").style.display =  "none";
+                    document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
                     document.getElementById("lstr").style.zIndex = -1;
                     document.getElementById("rdng").style.zIndex = -1;
                     document.getElementById("qsns").style.zIndex = -1;
@@ -306,6 +307,8 @@ function next() {
                     document.getElementById("tmb").style.display = "inline-block";
                     document.getElementById("tmes").style.display = "inline-block";
                     document.getElementById("tmts").style.display = "inline-block";
+                    document.getElementById("t1").style.display =  "inline-block";
+        document.getElementById("t2").style.display =  "inline-block";
                     curent = get_answer(+orderrow[count]["pk"]);
                     current_answer = get_answer(+orderrow[count]["pk"]);
                     current_task = get_task(+curent["question"]);
@@ -328,6 +331,8 @@ function next() {
                 document.getElementById("tmb").style.display = "none";
                 document.getElementById("tmes").style.display = "none";
                 document.getElementById("tmts").style.display =  "none";
+                document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
                 let g = new answer(curent["pk"], curent["number"], anser, curent["user"], curent["question"], curent["time_started"]);
                 send_answer(JSON.stringify(g));
                 document.getElementById("lstr").style.zIndex = -1;
@@ -472,12 +477,15 @@ function startsession() {
     current_task = get_task(+curent["question"]);
     fill_question_form(current_task);
     start_timer(current_task["duration"]);
+    start_timerg(timeleftg());
     document.getElementById("rdng").style.zIndex = 1;
     document.getElementById("qsns").style.zIndex = 2;
     is_reading(current_task);
     document.getElementById("tmb").style.display = "inline-block";
     document.getElementById("tmes").style.display = "inline-block";
     document.getElementById("tmts").style.display ="inline-block";
+                        document.getElementById("t1").style.display =  "inline-block";
+        document.getElementById("t2").style.display =  "inline-block";
     document.getElementById("lstr").style.zIndex = -1;
     document.getElementById("rdng").style.zIndex = -1;
     document.getElementById("qsns").style.zIndex = 1;
@@ -490,6 +498,8 @@ function initialization() {
     document.getElementById("tmb").style.display = "none";
      document.getElementById("tmes").style.display = "none";
      document.getElementById("tmts").style.display = "none";
+    document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
     document.getElementById("clear").style.zIndex = 100;
 
     orderrow = get_answers();
@@ -498,6 +508,8 @@ function initialization() {
         document.getElementById("tmb").style.display = "none";
         document.getElementById("tmes").style.display = "none";
         document.getElementById("tmts").style.display = "none";
+        document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
         document.getElementById("lstr").style.zIndex = 1;
         document.getElementById("rdng").style.zIndex = -1;
         document.getElementById("qsns").style.zIndex = -1;
@@ -507,6 +519,8 @@ function initialization() {
         document.getElementById("tmb").style.display = "none";
         document.getElementById("tmes").style.display = "none";
         document.getElementById("tmts").style.display =  "none";
+        document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
         document.getElementById("lstr").style.zIndex = -1;
         document.getElementById("rdng").style.zIndex = -1;
         document.getElementById("qsns").style.zIndex = -1;
@@ -516,12 +530,15 @@ function initialization() {
         document.getElementById("tmb").style.display = "inline-block";
         document.getElementById("tmes").style.display = "inline-block";
         document.getElementById("tmts").style.display = "inline-block";
+                            document.getElementById("t1").style.display =  "inline-block";
+        document.getElementById("t2").style.display =  "inline-block";
         curent = get_answer(+orderrow[count]["pk"]);
         current_answer = get_answer(+orderrow[count]["pk"]);
         current_task = get_task(+curent["question"]);
         fill_question_form(current_task);
         if (have_unused_time) start_timer(stillhavetime(current_answer, current_task));
         else start_timer(current_task["duration"]);
+        start_timerg(timeleftg());
         document.getElementById("rdng").style.zIndex = 1;
         document.getElementById("qsns").style.zIndex = 2;
         is_reading(current_task);
@@ -531,9 +548,12 @@ function initialization() {
 
 
 function order66() {
-procesed = true;
+            document.getElementById("tmb").style.display = "none";
+        document.getElementById("tmes").style.display = "none";
+        document.getElementById("tmts").style.display =  "none";
+        document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
     document.getElementById("assk").style.zIndex = 10;
-    if(!procesed) alert("nope");
 }
 
 function yes()
@@ -552,11 +572,99 @@ function yes()
         send_answer(JSON.stringify(g));
     }
     location.reload(true);}, 100);
-    procesed=false;
 }
 
 function no()
 {
     document.getElementById("assk").style.zIndex = -1;
-    procesed=false;
+            document.getElementById("tmb").style.display = "inline-block";
+        document.getElementById("tmes").style.display = "inline-block";
+        document.getElementById("tmts").style.display = "inline-block";
+                            document.getElementById("t1").style.display =  "inline-block";
+        document.getElementById("t2").style.display =  "inline-block";
+}
+
+
+function timeleftg() {
+    let str = JSON.parse(get(BASE_PATH + 'api/time/'))["time"];
+    let mas = str.split(':');
+    let houres = (+mas[0].substring(mas[0].length - 2, mas[0].length));
+    let minutes = (+mas[1]);
+    let secnds = (+mas[2].substring(0, 2));
+    let delta = houres * 3600 + minutes * 60 + secnds;
+    let ex=(JSON.parse(get(BASE_PATH + 'api/user-exam/'))[0]["exam"]);
+    let rr=(JSON.parse(get(BASE_PATH + 'api/exam/'+ex+'/')))["finish"];
+    let dt=rr;
+    let datetime=dt.split("T");
+    let date=datetime[0].split("-");
+    let datetime2=datetime[1].split("+");
+    let time=datetime2[0].split(":");
+    delta = (+time[0])*3600+(+time[1])*60+(+time[2])-(+delta);
+    let h = (delta-delta%3600) / 3600;
+    let m = (delta - h * 3600-(delta - h * 3600) % 60)/60;
+    let s = delta - m * 60 - h * 3600;
+    return h + ":" + m+ ":" + s;
+}
+
+
+
+function start_timerg(sectime) {
+    stop = false;
+    let mas = sectime.split(':');
+    let seconds = (+mas[0]) * 60 * 60 + (+mas[1]) * 60 + (+mas[2]) - 0.01;
+    houres = (seconds - seconds % 3600) / 3600;
+    minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
+    secnds = seconds - houres * 3600 - minutes * 60;
+    document.getElementById("ts").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1 + 1);
+    document.getElementById("tmts").style.background = "#4e73df";
+    let ex=(JSON.parse(get(BASE_PATH + 'api/user-exam/'))[0]["exam"]);
+    let rr=(JSON.parse(get(BASE_PATH + 'api/exam/'+ex+'/')))["finish"];
+    let dt=rr;
+    let datetime=dt.split("T");
+    let date=datetime[0].split("-");
+    let datetime2=datetime[1].split("+");
+    let time=datetime2[0].split(":");
+    let delta = (+time[0])*3600+(+time[1])*60+(+time[2]);
+    rr=(JSON.parse(get(BASE_PATH + 'api/exam/'+ex+'/')))["start"];
+    dt=rr;
+    datetime=dt.split("T");
+    date=datetime[0].split("-");
+    datetime2=datetime[1].split("+");
+    time=datetime2[0].split(":");
+    delta=delta-(+time[0])*3600+(+time[1])*60+(+time[2]); 
+    seconds -= 1;
+    setTimeout(function () {
+        timer_work_modeg(seconds, delta)
+    }, 1000);
+}
+
+function stop_timerg() {
+                document.getElementById("tmb").style.display = "none";
+        document.getElementById("tmes").style.display = "none";
+        document.getElementById("tmts").style.display =  "none";
+        document.getElementById("t1").style.display =  "none";
+        document.getElementById("t2").style.display =  "none";
+    setTimeout(function () {    yes();},100);
+}
+
+
+function timer_work_modeg(seconds, maxseconds) {
+        if (seconds > 0) {
+            houres = (seconds - seconds % 3600) / 3600;
+            minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
+            secnds = seconds - houres * 3600 - minutes * 60;
+            document.getElementById("ts").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1 + 1);
+            seconds -= 1;
+            setTimeout(function () {
+                timer_work_modeg(seconds, maxseconds)
+            }, 1000);
+        } else {
+            houres = (seconds - seconds % 3600) / 3600;
+            minutes = (seconds - houres * 3600 - (seconds - houres * 3600) % 60) / 60;
+            secnds = seconds - houres * 3600 - minutes * 60;
+            document.getElementById("ts").textContent = houres + ':' + minutes + ':' + (secnds - seconds % 1);
+            stop_timerg();
+        }
+    
+
 }

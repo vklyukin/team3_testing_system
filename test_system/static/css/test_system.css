@@ -1,3 +1,5 @@
+
+
 body {
     background: #4e73df;
 }
@@ -7,24 +9,34 @@ body {
     background-color: white;
     text-align: left;
     width: 100%;
-    min-height: 13vh;
+    height: 9vh;
     align-content: center;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
     position: fixed;
     background: white;  
-    vertical-align: top;
     left: 0;
+    text-align: center;
+}
+.barpart
+{
+    display: inline-block;
+    width: 100%;
     
 }
+.inftext
+{
+    font-size: 2vmin;
+    margin-top: 2px;
+    display: none;
 
-
+}
 
 .list {
     background: #f8f9fc;
     position: absolute;
     width: 96%;
-    height: 81vh;
-    top: 15vh;  
+    height: 86vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -36,7 +48,7 @@ body {
     position: relative;
     background: #f8f9fc;
     width: 98%;
-    height: 15vh;
+    height: 16vh;
     z-index: 2;
     margin-bottom: 2vh;
     margin-top: 0vh;
@@ -48,7 +60,7 @@ body {
     position: relative;
     background: white;
     width: 98%;
-    height: 13vh;
+    height: 14vh;
     z-index: 2;
     margin-bottom: 2vh;
     margin-top: 2vh;
@@ -91,19 +103,18 @@ body {
 .time {
     background: #4e73df;
     text-align: center;
-    width: 30%;
-    height: 4vh;
+    width: 85%;
+    height: 3.5vh;
     z-index: 2;
-    top:2vh;
+    top: 2vh;
     left: 35%;
     display: none;
     border-radius: 5px;
-    position: fixed;
 }
 
 .timetext {
     color: white;
-    font-size: 3vh;
+    font-size: 2vh;
 }
 
 
@@ -114,35 +125,49 @@ body {
 
 .timesesion {
     color: white;
-    font-size: 3vh;
+    font-size: 2vh;
 }
+
+.test
+{
+    background: none;
+    display: table-cell;
+    width:25vw;
+    height: 7vh;
+    vertical-align: bottom;
+    z-index: 10049;
+    position:static;
+    text-align: center;
+}
+
 
 .ndssn {
     background: #4e73df;
     text-align: center;
-    width: 30%;
-    height: 4vh;
+    width: 85%;
+    height: 3.5vh;
     z-index: 2;
     top:8vh;
     right: 35%;
     display: none;
     border-radius: 5px;
-    position: fixed;
+        color: white;
+    font-size: 2vh;
 }
 
 
 .tmssn {
     background: #4e73df;
     text-align: center;
-    position: fixed;
-    width: 30%;
-    height: 10vh;
+    width: 85%;
+    height: 3.5vh;
     z-index: 2;
     top:2vh;
     left: 3%;
     display: none;
     border-radius: 5px;
     color:white;
+    font-size: 2vh;
 }
 
 
@@ -339,8 +364,8 @@ body {
     background: #f8f9fc;
     position: absolute;
     width: 96%;
-    height: 81vh;
-    top: 15vh;
+    height: 86vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -353,8 +378,8 @@ body {
     background: #f8f9fc;
     position: absolute;
     width: 96%;
-    height: 81vh;
-    top: 15vh;
+    height: 86vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -366,8 +391,8 @@ body {
     background: #f8f9fc;
     position: absolute;
     width: 96%;
-    height: 81vh;
-    top: 15vh;
+    height: 86vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -379,8 +404,8 @@ body {
     background: #f8f9fc;
     position: absolute;
     width: 96%;
-    height: 81vh;
-    top: 15vh;
+    height: 86vh;
+    top: 10vh;  
     left: 2%;
     z-index: 1;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -393,7 +418,7 @@ body {
     position: relative;
     background: #f8f9fc;
     width: 98%;
-    height: 81vh;
+    height: 86vh;
     z-index: 2;
     margin-bottom: 2vh;
     margin-top: 0vh;
@@ -430,7 +455,7 @@ body {
     position: absolute;
     top: 11%;
     width: 100%;
-    height: 86%;
+    height: 81%;
     z-index: 11;
     font-size: 1.25vh;
     word-break: break-word;
@@ -445,36 +470,33 @@ body {
 
 .user
 {
-    position:fixed;
-    display: inline-block;
-    vertical-align: bottom;
-    text-align: right;  
-    width: auto;
-    height: 6vh;
-    right:1vh;
-    top:4vh;
-    background: white;
+    display:inline-block;
+    position:static;
+    width: 5.5vw;
+    height: 5.5vw;
+    max-width: 5.5vh;
+    max-height: 5.5vh;
+    background: none;
+    margin-right: 10px;
 }
 
 .userinfo
 {
-display: table-cell;
+    display:inline-block;
+    position:static;
+    font-size: 1.7vh;
+    background: none;
+    margin-right: 10px;
+    
 }
 
 .userbox
 {
-    display: table;
-z-index: 100;
-    vertical-align: bottom;
-    text-align: right;
-    background: green;
-    position: fixed;
-    right:7vh;
-    top: 2vh;
-    height: 10vh;
-    width:30%;
-    
+    margin-top: 2px;
+    background: none;
+    display: inline-block;
 }
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -519,12 +541,12 @@ z-index: 100;
 }
 
 .ask{
-    background: #4e73df;
+    background: #f8f9fc;
     position: absolute;
-    width: 30%;
-    height: 20vh;
-    top: 40vh;
-    left: 35%;
+    width: 96%;
+    height: 86vh;
+    top: 10vh;  
+    left: 2%;
     z-index: -1;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
@@ -534,15 +556,55 @@ z-index: 100;
 
 .yesno
 {
-    background: white;
-    color:#4e73df;
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+    margin-top:1vh;
+    margin-bottom: 1vh;
+    top:55%;
+    left:12%;
+    display:inline-block;
+    width:37%;
+      max-width: 232.5px;
+    font-size: 3vh;
+    margin-right: 1%;
+
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
 }
 
 
 .noyes
 {
-    background: white;
-    color:#4e73df;
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+        margin-top:1vh;
+    margin-bottom: 1vh;
+    width:37%;
+    max-width: 232.5px;
+    margin-left: 1%;
+    display:inline-block;
+        font-size: 3vh;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
 }
-<button class="yesno" id="yes">Yes</button>
-                <button class="noyes" id="no">No</button>
+
+.yesnotext
+{
+    margin-top: 30vh;
+    background: white;
+    border-radius: 5px;
+    font-size: 2vh;
+    width:76%;
+    max-width: 500px;
+    z-index: -1;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+.ggwp
+{
+  text-align: center;
+}
