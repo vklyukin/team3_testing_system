@@ -1,3 +1,5 @@
+
+
 body {
     background: #4e73df;
 }
@@ -5,13 +7,28 @@ body {
 
 .UpBackGroundPart {
     background-color: white;
+    text-align: left;
     width: 100%;
-    min-height: 8vh;
+    height: 9vh;
     align-content: center;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.26);
     position: fixed;
     background: white;  
     left: 0;
+    text-align: center;
+}
+.barpart
+{
+    display: inline-block;
+    width: 100%;
+    
+}
+.inftext
+{
+    font-size: 2vmin;
+    margin-top: 2px;
+    display: none;
+
 }
 
 .list {
@@ -19,7 +36,7 @@ body {
     position: absolute;
     width: 96%;
     height: 86vh;
-    top: 10vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -86,21 +103,74 @@ body {
 .time {
     background: #4e73df;
     text-align: center;
-    position: fixed;
-    width: 20%;
-    height: 4vh;
+    width: 85%;
+    height: 3.5vh;
+    z-index: 2;
     top: 2vh;
-    left: 40%;
-    z-index: 1233;
+    left: 35%;
     display: none;
     border-radius: 5px;
-
 }
 
 .timetext {
     color: white;
+    font-size: 2vh;
+}
+
+
+.endsesion {
+    color: white;
     font-size: 3vh;
 }
+
+.timesesion {
+    color: white;
+    font-size: 2vh;
+}
+
+.test
+{
+    background: none;
+    display: table-cell;
+    width:25vw;
+    height: 7vh;
+    vertical-align: bottom;
+    z-index: 10049;
+    position:static;
+    text-align: center;
+}
+
+
+.ndssn {
+    background: #4e73df;
+    text-align: center;
+    width: 85%;
+    height: 3.5vh;
+    z-index: 2;
+    top:8vh;
+    right: 35%;
+    display: none;
+    border-radius: 5px;
+        color: white;
+    font-size: 2vh;
+}
+
+
+.tmssn {
+    background: #4e73df;
+    text-align: center;
+    width: 85%;
+    height: 3.5vh;
+    z-index: 2;
+    top:2vh;
+    left: 3%;
+    display: none;
+    border-radius: 5px;
+    color:white;
+    font-size: 2vh;
+}
+
+
 
 .rightbutton {
     position: absolute;
@@ -231,7 +301,7 @@ body {
     z-index: 20;
     left: 0%;
     top: 0%;
-    height: 14vh;
+    height: 13vh;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -295,7 +365,7 @@ body {
     position: absolute;
     width: 96%;
     height: 86vh;
-    top: 10vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -309,7 +379,7 @@ body {
     position: absolute;
     width: 96%;
     height: 86vh;
-    top: 10vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -322,7 +392,7 @@ body {
     position: absolute;
     width: 96%;
     height: 86vh;
-    top: 10vh;
+    top: 10vh;  
     left: 2%;
     z-index: 0;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
@@ -335,19 +405,20 @@ body {
     position: absolute;
     width: 96%;
     height: 86vh;
-    top: 10vh;
+    top: 10vh;  
     left: 2%;
     z-index: 1;
     box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
     align-content: center;
     border-radius: 5px;
+    text-align: center;
 }
 
 .taskr {
     position: relative;
     background: #f8f9fc;
     width: 98%;
-    height: 82vh;
+    height: 86vh;
     z-index: 2;
     margin-bottom: 2vh;
     margin-top: 0vh;
@@ -384,7 +455,7 @@ body {
     position: absolute;
     top: 11%;
     width: 100%;
-    height: 86%;
+    height: 81%;
     z-index: 11;
     font-size: 1.25vh;
     word-break: break-word;
@@ -399,37 +470,33 @@ body {
 
 .user
 {
-    position:fixed;
-    display: inline-block;
-    width: auto;
-    height: 6vh;
-    right:1vh;
-    top:1vh;
-    background: white;
+    display:inline-block;
+    position:static;
+    width: 5.5vw;
+    height: 5.5vw;
+    max-width: 5.5vh;
+    max-height: 5.5vh;
+    background: none;
+    margin-right: 10px;
 }
 
 .userinfo
 {
-    text-align: right;
-    position:fixed;
-    display: inline-block;
-    right:7vh;
-    top:2.5vh;
-    width: 80%;
-    font-size: 2vh;
+    display:inline-block;
+    position:static;
+    font-size: 1.7vh;
     background: none;
-    background: white;
+    margin-right: 10px;
+    
 }
 
 .userbox
 {
-    position: fixed;
-    background: white;
-    right:1vh;
-    width: 30%;
-    height:6vh;
-    top: 1vh;
+    margin-top: 2px;
+    background: none;
+    display: inline-block;
 }
+
 
 /* width */
 ::-webkit-scrollbar {
@@ -452,3 +519,92 @@ body {
     background: #4e73df;
 }
 
+.spinner {
+    display: inline-block;
+    width: 4vh;
+    height: 4vh;
+    position: relative;
+    top:39vh;
+    
+    border: 2px solid rgba(0,0,0,0.5);
+    border-top-color: transparent;
+    border-radius: 100%;
+    
+
+    animation: spin 1s infinite linear;
+ }
+ 
+
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.ask{
+    background: #f8f9fc;
+    position: absolute;
+    width: 96%;
+    height: 86vh;
+    top: 10vh;  
+    left: 2%;
+    z-index: -1;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+    align-content: center;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.yesno
+{
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+    margin-top:1vh;
+    margin-bottom: 1vh;
+    top:55%;
+    left:12%;
+    display:inline-block;
+    width:37%;
+      max-width: 232.5px;
+    font-size: 3vh;
+    margin-right: 1%;
+
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+
+.noyes
+{
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+        margin-top:1vh;
+    margin-bottom: 1vh;
+    width:37%;
+    max-width: 232.5px;
+    margin-left: 1%;
+    display:inline-block;
+        font-size: 3vh;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+.yesnotext
+{
+    margin-top: 30vh;
+    background: white;
+    border-radius: 5px;
+    font-size: 2vh;
+    width:76%;
+    max-width: 500px;
+    z-index: -1;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+.ggwp
+{
+  text-align: center;
+}
