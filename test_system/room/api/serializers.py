@@ -6,8 +6,8 @@ class RoomSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         room = Room.objects.create(number=validated_data['number'],
-                                   amount_stud=validated_data['amount_stud'],
-                                   avg_time=validated_data['avg_time'])
+                                   avg_time=validated_data['avg_time'],
+                                   )
         return room
 
     class Meta:
@@ -17,4 +17,5 @@ class RoomSerializer(serializers.ModelSerializer):
             'number',
             'amount_stud',
             'avg_time',
+            'amount_teach'
         ]
