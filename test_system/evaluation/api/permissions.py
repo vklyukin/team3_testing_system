@@ -8,7 +8,7 @@ class IsTeacherOrAdmin(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS:
+            if request.method in permissions.SAFE_METHODS or request.method == 'PUT':
                 return True
         return False
 
@@ -26,13 +26,13 @@ class IsStudent(permissions.BasePermission):
 
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS:
+            if request.method in permissions.SAFE_METHODS or request.method == 'PUT':
                 return True
         return False
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
-            if request.method in permissions.SAFE_METHODS:
+            if request.method in permissions.SAFE_METHODS or request.method == 'PUT':
                 return obj.owner == request.user
         return False
 

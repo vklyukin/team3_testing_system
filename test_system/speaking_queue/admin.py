@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import TeacherSpeaking
 
-# Register your models here.
+admin.site.register(TeacherSpeaking)
