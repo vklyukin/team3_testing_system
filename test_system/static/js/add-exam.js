@@ -53,7 +53,7 @@ const SendPost = () => {
     })
     .then(function (response) {
       if(response.status === 201){
-        window.location.href = BASE_PATH + 'stream-settings/';
+        window.location.href = BASE_PATH + 'dashboard/stream_edit/';
       }
     })}
 };

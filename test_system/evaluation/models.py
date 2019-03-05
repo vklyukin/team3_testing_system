@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from speaking_queue.models import TeacherSpeaking
 from enum import Enum
+from room.models import Room
+from user_major.models import Major
 
 
 class TestLevel(Enum):
@@ -18,7 +20,8 @@ class TestLevel(Enum):
 
     @staticmethod
     def rev_vals():
-        return {1: TestLevel.A1.name, 2: TestLevel.A2.name, 3: TestLevel.B1.name, 4: TestLevel.B2.name, 5: TestLevel.C1.name, 6: TestLevel.C2.name}
+        return {1: TestLevel.A1.name, 2: TestLevel.A2.name, 3: TestLevel.B1.name, 4: TestLevel.B2.name,
+                5: TestLevel.C1.name, 6: TestLevel.C2.name}
 
     def __ge__(self, other):
         if self.__class__ is other.__class__:
@@ -119,7 +122,7 @@ class Mark(models.Model):
         choices=[(tag.name, tag.value) for tag in TestLevel],
         default=TestLevel.A1.name)
     removed = models.BooleanField(default=False)
-    speaking = models.ForeignKey(TeacherSpeaking, on_delete=models.CASCADE, null=True, blank=True)
+    speaking = models.ForeignKey(TeacherSpeaking, on_delete=models.SET_NULL, null=True, blank=True)
     speaking_mark = models.CharField(
         max_length=29,
         choices=[(tag.name, tag.value) for tag in SpeakingLevel],
@@ -128,3 +131,17 @@ class Mark(models.Model):
         max_length=29,
         choices=[(tag.name, tag.value) for tag in TestLevel],
         default=TestLevel.A1.name)
+    first_name = models.CharField(max_length=30)
+    second_name = models.CharField(max_length=150)
+    room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True)
+    position = models.SmallIntegerField(default=0)
+    confident = models.BooleanField(default=True)
+    major = models.CharField(
+        max_length=50,
+        choices=[(tag.name, tag.value) for tag in Major],
+        null=True, blank=True
+    )
+
+    @property
+    def owner(self):
+        return self.user
