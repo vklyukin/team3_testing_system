@@ -112,6 +112,14 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
             return Response(response)
         elif pref.user_preference == Preference.ADMIN or pref.user_preference == Preference.TEACHER:
             instance = self.get_object()
+            if request.data['position'] == -1:
+                try:
+                    Mark.objects.filter(room=instance.room.pk).exclude(position__lte=instance.position) \
+                        .update(position=F('position') - 1)
+                except Room.DoesNotExist:
+                    pass
+                except AttributeError:
+                    pass
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)

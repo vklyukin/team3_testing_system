@@ -1,0 +1,109 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/speaking.css' %}">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card border-left-primary shadow mb-4 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can mark students' answers</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-info fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Speaking</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <form class="form-inline">
+          <label for="number" class="form-label">Choose Your room:</label>
+          <select style="margin-left: 1vh;" class="custom-select form-control" name="room" id="room_select">
+          </select>
+        </form>
+        <div class="table-responsive" style="margin-top: 1vh;">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Student</th>
+                <th scope="col" hidden="hidden">Major</th>
+                <th scope="col" hidden="hidden">Test Mark</th>
+                <th scope="col" style="white-space: nowrap;" hidden="hidden">Test Level</th>
+                <th scope="col" hidden="hidden" hidden="hidden">Removed</th>
+                <th scope="col" style="white-space: nowrap;">Speaking Level</th>
+                <th scope="col" style="white-space: nowrap;" hidden="hidden">Overall Level</th>
+                <th scope="col" hidden="hidden">User</th>
+                <th scope="col" hidden="hidden">Speaking</th>
+                <th scope="col" hidden="hidden">Room</th>
+                <th scope="col" hidden="hidden">Position</th>
+                <th scope="col">Confident</th>
+                <th scope="col">Submit</th>
+              </tr>
+            </thead>
+            <tbody id="table">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="m-0 font-weight-bold text-primary">Passed students</h1>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Student</th>
+                <th scope="col" hidden="hidden">Major</th>
+                <th scope="col" hidden="hidden">Test Mark</th>
+                <th scope="col" style="white-space: nowrap;" hidden="hidden">Test Level</th>
+                <th scope="col" hidden="hidden" hidden="hidden">Removed</th>
+                <th scope="col" style="white-space: nowrap;">Speaking Level</th>
+                <th scope="col" style="white-space: nowrap;" hidden="hidden">Overall Level</th>
+                <th scope="col" hidden="hidden">User</th>
+                <th scope="col" hidden="hidden">Speaking</th>
+                <th scope="col" hidden="hidden">Room</th>
+                <th scope="col" hidden="hidden">Position</th>
+                <th scope="col">Confident</th>
+                <th scope="col">Submit</th>
+              </tr>
+            </thead>
+            <tbody id="table_checked">
+            </tbody>
+          </table>
+          <script type="text/javascript" src="{% static 'js/speaking.js' %}"></script>
+          <script type="text/javascript">
+            Start();
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

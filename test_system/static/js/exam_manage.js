@@ -55,17 +55,23 @@ const SendGet = () => { //function that get all questions from the server side
           q_test_level_wrapper.setAttribute("class", "custom-select form-control");
           q_test_level_wrapper.setAttribute("id", q_test_level_.concat(json[i].pk));
           const q_test_level_1 = document.createElement("option");
-          q_test_level_1.innerHTML = "A1";
+          q_test_level_1.innerHTML = "Beginner";
+          q_test_level_1.setAttribute("value", "A1");
           const q_test_level_2 = document.createElement("option");
-          q_test_level_2.innerHTML = "A2";
+          q_test_level_2.innerHTML = "Elementary";
+          q_test_level_2.setAttribute("value", "A2");
           const q_test_level_3 = document.createElement("option");
-          q_test_level_3.innerHTML = "B1";
+          q_test_level_3.innerHTML = "Pre-Intermediate";
+          q_test_level_3.setAttribute("value", "B1");
           const q_test_level_4 = document.createElement("option");
-          q_test_level_4.innerHTML = "B2";
+          q_test_level_4.innerHTML = "Intermediate";
+          q_test_level_4.setAttribute("value", "B2");
           const q_test_level_5 = document.createElement("option");
-          q_test_level_5.innerHTML = "C1";
+          q_test_level_5.innerHTML = "Upper-Intermediate";
+          q_test_level_5.setAttribute("value", "C1");
           const q_test_level_6 = document.createElement("option");
-          q_test_level_6.innerHTML = "C2";
+          q_test_level_6.innerHTML = "Advanced";
+          q_test_level_6.setAttribute("value", "C2");
           if (json[i].test_level === "A1") { //choose which option will be choosen by default based on the json
             q_test_level_1.setAttribute("selected", "selected");
           } else if (json[i].test_level === "A2") {
@@ -107,29 +113,41 @@ const SendGet = () => { //function that get all questions from the server side
             q_speaking_level_wrapper.setAttribute("class", "custom-select form-control");
             q_speaking_level_wrapper.setAttribute("id", q_speaking_level_.concat(json[i].pk));
             const q_speaking_level_1 = document.createElement("option");
-            q_speaking_level_1.innerHTML = "A1m";
+            q_speaking_level_1.innerHTML = "Beginner -";
+            q_speaking_level_1.setAttribute("value", "A1m");
             const q_speaking_level_2 = document.createElement("option");
-            q_speaking_level_2.innerHTML = "A1p";
+            q_speaking_level_2.innerHTML = "Beginner +";
+            q_speaking_level_2.setAttribute("value", "A1p");
             const q_speaking_level_3 = document.createElement("option");
-            q_speaking_level_3.innerHTML = "A2m";
+            q_speaking_level_3.innerHTML = "Elementary -";
+            q_speaking_level_3.setAttribute("value", "A2m");
             const q_speaking_level_4 = document.createElement("option");
-            q_speaking_level_4.innerHTML = "A2p";
+            q_speaking_level_4.innerHTML = "Elementary +";
+            q_speaking_level_4.setAttribute("value", "A2p");
             const q_speaking_level_5 = document.createElement("option");
-            q_speaking_level_5.innerHTML = "B1m";
+            q_speaking_level_5.innerHTML = "Pre-Intermediate -";
+            q_speaking_level_5.setAttribute("value", "B1m");
             const q_speaking_level_6 = document.createElement("option");
-            q_speaking_level_6.innerHTML = "B1p";
+            q_speaking_level_6.innerHTML = "Pre-Intermediate +";
+            q_speaking_level_6.setAttribute("value", "B1p");
             const q_speaking_level_7 = document.createElement("option");
-            q_speaking_level_7.innerHTML = "B2m";
+            q_speaking_level_7.innerHTML = "Intermediate -";
+            q_speaking_level_7.setAttribute("value", "B2m");
             const q_speaking_level_8 = document.createElement("option");
-            q_speaking_level_8.innerHTML = "B2p";
+            q_speaking_level_8.innerHTML = "Intermediate +";
+            q_speaking_level_8.setAttribute("value", "B2p");
             const q_speaking_level_9 = document.createElement("option");
-            q_speaking_level_9.innerHTML = "C1m";
+            q_speaking_level_9.innerHTML = "Upper-Intermediate -";
+            q_speaking_level_9.setAttribute("value", "C1m");
             const q_speaking_level_10 = document.createElement("option");
-            q_speaking_level_10.innerHTML = "C1p";
+            q_speaking_level_10.innerHTML = "Upper-Intermediate +";
+            q_speaking_level_10.setAttribute("value", "C1p");
             const q_speaking_level_11 = document.createElement("option");
-            q_speaking_level_11.innerHTML = "C2m";
+            q_speaking_level_11.innerHTML = "Advanced -";
+            q_speaking_level_11.setAttribute("value", "C2m");
             const q_speaking_level_12 = document.createElement("option");
-            q_speaking_level_12.innerHTML = "C2p";
+            q_speaking_level_12.innerHTML = "Advanced +";
+            q_speaking_level_12.setAttribute("value", "C2p");
             if (json[i].speaking_mark === "A1m") { //choose which option will be choosen by default based on the json
               q_speaking_level_1.setAttribute("selected", "selected");
             } else if (json[i].speaking_mark === "A1p") {
@@ -176,17 +194,23 @@ const SendGet = () => { //function that get all questions from the server side
             q_level_wrapper.setAttribute("class", "custom-select form-control");
             q_level_wrapper.setAttribute("id", q_level_.concat(json[i].pk));
             const q_level_1 = document.createElement("option");
-            q_level_1.innerHTML = "A1";
+            q_level_1.innerHTML = "Beginner";
+            q_level_1.setAttribute("value", "A1");
             const q_level_2 = document.createElement("option");
-            q_level_2.innerHTML = "A2";
+            q_level_2.innerHTML = "Elementary";
+            q_level_2.setAttribute("value", "A2");
             const q_level_3 = document.createElement("option");
-            q_level_3.innerHTML = "B1";
+            q_level_3.innerHTML = "Pre-Intermediate";
+            q_level_3.setAttribute("value", "B1");
             const q_level_4 = document.createElement("option");
-            q_level_4.innerHTML = "B2";
+            q_level_4.innerHTML = "Intermediate";
+            q_level_4.setAttribute("value", "B2");
             const q_level_5 = document.createElement("option");
-            q_level_5.innerHTML = "C1";
+            q_level_5.innerHTML = "Upper-Intermediate";
+            q_level_5.setAttribute("value", "C1");
             const q_level_6 = document.createElement("option");
-            q_level_6.innerHTML = "C2";
+            q_level_6.innerHTML = "Advanced";
+            q_level_6.setAttribute("value", "C2");
             if (json[i].level === "A1") { //choose which option will be choosen by default based on the json
               q_level_1.setAttribute("selected", "selected");
             } else if (json[i].level === "A2") {
@@ -291,7 +315,6 @@ const SendPut = (id) => { //function that checks for the changes in the question
   let confident = document.getElementById('q_test_confident_' + id).checked;
   let major = document.getElementById('major_' + id).innerHTML;
 
-
   fetch(BASE_PATH + 'api/mark/' + id + '/', { //sending fetch put request to add changed question to the Data Base
       method: "PUT",
       credentials: "same-origin", //including cookie information
@@ -303,9 +326,9 @@ const SendPut = (id) => { //function that checks for the changes in the question
       //making json from data that was piked on the lines above
       body:JSON.stringify({pk: id, major: major, user: user, test_mark: test_mark, test_level: test_level_selected, removed: removed, speaking: speaking, speaking_mark: speaking_mark_selected, level: level_selected, first_name: first_name, second_name: second_name, room: room, position: position, confident: confident,})
     }).then(function (response) {
-      // if(response.status === 200 && i === elem_count - 2){
-      //   location.reload();
-      // }
+      if(response.status === 200){
+        location.reload();
+      }
     });
 };
 
