@@ -1,6 +1,6 @@
 from rest_framework import generics
 from user_pref.models import UserPreferences, Preference
-from django.db.models import Q
+from django.db.models import Q, F
 from .serializers import MarkStudentSerializer, MarksSerializer
 from .permissions import IsStudent, IsTeacherOrAdmin, EmptyPermission
 from django.core.exceptions import PermissionDenied
@@ -95,6 +95,8 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
                     old_room = instance.room
                     if old_room is not None and old_room.amount_stud > 0:
                         Room.objects.filter(pk=old_room.pk).update(amount_stud=old_room.amount_stud - 1)
+                        Mark.objects.filter(room=old_room).exclude(position__lte=instance.position)\
+                            .update(position=F('position')-1)
                     if request.data['room'] != '':
                         room = Room.objects.get(pk=request.data['room'])
                         Room.objects.filter(pk=room.pk).update(amount_stud=room.amount_stud + 1)
@@ -110,6 +112,14 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
             return Response(response)
         elif pref.user_preference == Preference.ADMIN or pref.user_preference == Preference.TEACHER:
             instance = self.get_object()
+            if request.data['position'] == -1:
+                try:
+                    Mark.objects.filter(room=instance.room.pk).exclude(position__lte=instance.position) \
+                        .update(position=F('position') - 1)
+                except Room.DoesNotExist:
+                    pass
+                except AttributeError:
+                    pass
             serializer = self.get_serializer(instance, data=request.data)
             serializer.is_valid(raise_exception=True)
             self.perform_update(serializer)
