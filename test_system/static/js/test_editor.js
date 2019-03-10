@@ -53,6 +53,7 @@ const SendGet = () => { //function that get all questions from the server side
             const q_text = document.createElement("textarea");
             let q_str1 = "q_text_";
             const q_text_wrapper = document.createElement("td");
+            q_text.setAttribute("style", "width: 200px;");
             q_text.setAttribute("id", q_str1.concat(json[i].pk));
             q_text.setAttribute("class", "form-control");
             q_text.innerHTML = json[i].text;
@@ -67,6 +68,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_ans_1 = q_ans_1.concat("_1");
             q_answ1.setAttribute("type", "text");
             q_answ1.setAttribute("class", "form-control");
+            q_answ1.setAttribute("style", "width: 200px;");
             q_answ1.setAttribute("value", json[i].answ_option1);
             q_answ1.setAttribute("id", q_ans_1);
             q_answ1_div.innerHTML = "1";
@@ -82,6 +84,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_ans_2 = q_ans_2.concat("_2");
             q_answ2.setAttribute("type", "text");
             q_answ2.setAttribute("class", "form-control");
+            q_answ2.setAttribute("style", "width: 200px;");
             q_answ2.setAttribute("value", json[i].answ_option2);
             q_answ2.setAttribute("id", q_ans_2);
             q_answ2_div.innerHTML = "2";
@@ -97,6 +100,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_ans_3 = q_ans_3.concat("_3");
             q_answ3.setAttribute("type", "text");
             q_answ3.setAttribute("class", "form-control");
+            q_answ3.setAttribute("style", "width: 200px;");
             q_answ3.setAttribute("value", json[i].answ_option3);
             q_answ3.setAttribute("id", q_ans_3);
             q_answ3_div.innerHTML = "3";
@@ -112,6 +116,7 @@ const SendGet = () => { //function that get all questions from the server side
             q_ans_4 = q_ans_4.concat("_4");
             q_answ4.setAttribute("type", "text");
             q_answ4.setAttribute("class", "form-control");
+            q_answ4.setAttribute("style", "width: 200px;");
             q_answ4.setAttribute("value", json[i].answ_option4);
             q_answ4.setAttribute("id", q_ans_4);
             q_answ4_div.innerHTML = "4";
