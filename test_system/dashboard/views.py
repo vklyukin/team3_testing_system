@@ -53,3 +53,35 @@ def speaking(request):
         return render(request, 'speaking.html', {})
     else:
         return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def test_upload(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'file_upload.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def studlist(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'logpass-front.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def scale_edit(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'scale.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
+
+@login_required
+def results(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
+        return render(request, 'download_form.html', {})
+    else:
+        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
