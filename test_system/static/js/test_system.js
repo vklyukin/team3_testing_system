@@ -273,6 +273,7 @@ function select(num) {
 }
 
 function next() {
+    checkend();
     if (!procesed) {
         procesed = true;
         if (document.getElementById("anszero").className === "anserr" || document.getElementById("ansone").className === "anserr" || document.getElementById("anstwo").className === "anserr" || document.getElementById("ansthre").className === "anserr" || endtime) {
@@ -467,7 +468,7 @@ function findstop() {
 }
 
 function endsession() {
-    //
+    nextpage();
 }
 
 function startsession() {
@@ -504,6 +505,7 @@ function initialization() {
 
     orderrow = get_answers();
     count = findstop();
+    if(count !== -1&&count !== orderrow.length)checkend();
     if (count === -1) {
         document.getElementById("tmb").style.display = "none";
         document.getElementById("tmes").style.display = "none";
@@ -667,4 +669,28 @@ function timer_work_modeg(seconds, maxseconds) {
         }
     
 
+}
+
+function nextpage()
+{
+    window.location.href = BASE_PATH + 'speaking/info/';
+}
+
+
+
+
+function checkend()
+{
+    let user =JSON.parse(get(BASE_PATH + 'api/mark/'));
+    if(user[0]["removed"]===true)
+    {
+    document.getElementById("clear").style.zIndex = 1;
+    document.getElementById("lstr").style.zIndex = -1;
+    document.getElementById("rdng").style.zIndex = -1;
+    document.getElementById("qsns").style.zIndex = -1;
+    document.getElementById("lend").style.zIndex = -1;
+    document.getElementById("assk").style.zIndex = -1;
+    yes();
+    nextpage();
+    }       
 }
