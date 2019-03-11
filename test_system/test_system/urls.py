@@ -43,4 +43,5 @@ urlpatterns = [
     path('studlist/', include('file_uploader.api.urls', namespace='api-file-uploader')),
     path('api/speaking/', include('speaking_queue.api.urls', namespace='api-speaking')),
     path('api/room/', include('room.api.urls', namespace='api-room')),
+    path('speaking/', include('speaking_queue.api.urls', namespace='api-speaking')),
 ]
