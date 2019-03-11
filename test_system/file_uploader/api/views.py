@@ -258,20 +258,3 @@ def load_test(fi) -> tuple:
     reading = test[test.lower().find("read the text below"):test.find("(21)")]
     test = test.replace(reading, "")
     return test, reading
-
-
-@login_required
-def redirect(request):
-    qs = UserPreferences.objects.filter(user=request.user)
-    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
-        return render(request, 'file_upload.html', {})
-    else:
-        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
-
-@login_required
-def redirect_add(request):
-    qs = UserPreferences.objects.filter(user=request.user)
-    if qs[0].user_preference == Preference.ADMIN or qs[0].user_preference == Preference.TEACHER:
-        return render(request, 'logpass-front.html', {})
-    else:
-        return HttpResponseRedirect(BASE_PATH + 'stream_choose/choose/')
