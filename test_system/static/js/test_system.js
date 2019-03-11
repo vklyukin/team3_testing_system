@@ -262,7 +262,7 @@ const select = num => {
     }
 };
 
-function next() {
+const next = () => {
     checkend();
     if (!procesed) {
         procesed = true;
@@ -335,7 +335,7 @@ function next() {
         }
     }
     procesed = false;
-}
+};
 
 const ontetxmenuswitch = () => {
     if (!procesed) {
@@ -457,9 +457,9 @@ const findstop = () => {
 
 };
 
-function endsession() {
+const endsession = () => {
     nextpage();
-}
+};
 
 const startsession = () => {
     count = 0;
@@ -495,7 +495,7 @@ const initialization = () => {
 
     orderrow = get_answers();
     count = findstop();
-    if(count !== -1&&count !== orderrow.length)checkend();
+    if (count !== -1 && count !== orderrow.length) checkend();
     if (count === -1) {
         document.getElementById("tmb").style.display = "none";
         document.getElementById("tmes").style.display = "none";
@@ -660,26 +660,21 @@ const timer_work_modeg = (seconds, maxseconds) => {
 
 };
 
-function nextpage()
-{
+const nextpage = () => {
     window.location.href = BASE_PATH + 'speaking/info/';
-}
+};
 
 
-
-
-function checkend()
-{
-    let user =JSON.parse(get(BASE_PATH + 'api/mark/'));
-    if(user[0]["removed"]===true)
-    {
-    document.getElementById("clear").style.zIndex = 1;
-    document.getElementById("lstr").style.zIndex = -1;
-    document.getElementById("rdng").style.zIndex = -1;
-    document.getElementById("qsns").style.zIndex = -1;
-    document.getElementById("lend").style.zIndex = -1;
-    document.getElementById("assk").style.zIndex = -1;
-    yes();
-    nextpage();
+const checkend = () => {
+    let user = JSON.parse(get(BASE_PATH + 'api/mark/'));
+    if (user[0]["removed"] === true) {
+        document.getElementById("clear").style.zIndex = 1;
+        document.getElementById("lstr").style.zIndex = -1;
+        document.getElementById("rdng").style.zIndex = -1;
+        document.getElementById("qsns").style.zIndex = -1;
+        document.getElementById("lend").style.zIndex = -1;
+        document.getElementById("assk").style.zIndex = -1;
+        yes();
+        nextpage();
     }
-}
+};
