@@ -58,7 +58,7 @@ body
     position: relative;
     display:inline-block;
     width: 200px;
-    height: 150px;
+    height: 175px;
     margin: 30px;
     background: white;
     border-radius: 10px;
@@ -69,6 +69,11 @@ body
     border-width: 4px;
     transition: 0.05s;
     vertical-align: top;
+}
+
+.variant:active
+{
+    height: 225px;
 }
 
 
@@ -94,6 +99,20 @@ body
 .textform
 {
     position:absolute;
+    background: white;
+    border-radius: 10px;
+    width: 192px;
+    height: 142px;
+    left: 0px;
+    font-size: 20px;
+    padding-top: 1vh;
+}
+
+.textformm
+{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
     background: white;
     border-radius: 10px;
     width: 192px;
@@ -176,4 +195,68 @@ body
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+.ask{
+    background: #f8f9fc;
+    position: absolute;
+    width: 96%;
+    height: 86vh;
+    top: 10vh;  
+    left: 2%;
+    z-index: -1;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+    align-content: center;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.yesno
+{
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+    margin-top:1vh;
+    margin-bottom: 1vh;
+    top:55%;
+    left:12%;
+    display:inline-block;
+    width:37%;
+      max-width: 232.5px;
+    font-size: 3vh;
+    margin-right: 1%;
+
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+
+.noyes
+{
+    background: #4e73df;
+    color:white;
+    height: 4vh;
+     border-radius: 5px;
+        margin-top:1vh;
+    margin-bottom: 1vh;
+    width:37%;
+    max-width: 232.5px;
+    margin-left: 1%;
+    display:inline-block;
+        font-size: 3vh;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
+}
+
+.yesnotext
+{
+    margin-top: 30vh;
+    background: white;
+    border-radius: 5px;
+    font-size: 2vh;
+    width:76%;
+    max-width: 500px;
+    z-index: -1;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 4px 2px 15px 1px rgba(0, 0, 0, 0.13);
 }
