@@ -5,8 +5,6 @@ const evaluate = () => fetch(BASE_PATH + 'api/mark/evaluate/', { //fetch get req
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-const BASE_PATH = 'http://localhost:5000/';
-
 const getData = () => {
     var countPie_one = 0;
     var dataPie_one = [0, 0, 0, 0, 0, 0];

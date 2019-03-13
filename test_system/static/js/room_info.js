@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 let mas=[];
 let user;
 let room;
@@ -98,15 +97,15 @@ function counttime(qwe)
     let ctime=qwe["avg_time"].split(":");
     let time=(+ctime[0])*3600+(+ctime[1])*60+(+ctime[2]);
     let seconds=time*kf;
-    
+
     let minutes = (seconds - (seconds) % 60) / 60;
-    
+
     return minutes+" minutes";
 }
 
 function test()
 {
-    user=getinfo(); 
+    user=getinfo();
     checkend(user);
     if(null!==user[0]["room"]){
     room=JSON.parse(get(BASE_PATH + 'api/room/'+user[0]["room"]+'/'));
@@ -165,7 +164,7 @@ function yes()
         sendchoose();
 
 }
-               
+
 
 function no()
 {
@@ -179,5 +178,5 @@ function checkend(user)
     if(+user[0]["position"]===-1)
     {
         window.location.href = BASE_PATH + 'speaking/thanks/';
-    }       
+    }
 }

@@ -22,8 +22,9 @@ from accounts.api.serializers import UserSerializer
 from evaluation.models import Mark
 from django.conf import settings
 from stud_id.models import UserStudentID
+from test_system import base_path
 
-BASE_PATH = 'http://localhost:5000/'
+
 questions = []
 
 
@@ -144,7 +145,7 @@ class KeysUploadView(APIView):
                     is_reading=question.is_reading,
                 )
 
-            return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+            return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

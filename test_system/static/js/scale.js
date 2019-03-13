@@ -10,7 +10,6 @@ let scale_UI_l = document.getElementById('scale_UI_l');
 let scale_UI_h = document.getElementById('scale_UI_h');
 let scale_A_l = document.getElementById('scale_A_l');
 let scale_A_h = document.getElementById('scale_A_h');
-const BASE_PATH = 'http://localhost:5000/';
 
 const GetScales = () => fetch(BASE_PATH + 'api/scaler/', { //fetch get request to get array of questions
     method: 'get'
