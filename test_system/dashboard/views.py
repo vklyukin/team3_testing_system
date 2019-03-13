@@ -84,3 +84,6 @@ def results(request):
         return render(request, 'download_form.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'stream_choose/choose/')
+
+def error_404_view(request, exception):
+    return render(request, '404.html', {})
