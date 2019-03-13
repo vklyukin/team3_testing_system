@@ -58,7 +58,7 @@ class SpeakingAPIView(generics.ListAPIView, generics.CreateAPIView):
         return [EmptyPermission()]
 
     def get_queryset(self):
-        qs = TeacherSpeaking.objects.all()
+        qs = TeacherSpeaking.objects.filter(teacher=self.request.user)
         return qs
 
     def create(self, request, *args, **kwargs):
