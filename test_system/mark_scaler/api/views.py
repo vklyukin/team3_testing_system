@@ -8,9 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
 
-BASE_PATH = 'http://localhost:5000/'
-
-
 class ScalerAPIView(generics.ListAPIView, generics.CreateAPIView):
     lookup_field = 'pk'
 

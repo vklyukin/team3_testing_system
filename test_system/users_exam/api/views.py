@@ -10,9 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from student_answer.models import StudentAnswer
-
-
-BASE_PATH = 'http://localhost:5000/'
+from test_system import base_path
 
 
 class UsersExamAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -91,7 +89,7 @@ def redirect(request):
     if qs[0].user_preference == Preference.STUDENT:
         answers = StudentAnswer.objects.filter(user=request.user)
         if len(answers.exclude(time_started__isnull=True)) > 0:
-            return HttpResponseRedirect(BASE_PATH + 'speaking/info/')
+            return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
         return render(request, 'stream_choose.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')

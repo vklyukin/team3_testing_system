@@ -12,8 +12,7 @@ from django.shortcuts import render
 from evaluation.models import Mark
 from user_pref.models import Preference, UserPreferences
 from stud_id.models import UserStudentID
-
-BASE_PATH = 'http://localhost:5000/'
+from test_system import base_path
 
 
 class UserCreate(CreateAPIView):
@@ -43,9 +42,9 @@ class UserCreate(CreateAPIView):
             del response['password']
             del response['first_name']
             del response['last_name']
-            return HttpResponseRedirect(BASE_PATH + 'account/login/')
+            return HttpResponseRedirect(base_path.BASE_PATH + 'account/login/')
         else:
-            return HttpResponseRedirect(BASE_PATH + 'api/registration/signup/')
+            return HttpResponseRedirect(base_path.BASE_PATH + 'api/registration/signup/')
 
 
 def get_student_list():

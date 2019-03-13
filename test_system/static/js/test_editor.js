@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 history.pushState(null, null, location.href);
 window.onpopstate = function () {
     history.go(1);
