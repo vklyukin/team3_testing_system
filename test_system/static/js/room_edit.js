@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 let avg_time = document.getElementById('avg_time');
 let amount_stud = document.getElementById('amount_stud');
 let number = document.getElementById('room_number');

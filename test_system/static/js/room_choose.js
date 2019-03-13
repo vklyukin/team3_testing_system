@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 let mas=[];
 let block=false;
 
@@ -97,9 +96,9 @@ function counttime(qwe)
     let ctime=qwe["avg_time"].split(":");
     let time=(+ctime[0])*3600+(+ctime[1])*60+(+ctime[2]);
     let seconds=time*kf;
-    
+
     let minutes = (seconds - (seconds) % 60) / 60;
-    
+
     return minutes+" minutes";
 }
 
@@ -118,8 +117,8 @@ function test()
     obj.setAttribute("id","var"+i);
 
     let objtext=document.createElement("div");
-    objtext.setAttribute("class","textform"); 
-    objtext.innerHTML=text;     
+    objtext.setAttribute("class","textform");
+    objtext.innerHTML=text;
     let objin=document.createElement("button");
     objin.style.color="#858796";
     objin.setAttribute("class","choose");
@@ -154,7 +153,7 @@ function test()
 
          for(j=0;j<mas.length;j++)
          {
-            if(+(this.id).substring(3)!==j) 
+            if(+(this.id).substring(3)!==j)
             {
             document.getElementById("var"+j+"btn").style.display="none";
             document.getElementById("var"+j).style.height="175px";
@@ -166,7 +165,7 @@ function test()
     document.getElementById("tst").appendChild(obj);
     }
         else{
-            
+
     let time=counttime(mas[i]);
     let text="Return to my room";
     let obj=document.createElement("div");
@@ -174,8 +173,8 @@ function test()
     obj.setAttribute("id","var"+i);
 
     let objtext=document.createElement("div");
-    objtext.setAttribute("class","textformm"); 
-    objtext.innerHTML=text;     
+    objtext.setAttribute("class","textformm");
+    objtext.innerHTML=text;
     let objin=document.createElement("button");
     objin.style.color="#858796";
     objin.setAttribute("class","choose");
@@ -210,7 +209,7 @@ function test()
 
          for(j=0;j<mas.length;j++)
          {
-            if(+(this.id).substring(3)!==j) 
+            if(+(this.id).substring(3)!==j)
             {
             document.getElementById("var"+j+"btn").style.display="none";
             document.getElementById("var"+j).style.height="175px";
@@ -219,9 +218,9 @@ function test()
         }
         }
     }
-    document.getElementById("tst").appendChild(obj); 
-            
-            
+    document.getElementById("tst").appendChild(obj);
+
+
         }
     }
 }
@@ -274,5 +273,5 @@ function checkend()
     if(+user[0]["position"]===-1)
     {
         window.location.href = BASE_PATH + 'speaking/thanks/';
-    }       
+    }
 }

@@ -1,5 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
-
 const Start = () => {
     const q_duration_div = document.getElementById('q_durr');
     const q_duration_container = document.getElementById('q_durr_cont');

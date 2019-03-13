@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 const select = document.getElementById('room_select');
 let pk;
 const tableBodyQueue = document.getElementById('table');
