@@ -1,4 +1,3 @@
-const BASE_PATH = 'http://localhost:5000/';
 let mas = [];
 let block = false;
 
