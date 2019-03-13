@@ -236,13 +236,17 @@ def get_student_list(major: str, groups: int, students : int) -> list:
         groups = int(groups)
         students = int(students)
         if groups * students < marks_count:
-            raise ValueError(f"{major}: Given group and student count is less than needed")
+            groups = None
 
     if groups is None:
         groups = marks_count // students + 1 * (marks_count % students != 0)
 
     if students is None: 
         students = marks_count // groups + 1 * (marks_count % groups != 0)
+
+    students -= 1
+    if students == 0:
+        students = 1
 
     marks = list(map(lambda x : (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name, x.second_name), marks))
 
