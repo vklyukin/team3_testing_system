@@ -17,8 +17,10 @@ from django.conf.urls import url, include
 from django.urls import path
 from django.contrib import admin
 from django.views.generic import TemplateView
+from account import views
 
 urlpatterns = [
+    path('', views.redirect, name='redirect'),
     url(r'^admin/', admin.site.urls),
     url(r'^exam/', include('exam.urls')),
     url(r'^api-auth/', include('rest_framework.urls')),
