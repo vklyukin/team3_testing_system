@@ -18,6 +18,8 @@ from django.urls import path
 from django.contrib import admin
 from django.views.generic import TemplateView
 from account import views
+from django.conf.urls import handler404
+
 
 urlpatterns = [
     path('', views.redirect, name='redirect'),
@@ -43,3 +45,5 @@ urlpatterns = [
     path('api/room/', include('room.api.urls', namespace='api-room')),
     path('speaking/', include('speaking_queue.api.urls', namespace='api-speaking')),
 ]
+
+handler404 = 'dashboard.views.error_404_view'
