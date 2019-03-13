@@ -3,8 +3,8 @@
 {% load static %}
 <link href="{% static 'css/download_form.css' %}" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
-<script src="{% static 'js/download_form.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/chart.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-validate.js' %}"></script>
 <script type="text/javascript">
   evaluate();
 </script>
@@ -32,9 +32,55 @@
         <h3 class="m-0 font-weight-bold text-primary">Download results</h3>
       </div>
       <div class="card-body download">
-          <a id="invisible" style="display: none;" href="{% static 'patches/patch.xlsx' %}" download="results.xlsx"></a>
           <div class="download-card">Press the button to download Excel file with results</div>
-          <button class="btn btn-outline-primary download-button" id="sub_but" onclick="Download()">Download</button>
+          <form id="form" class="user needs-validation" action="/api/mark/groups/" method="get" novalidate>
+            {% csrf_token %}
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <input name="groupsSE" type="text" id="groupsSE" class="form-control form-control-user" placeholder="Number of SE groups" required>
+                <div class="invalid-feedback">
+                  Please provide a valid number
+                </div>
+                <script>
+                bootstrapValidate('#groupsSE', 'integer:Please fill out this input field with number!');
+                </script>
+              </div>
+              <div class="col-sm-6">
+                <input name="studentsSE" type="text" id="studentsSE" class="form-control form-control-user" placeholder="Number of SE students in group" required>
+                <div class="invalid-feedback">
+                  Please provide a valid number
+                </div>
+                <script>
+                bootstrapValidate('#studentsSE', 'integer:Please fill out this input field with number!');
+                </script>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-6">
+                <input name="groupsAMI" type="text" id="groupsAMI" class="form-control form-control-user" placeholder="Number of AMI groups" required>
+                <div class="invalid-feedback">
+                  Please provide a valid number
+                </div>
+                <script>
+                bootstrapValidate('#groupsAMI', 'integer:Please fill out this input field with number!');
+                </script>
+              </div>
+              <div class="col-sm-6">
+                <input name="studentsAMI" type="text" id="studentsAMI" class="form-control form-control-user" placeholder="Number of AMI students in group" required>
+                <div class="invalid-feedback">
+                  Please provide a valid number
+                </div>
+                <script>
+                bootstrapValidate('#studentsAMI', 'integer:Please fill out this input field with number!');
+                </script>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary btn-user btn-block" type="submit">Download</button>
+            </div>
+          </form>
+          <script src="{% static 'js/download_form.js' %}"></script>
+          <!-- <button class="btn btn-outline-primary download-button" id="sub_but" onclick="Download()">Download</button> -->
       </div>
     </div>
   </div>
