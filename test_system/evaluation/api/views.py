@@ -244,7 +244,7 @@ def get_student_list(major: str, groups: int, students : int) -> list:
     if students is None: 
         students = marks_count // groups + 1 * (marks_count % groups != 0)
 
-    marks = list(map(lambda x : (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and x.speaking_mark == 'A1m' and x.level == 'Beginner', x.first_name, x.second_name), marks))
+    marks = list(map(lambda x : (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name, x.second_name), marks))
 
     pv = list(filter(lambda x: x[2] == False, marks)) # Probably visited
     pnv = list(filter(lambda x: x[2] == True, marks))
