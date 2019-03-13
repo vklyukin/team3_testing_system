@@ -1,14 +1,112 @@
-{% extends 'admin_base.html' %}
-{% block content %}
+<!DOCTYPE html>
 {% load static %}
-<div class="row">
-  <div class="container-fluid">
-    <div class="text-center">
-      <div class="error mx-auto" data-text="四零四">四零四</div>
-      <p class="lead text-gray-800 mb-5">Page Not Found</p>
-      <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-      <a href="{% url 'dashboard:home' %}">&larr; Back to Dashboard</a>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </head>
+  <body id="page-top">
+    <div id="wrapper">
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+
+              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <!-- Dropdown - Messages -->
+                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                  <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </li>
+
+              {% if user.is_authenticated %}
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.username }}</span>
+                  <img class="img-profile rounded-circle" src="{% static 'img/profile.png' %}">
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="{% url 'account:logout' %}">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+
+              {% else %}
+
+              <li class="nav-item">
+                <a class="dropdown-item" href="{% url 'account:login' %}">
+                  <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Login
+                </a>
+              </li>
+
+              {% endif %}
+
+            </ul>
+
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <div class="row">
+              <div class="container-fluid">
+                <div class="text-center">
+                  <div class="error mx-auto" data-text="四零四">四零四</div>
+                  <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                  <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+                  <a href="{% url 'dashboard:home' %}">&larr; Back to Dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+          </a>
+          <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
     </div>
-  </div>
-</div>
-{% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sb-admin-2.min.js' %}"></script>
+  </body>
+</html>
