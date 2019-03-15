@@ -62,7 +62,7 @@ function parseinfo(txt1,txt2,stream)
 
 
 function checkstreamtime(stream) {
-    let cur = JSON.parse(get("http://localhost:5000/api/time/"))["time"]
+    let cur = JSON.parse(get(BASE_PATH + '/api/time/'))["time"]
     let tst = stream["finish"];
     let cdatetime=cur.split("T");
     let cdate=cdatetime[0].split("-");
