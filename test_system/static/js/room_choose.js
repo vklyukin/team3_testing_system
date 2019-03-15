@@ -245,8 +245,10 @@ function sendchoose(id)
 {
     id=id.substr(0, id.length - 3);
     id=id.substr(3, id.length);
+    alert(id);
     let usr=JSON.parse(get(BASE_PATH + 'api/mark/'))[0];
     let jsn=JSON.stringify(new roomsm(mas[id]["pk"]));
+    alert(jsn);
     fetch(BASE_PATH + 'api/mark/'+usr["pk"]+'/', { //sending fetch put request to add changed question to the Data Base
         method: "PUT",
         credentials: "same-origin", //including cookie information
@@ -257,11 +259,10 @@ function sendchoose(id)
         },
         body: jsn
       }).then(function (response) {
-        if(response.status === 201){
+        if(response.status === 200){
             window.location.href = BASE_PATH + 'speaking/info/';
         }
       })
-    window.location.href = BASE_PATH + 'speaking/info/';
 }
 
 
