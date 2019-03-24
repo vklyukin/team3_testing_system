@@ -7,9 +7,8 @@ from user_pref.models import UserPreferences, Preference
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from test_system import base_path
 
-
-BASE_PATH = 'http://localhost:5000/'
 
 class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
     lookup_field = 'pk'
@@ -90,4 +89,4 @@ def redirect(request):
     if qs[0].user_preference == Preference.STUDENT:
         return render(request, 'test_system.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')

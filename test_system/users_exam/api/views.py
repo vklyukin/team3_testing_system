@@ -9,9 +9,8 @@ from rest_framework import status
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
-
-BASE_PATH = 'http://localhost:5000/'
+from student_answer.models import StudentAnswer
+from test_system import base_path
 
 
 class UsersExamAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -88,6 +87,9 @@ class UsersExamRUDView(generics.RetrieveUpdateDestroyAPIView):
 def redirect(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
+        answers = StudentAnswer.objects.filter(user=request.user)
+        if len(answers.exclude(time_started__isnull=True)) > 0:
+            return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
         return render(request, 'stream_choose.html', {})
     else:
-        return HttpResponseRedirect(BASE_PATH + 'test_editor/')
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')

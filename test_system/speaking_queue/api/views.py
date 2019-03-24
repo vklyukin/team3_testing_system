@@ -7,6 +7,35 @@ from rest_framework import status
 from .permissions import *
 from .serializers import *
 from room.models import Room
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from test_system import base_path
+
+
+@login_required
+def choose(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.STUDENT:
+        return render(request, 'room_choose.html', {})
+    else:
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
+
+@login_required
+def info(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.STUDENT:
+        return render(request, 'room_info.html', {})
+    else:
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
+
+@login_required
+def thanks(request):
+    qs = UserPreferences.objects.filter(user=request.user)
+    if qs[0].user_preference == Preference.STUDENT:
+        return render(request, 'thanks.html', {})
+    else:
+        return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
 
 
 class SpeakingAPIView(generics.ListAPIView, generics.CreateAPIView):

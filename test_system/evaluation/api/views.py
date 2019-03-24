@@ -13,6 +13,12 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from speaking_queue.models import TeacherSpeaking
 from room.models import Room
+from rest_framework.views import APIView
+from rest_framework import status
+from random import sample
+import xlsxwriter
+from io import BytesIO
+from django.http import StreamingHttpResponse
 
 
 class MarkAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -170,7 +176,7 @@ class CountMarksView(generics.ListAPIView):
                 try:
                     for mark in marks:
                         answers = StudentAnswer.objects.filter(user=mark.user)
-                        if len(answers) > 0 and not mark.removed:
+                        if len(answers) > 0:
                             count = 0
                             for ans in answers:
                                 question = TestQuestion.objects.get(pk=ans.question.pk)
@@ -217,3 +223,112 @@ class StudentsByRoom(generics.ListAPIView):
                     return Mark.objects.filter(room=teacher[0].room)
             return Mark.objects.none()
         return Mark.objects.none()
+
+
+def get_student_list(major: str, groups: int, students : int) -> list:
+    if (groups is None) and (students is None):
+        raise ValueError(f"{major}: Group or student per group count should be passed in request body")
+
+    marks = list(Mark.objects.filter(Q(major=major)))
+    marks_count = len(marks)
+
+    if (groups is not None) and (students is not None):
+        groups = int(groups)
+        students = int(students)
+        if groups * students < marks_count:
+            groups = None
+
+    if groups is None:
+        groups = marks_count // students + 1 * (marks_count % students != 0)
+
+    if students is None: 
+        students = marks_count // groups + 1 * (marks_count % groups != 0)
+
+    students -= 1
+    if students == 0:
+        students = 1
+
+    marks = list(map(lambda x : (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name, x.second_name), marks))
+
+    pv = list(filter(lambda x: x[2] == False, marks)) # Probably visited
+    pnv = list(filter(lambda x: x[2] == True, marks))
+
+    pv.sort(reverse=True)
+    pnv = sample(pnv, len(pnv))
+
+    pvst = len(pv) // groups + 1 * (len(pv) % groups != 0) # Students per group
+    if pvst == 0:
+        pvst = 1
+    pnvst = len(pnv) // groups + 1 * (len(pnv) % groups != 0)
+    if pnvst == 0:
+        pnvst = 1
+
+    gpv = [pv[i:i+pvst] for i in range(0, len(pv), pvst)] # Grouped
+    lgpv = len(gpv)
+    for i in range(groups - lgpv):
+        gpv.append([])
+
+    gpnv = [pnv[i:i+pnvst] for i in range(0, len(pnv), pnvst)]
+    lgpnv = len(gpnv)
+    for i in range(groups - lgpnv):
+        gpnv.append([])
+
+    g = [gpv[i] + gpnv[i] for i in range(groups)] # Merge groups
+
+    return tuple(map(lambda x : tuple(map(lambda y : (y[4], y[3], y[1]), x)), g))
+
+
+class GroupListView(APIView):
+
+    def get_permissions(self):
+        if self.request.user.is_authenticated:
+            pref = UserPreferences.objects.filter(user=self.request.user)
+            if pref[0].user_preference == Preference.STUDENT:
+                return [EmptyPermission()]
+            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
+                return [IsTeacherOrAdmin()]
+        else:
+            return [EmptyPermission()]
+
+    def get(self, request):
+        groupsSE = self.request.GET.get("groupsSE")
+        groupsAMI = self.request.GET.get("groupsAMI")
+        studentsSE = self.request.GET.get("studentsSE")
+        studentsAMI = self.request.GET.get("studentsAMI")
+
+        se = []
+        ami = []
+        try:
+            se = get_student_list('SE', groupsSE, studentsSE)
+            ami = get_student_list('AMI', groupsAMI, studentsAMI)
+        except Exception as e:
+            return Response({"status": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # create workbook with worksheet
+        output = BytesIO()
+        book = xlsxwriter.Workbook(output)
+
+        for major in (se, ami):
+            if major == se:
+                sheet = book.add_worksheet('SE')
+            else:
+                sheet = book.add_worksheet('AMI')
+            # fill worksheet
+            row = 0
+            for group in major:
+                for student in group:
+                    for i in range(len(student)):
+                        sheet.write(row, i, student[i])
+                    row += 1
+                row += 1
+
+        book.close()  # close book and save it in "output"
+        output.seek(0)  # seek stream on begin to retrieve all data from it
+
+        # send "output" object to stream with mimetype and filename
+        response = StreamingHttpResponse(
+            output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=Student_list.xlsx'
+        return response
+

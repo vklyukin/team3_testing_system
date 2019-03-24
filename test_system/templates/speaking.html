@@ -2,6 +2,7 @@
 {% block content %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/speaking.css' %}">
+<script type="text/javascript" src="{% static 'js/base_path.js' %}"></script>
 <div class="row">
   <div class="col-lg-12">
     <div class="card border-left-primary shadow mb-4 py-2">
@@ -9,7 +10,10 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Information</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can mark students' answers</div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800">Here You can mark students' answers.
+              To do this, put a student grade below and choose whether you are sure or not.
+              Verified students will appear in the table below.
+              You can edit the grades at any time.</div>
           </div>
           <div class="col-auto">
             <i class="fas fa-info fa-2x text-gray-300"></i>
