@@ -161,6 +161,14 @@ class CountMarksView(generics.ListAPIView):
     @staticmethod
     def evaluate(test_mark, mark):
         bounds = Scaler.objects.all()
+        if test_mark == 0:
+            min_level = None
+            min_bound = 1000
+            for bound in bounds:
+                if bound.lower < min_bound:
+                    min_bound = bound.lower
+                    min_level = bound.level
+            return TestLevel.get_value(min_level)
         for bound in bounds:
             if bound.lower <= test_mark <= bound.upper:
                 Mark.objects.filter(pk=mark.pk).update(test_level=TestLevel.get_enum(bound.level).name)
@@ -241,7 +249,7 @@ def get_student_list(major: str, groups: int, students : int) -> list:
     if groups is None:
         groups = marks_count // students + 1 * (marks_count % students != 0)
 
-    if students is None: 
+    if students is None:
         students = marks_count // groups + 1 * (marks_count % groups != 0)
 
     students -= 1
@@ -303,7 +311,7 @@ class GroupListView(APIView):
             ami = get_student_list('AMI', groupsAMI, studentsAMI)
         except Exception as e:
             return Response({"status": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         # create workbook with worksheet
         output = BytesIO()
         book = xlsxwriter.Workbook(output)
@@ -331,4 +339,3 @@ class GroupListView(APIView):
         )
         response['Content-Disposition'] = 'attachment; filename=Student_list.xlsx'
         return response
-
