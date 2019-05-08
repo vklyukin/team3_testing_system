@@ -12,8 +12,7 @@ delta = timedelta(seconds=3)
 class StudentAnswerSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if instance.time_started:
-            q = TestQuestion.objects.all()
-            q = q.filter(Q(number__exact=instance.question.number))
+            q = TestQuestion.objects.filter(number__exact=instance.question.number)
             if localtime(now()) - instance.time_started < q[0].duration + delta:
                 instance.answer = validated_data.get('answer', instance.answer)
                 instance.save()

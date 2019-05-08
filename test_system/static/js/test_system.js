@@ -554,15 +554,15 @@ const yes = () => {
     document.getElementById("qsns").style.zIndex = -1;
     document.getElementById("lend").style.zIndex = -1;
     document.getElementById("assk").style.zIndex = -1;
-    setTimeout(function () {
-        for (i = count; i < orderrow.length; i++) {
-            current_answer = get_answer(+orderrow[i]["pk"]);
-            current_task = get_task(+current_answer["question"]);
-            let g = new answer(current_answer["pk"], current_answer["number"], -1, current_answer["user"], current_answer["question"], current_answer["time_started"]);
-            send_answer(JSON.stringify(g));
+    fetch(BASE_PATH + 'api/answer/finish/', {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json"
         }
-        location.reload(true);
-    }, 100);
+    });
+    location.reload(true);
 };
 
 const no = () => {
@@ -633,9 +633,7 @@ const stop_timerg = () => {
     document.getElementById("tmts").style.display = "none";
     document.getElementById("t1").style.display = "none";
     document.getElementById("t2").style.display = "none";
-    setTimeout(function () {
-        yes();
-    }, 100);
+    yes();
 };
 
 
@@ -674,6 +672,5 @@ const checkend = () => {
         document.getElementById("lend").style.zIndex = -1;
         document.getElementById("assk").style.zIndex = -1;
         yes();
-        nextpage();
     }
 };
