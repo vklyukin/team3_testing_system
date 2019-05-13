@@ -561,8 +561,11 @@ const yes = () => {
             "X-CSRFToken": getCookie("csrftoken"),
             "Accept": "application/json"
         }
-    });
-    location.reload(true);
+    }).then(function (response) {
+                if (response.status === 201) {
+                    location.reload(true);
+                }
+            });
 };
 
 const no = () => {
