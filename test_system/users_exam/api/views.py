@@ -11,6 +11,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from student_answer.models import StudentAnswer
 from test_system import base_path
+from evaluation.models import Mark
+from django.utils.timezone import now, localtime
 
 
 class UsersExamAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -87,9 +89,15 @@ class UsersExamRUDView(generics.RetrieveUpdateDestroyAPIView):
 def redirect(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
-        answers = StudentAnswer.objects.filter(user=request.user)
-        if len(answers.exclude(time_started__isnull=True)) > 0:
-            return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
-        return render(request, 'stream_choose.html', {})
+        userexam = UsersExam.objects.filter(user=request.user)
+        if userexam:
+            mark = Mark.objects.filter(user=request.user)[0]
+            if mark.removed:
+                return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
+            if userexam[0].exam.finish < localtime(now()):
+                return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
+            return HttpResponseRedirect(base_path.BASE_PATH + 'test_system/test/')
+        else:
+            return render(request, 'stream_choose.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')

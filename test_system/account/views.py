@@ -4,6 +4,9 @@ from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
 from student_answer.models import StudentAnswer
 from test_system import base_path
+from users_exam.models import UsersExam
+from evaluation.models import Mark
+from django.utils.timezone import now, localtime
 
 
 @login_required
@@ -14,7 +17,12 @@ def redirect(request):
     elif qs[0].user_preference == Preference.TEACHER:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')
     else:
-        answers = StudentAnswer.objects.filter(user=request.user)
-        if len(answers.exclude(time_started__isnull=True)) > 0:
-            return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
+        # answers = StudentAnswer.objects.filter(user=request.user)
+        userexam = UsersExam.objects.filter(user=request.user)
+        if userexam:
+            mark = Mark.objects.filter(user=request.user)[0]
+            if mark.removed:
+                return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
+            if userexam[0].exam.finish < localtime(now()):
+                return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
         return HttpResponseRedirect(base_path.BASE_PATH + 'stream_choose/choose/')
