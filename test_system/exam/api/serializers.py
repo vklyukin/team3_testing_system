@@ -17,7 +17,7 @@ class ExamSessionAPISerializer(serializers.ModelSerializer):
             'start',
             'finish',
             'stream',
-            'major'
+            'major',
             'start_button'
         ]
 

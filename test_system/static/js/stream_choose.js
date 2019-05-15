@@ -61,6 +61,7 @@ function checkstreamtime(stream) {
 
     if ((+cdate[0])<(+tdate[0])||((+cdate[1])<(+tdate[1])&&(+cdate[0])<=(+tdate[0]))||((+cdate[2])<(+tdate[2])&&(+cdate[1])<=(+tdate[1])&&(+cdate[0])<=(+tdate[0])))
     {
+
         return true;
     }
     else   if ((+cdate[0])===(+tdate[0])&&(+cdate[1])===(+tdate[1])&&(+cdate[2])===(+tdate[2]))
@@ -84,16 +85,17 @@ function checkstreamtimestrt(stream) {
     let tdatetime2=tdatetime[1].split("+");
     let ttime=tdatetime2[0].split(":");
 
+    let tostart = false
     if ((+cdate[0])<(+tdate[0])||((+cdate[1])<(+tdate[1])&&(+cdate[0])<=(+tdate[0]))||((+cdate[2])<(+tdate[2])&&(+cdate[1])<=(+tdate[1])&&(+cdate[0])<=(+tdate[0])))
     {
-        return false;
+       tostart = false;
     }
     else   if ((+cdate[0])===(+tdate[0])&&(+cdate[1])===(+tdate[1])&&(+cdate[2])===(+tdate[2]))
     {
        if((+ctime[0])*3600+(+ctime[1])*60+(+ctime[2])-(+ttime[0])*3600-(+ttime[1])*60-(+ttime[2])>0)
-       return true;
+       tostart = true;
     }
-    return false;
+    return tostart && stream['start_button'];
 }
 
 

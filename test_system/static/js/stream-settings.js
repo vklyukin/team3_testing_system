@@ -172,6 +172,29 @@ const SendGet = () => { //function that get all questions from the server side
                     delete_button_th.setAttribute("class", "center");
                     delete_button_th.appendChild(delete_button);
                     q_tr.appendChild(delete_button_th);
+
+                    const start_finish_button = document.createElement("button");
+                    start_finish_button.setAttribute("id", 'q_start_but_' + json[i].pk);
+                    start_finish_button.setAttribute("class", "btn btn-outline-success");
+                    if (json[i].start_button === false){
+                      start_finish_button.innerHTML = 'Start';
+                      start_finish_button.setAttribute("class", "btn btn-outline-success");
+                      start_finish_button.setAttribute("onclick", 'SendStatus(' + json[i].pk + ')');
+                    }else{
+                      if (checkstreamtime(json[i].finish) === true){
+                        start_finish_button.innerHTML = 'Finish';
+                        start_finish_button.setAttribute("class", "btn btn-outline-danger");
+                        start_finish_button.setAttribute("onclick", 'SendFinish(' + json[i].pk + ')');
+                      }else{
+                        start_finish_button.innerHTML = 'Finish';
+                        start_finish_button.setAttribute("class", "btn btn-outline-secondary");
+                        start_finish_button.disabled = true;
+                      }
+                    }
+                    const start_finish_button_th = document.createElement("td");
+                    start_finish_button_th.setAttribute("class", "center");
+                    start_finish_button_th.appendChild(start_finish_button);
+                    q_tr.appendChild(start_finish_button_th);
                 }
             }
         });
@@ -191,6 +214,11 @@ const SendChanges = () => { //function that checks for the changes in the questi
         let q_date = document.getElementById('q_date_' + q_pk);
         let q_start = document.getElementById('q_start_' + q_pk); //getting question's correct answer wrapper
         let q_finish = document.getElementById('q_finish_' + q_pk);
+        let q_start_status = false;
+        let q_start_but = document.getElementById('q_start_but_' + q_pk);
+        if (q_start_but.innerHTML == "Finish"){
+          q_start_status = true;
+        }
         fetch(BASE_PATH + 'api/exam/' + q_pk + '/', { //sending fetch put request to add changed question to the Data Base
             method: "PUT",
             credentials: "same-origin", //including cookie information
@@ -205,7 +233,8 @@ const SendChanges = () => { //function that checks for the changes in the questi
                 major: major,
                 stream: q_stream.value,
                 start: (q_date.textContent + "T" + q_start.textContent + ":00+03:00"),
-                finish: (q_date.textContent + "T" + q_finish.textContent + ":00+03:00")
+                finish: (q_date.textContent + "T" + q_finish.textContent + ":00+03:00"),
+                start_button: q_start_status
             })
         }).then(function (response) {
             if (response.status === 200 && i === elem_count - 2) {
@@ -229,6 +258,113 @@ const SendDelete = pk => {
             location.reload();
         }
     })
+};
+
+const SendStatus = pk => {
+  let q_number = document.getElementById('q_' + pk); //getting question's number
+  let q_major = document.getElementById('q_major_' + pk); //getting question's text
+  let major = "---";
+  if (q_major.value == "Software Engineering") major = "SE";
+  if (q_major.value == "Applied Mathematics and Information Science") major = "AMI";
+  let q_stream = document.getElementById('q_stream_' + pk); //getting question's answer option 1
+  let q_date = document.getElementById('q_date_' + pk);
+  let q_start = document.getElementById('q_start_' + pk); //getting question's correct answer wrapper
+  let q_finish = document.getElementById('q_finish_' + pk);
+  let q_start_status = true;
+  fetch(BASE_PATH + 'api/exam/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
+      method: "PUT",
+      credentials: "same-origin", //including cookie information
+      headers: {
+          "X-CSRFToken": getCookie("csrftoken"), //token to check user validation
+          "Accept": "application/json",
+          'Content-Type': 'application/json'
+      },
+      //making json from data that was piked on the lines above
+      body: JSON.stringify({
+          pk: pk,
+          major: major,
+          stream: q_stream.value,
+          start: (q_date.textContent + "T" + q_start.textContent + ":00+03:00"),
+          finish: (q_date.textContent + "T" + q_finish.textContent + ":00+03:00"),
+          start_button: q_start_status
+      })
+  }).then(function (response) {
+      if (response.status === 200) {
+          location.reload();
+      }
+  })
+};
+
+function get(path) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', path, false);
+    xhr.send();
+    return xhr.response;
+}
+
+function checkstreamtime(time) {
+    let cur = JSON.parse(get(BASE_PATH + 'api/time/'))["time"]
+    let tst = time;
+    let cdatetime=cur.split("T");
+    let cdate=cdatetime[0].split("-");
+    let cdatetime2=cdatetime[1].split("+");
+    let ctime=cdatetime2[0].split(":");
+
+    let tdatetime=tst.split("T");
+    let tdate=tdatetime[0].split("-");
+    let tdatetime2=tdatetime[1].split("+");
+    let ttime=tdatetime2[0].split(":");
+
+    if ((+cdate[0])<(+tdate[0])||((+cdate[1])<(+tdate[1])&&(+cdate[0])<=(+tdate[0]))||((+cdate[2])<(+tdate[2])&&(+cdate[1])<=(+tdate[1])&&(+cdate[0])<=(+tdate[0])))
+    {
+
+        return true;
+    }
+    else   if ((+cdate[0])===(+tdate[0])&&(+cdate[1])===(+tdate[1])&&(+cdate[2])===(+tdate[2]))
+    {
+       if((+ctime[0])*3600+(+ctime[1])*60+(+ctime[2])-(+ttime[0])*3600-(+ttime[1])*60-(+ttime[2])<0)
+       return true;
+    }
+    else return false;
+}
+
+const SendFinish = pk => {
+  let cur = JSON.parse(get(BASE_PATH + 'api/time/'))["time"]
+  let q_number = document.getElementById('q_' + pk); //getting question's number
+  let q_major = document.getElementById('q_major_' + pk); //getting question's text
+  let major = "---";
+  if (q_major.value == "Software Engineering") major = "SE";
+  if (q_major.value == "Applied Mathematics and Information Science") major = "AMI";
+  let q_stream = document.getElementById('q_stream_' + pk); //getting question's answer option 1
+  let q_date = document.getElementById('q_date_' + pk);
+  let q_start = document.getElementById('q_start_' + pk); //getting question's correct answer wrapper
+  let q_finish = document.getElementById('q_finish_' + pk);
+  let q_start_status = true;
+  q_start_but = document.getElementById('q_start_but_' + pk);
+  q_start_but.setAttribute("class", "btn btn-outline-secondary");
+  q_start_but.disabled = true;
+  fetch(BASE_PATH + 'api/exam/' + pk + '/', { //sending fetch put request to add changed question to the Data Base
+      method: "PUT",
+      credentials: "same-origin", //including cookie information
+      headers: {
+          "X-CSRFToken": getCookie("csrftoken"), //token to check user validation
+          "Accept": "application/json",
+          'Content-Type': 'application/json'
+      },
+      //making json from data that was piked on the lines above
+      body: JSON.stringify({
+          pk: pk,
+          major: major,
+          stream: q_stream.value,
+          start: (q_date.textContent + "T" + q_start.textContent + ":00+03:00"),
+          finish: cur,
+          start_button: q_start_status
+      })
+  }).then(function (response) {
+      if (response.status === 200) {
+          location.reload();
+      }
+  })
 };
 
 const AddQ = () => {
