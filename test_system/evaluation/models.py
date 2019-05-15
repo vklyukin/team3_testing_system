@@ -141,6 +141,7 @@ class Mark(models.Model):
         choices=[(tag.name, tag.value) for tag in Major],
         null=True, blank=True
     )
+    email_received = models.BooleanField(default=False)
 
     @property
     def owner(self):

@@ -19,6 +19,7 @@ from random import sample
 import xlsxwriter
 from io import BytesIO
 from django.http import StreamingHttpResponse
+from django.contrib.auth.models import User
 
 
 class MarkAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -102,8 +103,8 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
                     old_room = instance.room
                     if old_room is not None and old_room.amount_stud > 0:
                         Room.objects.filter(pk=old_room.pk).update(amount_stud=old_room.amount_stud - 1)
-                        Mark.objects.filter(room=old_room).exclude(position__lte=instance.position)\
-                            .update(position=F('position')-1)
+                        Mark.objects.filter(room=old_room).exclude(position__lte=instance.position) \
+                            .update(position=F('position') - 1)
                     if request.data['room'] is not None:
                         room = Room.objects.get(pk=request.data['room'])
                         Room.objects.filter(pk=room.pk).update(amount_stud=room.amount_stud + 1)
@@ -233,7 +234,7 @@ class StudentsByRoom(generics.ListAPIView):
         return Mark.objects.none()
 
 
-def get_student_list(major: str, groups: int, students : int) -> list:
+def get_student_list(major: str, groups: int, students: int) -> list:
     if (groups is None) and (students is None):
         raise ValueError(f"{major}: Group or student per group count should be passed in request body")
 
@@ -256,37 +257,44 @@ def get_student_list(major: str, groups: int, students : int) -> list:
     if students == 0:
         students = 1
 
-    marks = list(map(lambda x : (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name, x.second_name), marks))
+    marks = list(map(lambda x: (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and
+                                x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name,
+                                x.second_name), marks))
 
-    pv = list(filter(lambda x: x[2] == False, marks)) # Probably visited
+    pv = list(filter(lambda x: x[2] == False, marks))  # Probably visited
     pnv = list(filter(lambda x: x[2] == True, marks))
 
     pv.sort(reverse=True)
     pnv = sample(pnv, len(pnv))
 
-    pvst = len(pv) // groups + 1 * (len(pv) % groups != 0) # Students per group
+    pvst = len(pv) // groups + 1 * (len(pv) % groups != 0)  # Students per group
     if pvst == 0:
         pvst = 1
     pnvst = len(pnv) // groups + 1 * (len(pnv) % groups != 0)
     if pnvst == 0:
         pnvst = 1
 
-    gpv = [pv[i:i+pvst] for i in range(0, len(pv), pvst)] # Grouped
+    gpv = [pv[i:i + pvst] for i in range(0, len(pv), pvst)]  # Grouped
     lgpv = len(gpv)
     for i in range(groups - lgpv):
         gpv.append([])
 
-    gpnv = [pnv[i:i+pnvst] for i in range(0, len(pnv), pnvst)]
+    gpnv = [pnv[i:i + pnvst] for i in range(0, len(pnv), pnvst)]
     lgpnv = len(gpnv)
     for i in range(groups - lgpnv):
         gpnv.append([])
 
-    g = [gpv[i] + gpnv[i] for i in range(groups)] # Merge groups
+    g = [gpv[i] + gpnv[i] for i in range(groups)]  # Merge groups
 
-    return tuple(map(lambda x : tuple(map(lambda y : (y[4], y[3], y[1]), x)), g))
+    return tuple(map(lambda x: tuple(map(lambda y: (y[4], y[3], y[1]), x)), g))
 
 
 class GroupListView(APIView):
+
+    @staticmethod
+    def result_text(level, name, surname):
+        return "Dear " + name + " " + surname + "!\n According to the test results your English language " \
+                                                "proficiency level is " + level + ".\n\nBest regards,\nHSE administration."
 
     def get_permissions(self):
         if self.request.user.is_authenticated:
@@ -333,6 +341,12 @@ class GroupListView(APIView):
         book.close()  # close book and save it in "output"
         output.seek(0)  # seek stream on begin to retrieve all data from it
 
+        # send emails with results
+        unsent = Mark.objects.filter(email_received=False)
+        for student in unsent:
+            student.user.email_user("Results of the entry test",
+                                    self.result_text(student.level, student.user.first_name, student.user.last_name))
+        Mark.objects.filter(email_received=False).update(email_received=True)
         # send "output" object to stream with mimetype and filename
         response = StreamingHttpResponse(
             output, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

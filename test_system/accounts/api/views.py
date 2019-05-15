@@ -13,6 +13,7 @@ from evaluation.models import Mark
 from user_pref.models import Preference, UserPreferences
 from stud_id.models import UserStudentID
 from test_system import base_path
+from django.core.mail import send_mail
 
 
 class UserCreate(CreateAPIView):
@@ -39,6 +40,16 @@ class UserCreate(CreateAPIView):
             Mark.objects.create(user=user, first_name=user.first_name, second_name=user.last_name,
                                 major=Major.get_name(request.data['major']))
             UserStudentID.objects.create(user=user, student_id=request.data['password'])
+            data = 'Your username: ' + request.data['username'] + '\nYour password: ' + request.data['password'] +\
+                   '\n\nDon\'t tell anybody your authentication data\n' \
+                   'Good luck!\nHSE CS faculty administration'
+            send_mail(
+                'Your auth data',
+                data,
+                'testhsecs@gmail.com',
+                [request.data['email']],
+                fail_silently=False,
+            )
             del response['password']
             del response['first_name']
             del response['last_name']
