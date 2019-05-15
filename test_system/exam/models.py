@@ -11,3 +11,4 @@ class ExamSession(models.Model):
         choices=[(tag.name, tag.value) for tag in Major],
         null=True, blank=True
     )
+    start_button = models.BooleanField(default=False)
