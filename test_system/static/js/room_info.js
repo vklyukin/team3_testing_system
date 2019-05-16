@@ -88,19 +88,24 @@ function checkstreamtime(stream) {
 
 function counttime(qwe)
 {
-    let kf=0;
-    let st=+user[0]["position"];
-    let tch=+qwe["amount_teach"];
-    if(qwe["amount_teach"]>0)
+  let kf=0;
+  let st=+qwe["amount_stud"]-1;
+  let tch=+qwe["amount_teach"];
+  if(qwe["amount_teach"] > 0){
     kf=(st-st%tch)/tch;
-    else return "inf";
-    let ctime=qwe["avg_time"].split(":");
-    let time=(+ctime[0])*3600+(+ctime[1])*60+(+ctime[2]);
-    let seconds=time*kf;
+  } else {
+    return "Undefined";
+  }
+  let ctime=qwe["avg_time"].split(":");
+  let time=(+ctime[0])*3600+(+ctime[1])*60+(+ctime[2]);
+  let seconds=time*kf;
 
-    let minutes = (seconds - (seconds) % 60) / 60;
+  let minutes = (seconds - (seconds) % 60) / 60;
+  if (minutes < 0){
+    minutes = 0;
+  }
 
-    return minutes+" minutes";
+  return minutes+" minutes";
 }
 
 function test()
