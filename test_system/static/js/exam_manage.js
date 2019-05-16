@@ -5,6 +5,10 @@ window.onpopstate = function () {
 
 const evaluate = () => fetch(BASE_PATH + 'api/mark/evaluate/', { //fetch get request to get array of questions
     method: 'get'
+}).then(function (response) {
+  if (response.status === 200) {
+    SendGet();
+  }
 });
 
 const SendGet = () => { //function that get all questions from the server side
