@@ -3,6 +3,10 @@ window.onpopstate = function () {
     history.go(1);
 };
 
+const evaluate = () => fetch(BASE_PATH + 'api/mark/evaluate/', { //fetch get request to get array of questions
+    method: 'get'
+});
+
 const SendGet = () => { //function that get all questions from the server side
     return fetch(BASE_PATH + 'api/mark/', { //fetch get request to get array of questions
         method: 'get'
