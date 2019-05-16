@@ -1,2 +1,2 @@
-BASE_PATH = 'http://gdteam3.pythonanywhere.com/'
+BASE_PATH = 'http://entryhse.tk/'
 # BASE_PATH = 'http://localhost:5000/'
