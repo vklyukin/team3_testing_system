@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.tablesorter.js' %}"></script>
   </head>
   <body id="page-top">
     <div id="wrapper">
@@ -36,13 +37,13 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'test-editor:redirect' %}">
             <i class="fas fa-fw fa-edit"></i>
-            <span>Editor</span></a>
+            <span>Question Editor</span></a>
         </li>
 
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:test_upload' %}">
             <i class="fas fa-fw fa-upload"></i>
-            <span>Upload</span></a>
+            <span>Test File Upload</span></a>
         </li>
 
         <!-- Divider -->
@@ -55,13 +56,13 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:scale_edit' %}">
             <i class="fas fa-fw fa-ruler"></i>
-            <span>Grading Scale</span></a>
+            <span>Grading Scale Editor</span></a>
         </li>
 
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:results' %}">
             <i class="fas fa-fw fa-vote-yea"></i>
-            <span>Results</span></a>
+            <span>Infographics</span></a>
         </li>
 
         <hr class="sidebar-divider">
@@ -73,7 +74,7 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:studlist' %}">
             <i class="fas fa-fw fa-list-ul"></i>
-            <span>List Upload</span></a>
+            <span>Student List Upload</span></a>
         </li>
 
         <hr class="sidebar-divider">
@@ -91,7 +92,7 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:speaking' %}">
             <i class="fas fa-fw fa-volume-up"></i>
-            <span>Speaking grading</span></a>
+            <span>Speaking Scores</span></a>
         </li>
 
         <hr class="sidebar-divider">
@@ -103,13 +104,13 @@
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:manage' %}">
             <i class="fas fa-fw fa-solar-panel"></i>
-            <span>Control Panel</span></a>
+            <span>Test Results</span></a>
         </li>
 
         <li class="nav-item active">
           <a class="nav-link" href="{% url 'dashboard:stream_edit' %}">
             <i class="fas fa-fw fa-stopwatch"></i>
-            <span>Stream Settings</span></a>
+            <span>Test Session add & edit</span></a>
         </li>
 
         <!-- Divider -->

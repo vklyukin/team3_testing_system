@@ -35,6 +35,7 @@
   float: right;
   height: 9vh;
   font-size: 3vh;
+  margin-bottom: 2vh;
 }
 
 .question_next:hover {
@@ -81,4 +82,12 @@
 
 .test_time {
   font-size: 5vh;
+}
+
+.reading_text {
+  font-size: 3vh;
+}
+
+.reading {
+  margin-bottom: 2vh;
 }

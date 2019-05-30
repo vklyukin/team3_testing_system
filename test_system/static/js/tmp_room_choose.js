@@ -20,16 +20,15 @@ function init() {
           waiting_time = (json[i].amount_stud * parseInt((json[i].avg_time).slice(3, 5))) / json[i].amount_teach;
         }
         let room = document.createElement('button');
-        room.setAttribute('class', 'btn btn-block room-variant');
+        room.setAttribute('class', 'btn room-variant');
         // room.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><th>Room number</th><th>Number of students</th><th>Number of teachers</th><th>Waiting time</th></tr><tr><td>'
         // + json[i].number + '</td><td>'
         // + json[i].amount_stud + '</td><td>'
         // + json[i].amount_teach + '</td><td>'
         // + waiting_time + ' minutes</td></tr></table>'
-        room.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><th>Room number</th><td>'
-        + json[i].number + '</td></tr><tr><th>Number of students</th><td>'
-        + json[i].amount_stud + '</td></tr><tr><th>Number of teachers</th><td>'
-        + json[i].amount_teach + '</td></tr><tr><th>Waiting time</th><td>'
+        room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Students</th><td>'
+        + json[i].amount_stud + '</td></tr><tr><th>Teachers</th><td>'
+        + json[i].amount_teach + '</td></tr><tr><th>Waiting</th><td>'
         + waiting_time + ' minutes</td></tr></table>'
         rooms_container.appendChild(room);
       }

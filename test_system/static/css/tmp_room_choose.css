@@ -22,6 +22,10 @@
   border-style: none;
 }
 
+#rooms {
+  text-align: center;
+}
+
 .main_header {
   font-size: 6vh;
   text-align: center;
@@ -38,7 +42,7 @@
   margin-bottom: 2vh;
   margin-top: 0;
   font-size: 2.5vh;
-  margin-right: 5vw;
+  margin: 1vw;
 }
 
 .room-variant:hover {
@@ -52,4 +56,21 @@
   color: #fff;
   border-color: #28a745;
   background-color: #28a745;
+}
+
+.room_number {
+  font-size: 4vh;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (min-width: 550px) {
+    .room-variant {
+      width: 40vw;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .room-variant {
+      width: 20vw;
+    }
 }

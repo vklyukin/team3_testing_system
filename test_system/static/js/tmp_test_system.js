@@ -6,6 +6,10 @@ let answer3 = document.getElementById('question_answer3');
 let answer4 = document.getElementById('question_answer4');
 let count = 0;
 let questions;
+let question_reading_text;
+let question_reading_container = document.createElement('div');
+let question_reading;
+let question_next = document.getElementById('question_next');
 
 function default_choose() {
   if (answer1.className == "btn btn-block answer_selected") {
@@ -190,6 +194,15 @@ function next_question() {
 function fill_questions(json, i) {
   const n = json.length;
   if (i < n) {
+    if (json[i].is_reading == true) {
+      question_reading.style.visibility = 'visible';
+      question_reading_text.appendChild(question_reading_container);
+    } else {
+      if (question_reading_text.childNodes.length != 0) {
+        question_reading.style.visibility = 'hidden';
+        question_reading_text.removeChild(question_reading_text.childNodes[0]);
+      }
+    }
     question_number.innerHTML = 'Task ' + (i + 1) + ' out of ' + n;
     question_text.innerHTML = json[i].text;
     answer1.innerHTML = json[i].answ_option1;
@@ -201,10 +214,19 @@ function fill_questions(json, i) {
 }
 
 function init() {
-  return fetch(BASE_PATH + 'api/question/', {
+  question_reading_text = document.getElementById('question_reading');
+  question_reading = document.getElementById('reading_text');
+  fetch(BASE_PATH + 'api/question/text', {
     method: 'get'
   }).then(function (response) {
-      return response.json(); //reading request like a json object
+    return response.json();
+  }).then(function (json) {
+    question_reading_container.innerHTML = json[0].text;
+  });
+  fetch(BASE_PATH + 'api/question/', {
+    method: 'get'
+  }).then(function (response) {
+      return response.json();
   }).then(function (json) {
     questions = json;
     fill_questions(questions, count);
