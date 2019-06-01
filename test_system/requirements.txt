@@ -7,3 +7,4 @@ fulltext
 numpy
 xlrd
 xlsxwriter
+psycopg2

@@ -15,7 +15,6 @@ class TeacherQuestionSerializer(serializers.ModelSerializer):
             'answ_option2',
             'answ_option3',
             'answ_option4',
-            'duration',
             'is_reading'
         ]
 
@@ -40,7 +39,6 @@ class StudentQuestionSerializer(serializers.ModelSerializer):
             'answ_option2',
             'answ_option3',
             'answ_option4',
-            'duration',
             'is_reading',
         ]
         read_only_fields = ['answ_correct', 'is_reading']
@@ -55,7 +53,6 @@ class StudentQuestionAPISerializer(serializers.ModelSerializer):
         fields = [
             'pk',
             'number',
-            'duration',
             'is_reading',
         ]
         read_only_fields = [
@@ -66,7 +63,6 @@ class StudentQuestionAPISerializer(serializers.ModelSerializer):
             'answ_option3',
             'answ_option4',
             'is_reading',
-            'duration',
         ]
 
 
@@ -83,7 +79,6 @@ class EmptyQuestionSerializer(serializers.ModelSerializer):
             'answ_option2',
             'answ_option3',
             'answ_option4',
-            'duration',
             'is_reading',
         ]
 
@@ -114,7 +109,6 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
                                                answ_option2=validated_data['answ_option2'],
                                                answ_option3=validated_data['answ_option3'],
                                                answ_option4=validated_data['answ_option4'],
-                                               duration=validated_data['duration'],
                                                is_reading=validated_data['is_reading'])
         return question
 
@@ -128,7 +122,6 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
             'answ_option2',
             'answ_option3',
             'answ_option4',
-            'duration',
             'is_reading'
         ]
 
