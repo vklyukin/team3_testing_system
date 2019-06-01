@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from test_question.models import TestQuestion
 from test_text.models import ReadingTest
-from datetime import timedelta
 
 
 class TeacherQuestionSerializer(serializers.ModelSerializer):
@@ -98,12 +97,6 @@ class CorrectAnswerValidator(object):
             raise serializers.ValidationError("Correct answer field is out of possible range")
 
 
-class CorrectDurationValidator(object):
-    def __call__(self, duration):
-        if duration <= timedelta(seconds=0):
-            raise serializers.ValidationError("Duration field should be positive")
-
-
 class TestQuestionCreateSerializer(serializers.ModelSerializer):
     number = serializers.IntegerField()
     text = serializers.CharField()
@@ -112,7 +105,6 @@ class TestQuestionCreateSerializer(serializers.ModelSerializer):
     answ_option2 = serializers.CharField()
     answ_option3 = serializers.CharField()
     answ_option4 = serializers.CharField()
-    duration = serializers.DurationField(validators=[CorrectDurationValidator()])
     is_reading = serializers.BooleanField()
 
     def create(self, validated_data):
@@ -147,14 +139,12 @@ class TestQuestionReadingAPISerializer(serializers.ModelSerializer):
         fields = [
             'pk',
             'text',
-            'time_recommended',
         ]
 
 
 class TestQuestionReading(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.text = validated_data.get('text', instance.text)
-        instance.time_recommended = validated_data.get('time_recommended', instance.time_recommended)
         instance.save()
         return instance
 
@@ -162,7 +152,6 @@ class TestQuestionReading(serializers.ModelSerializer):
         model = ReadingTest
         fields = [
             'text',
-            'time_recommended',
         ]
 
 
@@ -171,5 +160,4 @@ class TestQuestionReadingEmpty(serializers.ModelSerializer):
         model = ReadingTest
         read_only_fields = [
             'text',
-            'time_recommended',
         ]

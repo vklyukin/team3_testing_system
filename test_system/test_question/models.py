@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from datetime import timedelta
 
 
 class TestQuestion(models.Model):
@@ -13,7 +12,6 @@ class TestQuestion(models.Model):
     answ_option2 = models.TextField()
     answ_option3 = models.TextField()
     answ_option4 = models.TextField()
-    duration = models.DurationField(default=timedelta(seconds=30))
     is_reading = models.BooleanField(default=False)
 
     def __str__(self):

@@ -9,7 +9,6 @@ from rest_framework import status
 from .serializers import FileSerializer
 from test_question.models import TestQuestion
 from django.http import HttpResponseRedirect
-from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from user_pref.models import UserPreferences, Preference
@@ -87,13 +86,11 @@ class TextUploadView(APIView):
 
                     for i in range(20, 25):
                         questions[i].is_reading = True
-                        questions[i].duration = timedelta(minutes=5)
 
                     ReadingTest.objects.create(
                         text=''.join(map(lambda x: '<p>' + x.replace("\n", " ") + '.</p>',
                                          re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace(
                             "<p>.</p>", ""),
-                        time_recommended=timedelta(minutes=20),
                     )
 
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
@@ -226,7 +223,6 @@ class Question():
         self.answers = []
         self.answ_correct = ""
         self.is_reading = False
-        self.duration = timedelta(seconds=30)
 
     def __str__(self):
         res = f"({self.number}) {self.text}\n"
