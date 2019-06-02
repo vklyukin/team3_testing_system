@@ -1,6 +1,9 @@
 # English Language Testing System
 ###### Django Testing System for HSE freshmen. It is set to help HSE Foreign Languages Department automate process of language quality assessment.
 
+###### This fork goal is to move project to PostgreSQL and to make a Docker container over existing system.
+
+
 ## Table of contents
 
 - [Main](#main)
