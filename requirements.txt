@@ -8,3 +8,4 @@ numpy
 xlrd
 xlsxwriter
 psycopg2
+gunicorn

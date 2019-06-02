@@ -1,0 +1,3 @@
+POSTGRES_USER=audrey_horne
+POSTGRES_PASSWORD=my_love_to_audrey_is_enough_strong_to_be_a_password
+POSTGRES_DB=database1
