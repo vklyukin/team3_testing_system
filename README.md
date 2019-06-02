@@ -43,32 +43,42 @@ test_system/
 
 ## Getting started
 
-##### *Note that commands like python3, apt-get and pip3 can differ depending on your operation system!*
-
-> To use this project on your local machine you should make python virtual environment and run it.
-
-```shell
-python3 -m venv myvemv
-source myvenv/bin/activate
+> Clone this repo 
+```sh
+git clone https://github.com/DimaT1/team3_testing_system/
 ```
-> Then you should install all required packages.
 
-```shell
-pip3 install -r requirements.txt
-sudo apt-get install antiword abiword unrtf poppler-utils libjpeg-dev \
-pstotext
+> Create constants.py
+##### You need to specify SECRET_KEY, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
+```sh
+vim test_system/constants.py
 ```
-> After all packages were installed you should make debug mode True in the settings.py file, so Django could serve static files on you localhost.
 
-```python
-# test_system/settings.py
-DEBUG = True
+> Build containers
+```sh
+docker-compose build
 ```
-> And then You are ready to run this application on your local machine.
 
-```shell
-python3 manage.py runserver
+> You can run bash using
+```sh
+docker-compose run --rm djangoapp /bin/bash
 ```
+
+> Create superuser
+```sh
+docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py createsuperuser"
+```
+
+> Run server
+```sh
+docker-compose up
+```
+
+> Collect static
+```sh
+docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-input
+```
+
 
 [⬆ Back to top](#table-of-contents)
 
