@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from test_system.constants import SECRET_KEY, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_PORT, DB_POSTGRES_PSWD
+from test_system.constants import SECRET_KEY, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_PORT
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -97,11 +97,11 @@ WSGI_APPLICATION = 'test_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 't3ts',
+        'NAME': 'database1',
         'USER': 'audrey_horne',
-        'PASSWORD': DB_POSTGRES_PSWD,
-        'HOST': 'localhost',
-        'PORT': '',
+        'PASSWORD': 'my_love_to_audrey_is_enough_strong_to_be_a_password',
+        'HOST': 'database1',
+        'PORT': '5432',
     }
 }
 
@@ -146,7 +146,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/account/login_redirect/'
