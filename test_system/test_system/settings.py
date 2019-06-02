@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-from test_system.constants import SECRET_KEY, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_PORT
+from test_system.constants import SECRET_KEY, EMAIL_HOST_PASSWORD, EMAIL_HOST_USER, EMAIL_PORT, DB_POSTGRES_PSWD
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -24,8 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -96,8 +96,12 @@ WSGI_APPLICATION = 'test_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 't3ts',
+        'USER': 'audrey_horne',
+        'PASSWORD': DB_POSTGRES_PSWD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -142,7 +146,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/account/login_redirect/'
