@@ -10,6 +10,7 @@ let question_reading_text;
 let question_reading_container = document.createElement('div');
 let question_reading;
 let question_next = document.getElementById('question_next');
+let test_time = document.getElementById('test_time');
 
 function default_choose() {
   if (answer1.className == "btn btn-block answer_selected") {
@@ -214,6 +215,38 @@ function fill_questions(json, i) {
 }
 
 function init() {
+  var x = setInterval(function() {
+    var now = new Date();
+    var countDownDate = localStorage.getItem('time');
+    if (countDownDate == null) {
+      countDownDate = new Date();
+      countDownDate.setHours(countDownDate.getHours() + 1);
+      countDownDate.setMinutes(countDownDate.getMinutes() + 30);
+      localStorage.setItem('time', countDownDate.toString());
+    } else {
+      countDownDate = Date.parse(localStorage.getItem('time'));
+    }
+    var distance = countDownDate - now;
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    test_time.innerHTML = hours + ":" + minutes + ":" + seconds;
+    if (distance < 0) {
+      clearInterval(x);
+      fetch(BASE_PATH + 'api/answer/finish/', {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+            "Accept": "application/json"
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          location.reload(true);
+        }
+      });
+    }
+  }, 1000);
   question_reading_text = document.getElementById('question_reading');
   question_reading = document.getElementById('reading_text');
   fetch(BASE_PATH + 'api/question/text', {
