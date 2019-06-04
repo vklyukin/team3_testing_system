@@ -3,8 +3,7 @@ window.onpopstate = function () {
     history.go(1);
 };
 
-const strems_ami = document.getElementById('streams_ami');
-const strems_se = document.getElementById('streams_se');
+const strems = document.getElementById('streams');
 let time_now;
 
 function check_time() {
@@ -14,6 +13,25 @@ function check_time() {
     return response.json();
   }).then(function (json) {
     time_now = json.time;
+  });
+}
+
+function SendPost(id) {
+  fetch(BASE_PATH + 'api/user-exam/', {
+    method: 'post',
+    credentials: "same-origin",
+    headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+        "Accept": "application/json",
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        exam: id,
+    })
+  }).then(function (response) {
+    if (response.status === 201) {
+      window.location.href = BASE_PATH + 'tmp/test_system/';
+    }
   });
 }
 
@@ -31,6 +49,7 @@ function init() {
         let start_str = json[i].start;
         let finish_str = json[i].finish;
         stream_button.setAttribute('class', 'btn btn-block stream-variant');
+        stream_button.setAttribute('onclick', 'SendPost(' + json[i].pk + ')');
         // stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
         // + json[i].stream + '</td><td>'
         // + start_str.slice(11, 16) + '</td><td>'
@@ -40,12 +59,25 @@ function init() {
         if (json[i].start_button === false) {
           stream_button.setAttribute('disabled', 'disabled');
         }
-        if (json[i].major == "SE" && date == start_str.slice(0, 10)) {
-          streams_se.appendChild(stream_button);
-        } else if (json[i].major == "AMI" && date == start_str.slice(0, 10)){
-          streams_ami.appendChild(stream_button);
+        if (date == start_str.slice(0, 10)) {
+          streams.appendChild(stream_button);
         }
       }
     }
   });
 }
+
+const getCookie = name => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+};

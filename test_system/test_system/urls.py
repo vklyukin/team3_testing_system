@@ -47,6 +47,7 @@ urlpatterns = [
     path('tmp/test_system/', TemplateView.as_view(template_name='tmp_test_system.html')),
     path('tmp/stream_choose/', TemplateView.as_view(template_name='tmp_stream_choose.html')),
     path('tmp/room_choose/', TemplateView.as_view(template_name='tmp_room_choose.html')),
+    path('tmp/room_info/', TemplateView.as_view(template_name='tmp_room_info.html')),
 ]
 
 handler404 = 'dashboard.views.error_404_view'
