@@ -1,9 +1,6 @@
 # English Language Testing System
 ###### Django Testing System for HSE freshmen. It is set to help HSE Foreign Languages Department automate process of language quality assessment.
 
-###### This fork goal is to move project to PostgreSQL and to make a Docker container over existing system.
-
-
 ## Table of contents
 
 - [Main](#main)
@@ -41,6 +38,17 @@ test_system/
 
 [⬆ Back to top](#table-of-contents)
 
+## Requirements
+
+```
+docker
+docker-compose
+whiptail
+```
+
+
+[⬆ Back to top](#table-of-contents)
+
 ## Getting started
 
 > Clone this repo 
@@ -51,22 +59,17 @@ git clone https://github.com/DimaT1/team3_testing_system/
 > Create constants.py
 ##### You need to specify SECRET_KEY, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 ```sh
-vim test_system/constants.py
+vim test_system/test_system/constants.py
 ```
 
-> Build containers
+> Configure & build
 ```sh
-docker-compose build
+./auto_bootstrap.sh
 ```
 
 > You can run bash using
 ```sh
 docker-compose run --rm djangoapp /bin/bash
-```
-
-> Create superuser
-```sh
-docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py createsuperuser"
 ```
 
 > Run server
@@ -77,6 +80,11 @@ docker-compose up
 > Collect static
 ```sh
 docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-input
+```
+
+> Reset docker (not recommended)
+```sh
+./docker-reset.sh
 ```
 
 
