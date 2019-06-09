@@ -59,7 +59,7 @@ git clone https://github.com/DimaT1/team3_testing_system/
 > Create constants.py
 ##### You need to specify SECRET_KEY, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 ```sh
-vim test_system/constants.py
+vim test_system/test_system/constants.py
 ```
 
 > Configure & build
@@ -84,7 +84,7 @@ docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-in
 
 > Reset docker (not recommended)
 ```sh
-./docker-reser.sh
+./docker-reset.sh
 ```
 
 
