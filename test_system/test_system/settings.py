@@ -90,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'test_system.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 

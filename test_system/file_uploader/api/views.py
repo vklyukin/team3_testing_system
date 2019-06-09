@@ -56,7 +56,6 @@ class TextUploadView(APIView):
                 pattern_answer = r"([a-d]\))" + pattern_line
 
                 test, reading = load_test(fi.file)
-
                 questions = []
 
                 test = iter(test.split("\n"))
@@ -248,7 +247,7 @@ class Question():
 
 
 def load_test(fi) -> tuple:
-    test = fulltext.get(fi)
+    test = fulltext.get(fi).replace('Choose the best word or phrase (a, b, c or d) to fill each blank.', '')
     if "answer sheet" in test.lower():
         test = test[:test.lower().find("answer sheet")]
     reading = test[test.lower().find("read the text below"):test.find("(21)")]
