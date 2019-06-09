@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from test_system import base_path
 from rest_framework.decorators import api_view
-from django.utils.timezone import now, localtime
 
 
 class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
@@ -39,11 +38,9 @@ class StudentAnswerAPIView(generics.ListAPIView, generics.CreateAPIView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated:
-            qs = UserPreferences.objects.all()
-            qs = qs.filter(Q(user=self.request.user))
+            qs = UserPreferences.objects.filter(user=self.request.user)
             if qs[0].user_preference == Preference.STUDENT:
-                sa = StudentAnswer.objects.all()
-                sa = sa.filter(Q(user=self.request.user))
+                sa = StudentAnswer.objects.filter(user=self.request.user, answer=32767)
                 return sa
             elif qs[0].user_preference == Preference.TEACHER or qs[0].user_preference == Preference.ADMIN:
                 return StudentAnswer.objects.all()
@@ -101,6 +98,6 @@ def finish_test(request):
             qs = UserPreferences.objects.filter(user=request.user)
             if len(qs) > 0:
                 if qs[0].user_preference == Preference.STUDENT:
-                    StudentAnswer.objects.filter(user=request.user, time_started__isnull=True).\
-                        update(answer=-1, time_started=localtime(now()))
+                    StudentAnswer.objects.filter(user=request.user, answer=32767).\
+                        update(answer=-1)
         return HttpResponse(status=200)

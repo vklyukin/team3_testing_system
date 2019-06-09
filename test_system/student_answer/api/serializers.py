@@ -8,8 +8,10 @@ from django.db.models import Q
 
 class StudentAnswerSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
-        if not instance.time_started:
+        if instance.answer != 32767:
             raise PermissionDenied()
+        instance.answer = validated_data.get('answer', instance.answer)
+        instance.save()
         return instance
 
     class Meta:
@@ -31,8 +33,8 @@ class StudentAnswerAPISerializer(serializers.ModelSerializer):
             'number',
             'answer',
             'user',
+            'question',
         ]
-        read_only_fields = ('question')
 
 
 class StudentAnswerSerializerEmpty(serializers.ModelSerializer):
