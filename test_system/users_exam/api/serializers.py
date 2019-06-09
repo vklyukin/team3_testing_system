@@ -16,14 +16,17 @@ class UsersExamAPISerializer(serializers.ModelSerializer):
         q_read = TestQuestion.objects.filter(is_reading=True)
         q_not_read = TestQuestion.objects.filter(is_reading=False)
         total = len(q_read) + len(q_not_read)
-        not_read_order = np.random.permutation(range(1, len(q_not_read) + 1))
-        for i in range(len(not_read_order)):
-            StudentAnswer.objects.create(number=not_read_order[i],
-                                         user=self.context['request'].user, question=q_not_read[i])
-        read_order = np.random.permutation(range(len(q_not_read) + 1, total + 1))
+        not_read_order = np.random.permutation(range(len(q_read) + 1, total + 1))
+
+        read_order = np.random.permutation(range(1, len(q_read) + 1))
         for i in range(len(read_order)):
             StudentAnswer.objects.create(number=read_order[i],
                                          user=self.context['request'].user, question=q_read[i])
+
+        for i in range(len(not_read_order)):
+            StudentAnswer.objects.create(number=not_read_order[i],
+                                         user=self.context['request'].user, question=q_not_read[i])
+
         return user
 
     class Meta:
