@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="591d0626-d5cc-445f-9999-8a477fb08231" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_system/file_uploader/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_system/file_uploader/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_system/test_system/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_system/test_system/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_system/evaluation/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_system/evaluation/api/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,14 +12,38 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/test_system/file_uploader/api/views.py">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_system/mark_scaler/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="709">
-              <caret line="250" selection-start-line="250" selection-end-line="250" />
+            <state relative-caret-position="135">
+              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test_system/mark_scaler/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_system/accounts/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="88" selection-start-line="88" selection-end-line="88" />
+              <folding>
+                <element signature="e#0#17#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,6 +78,10 @@
         <option value="$PROJECT_DIR$/test_system/test_system/settings.py" />
         <option value="$PROJECT_DIR$/test_system/student_answer/tests.py" />
         <option value="$PROJECT_DIR$/test_system/file_uploader/api/views.py" />
+        <option value="$PROJECT_DIR$/test_system/evaluation/api/views.py" />
+        <option value="$PROJECT_DIR$/test_system/mark_scaler/models.py" />
+        <option value="$PROJECT_DIR$/test_system/accounts/api/views.py" />
+        <option value="$PROJECT_DIR$/test_system/mark_scaler/api/views.py" />
       </list>
     </option>
   </component>
@@ -97,13 +124,26 @@
               <item name="team3_testing_system" type="b2602c69:ProjectViewProjectNode" />
               <item name="team3_testing_system" type="462c0819:PsiDirectoryNode" />
               <item name="test_system" type="462c0819:PsiDirectoryNode" />
-              <item name="file_uploader" type="462c0819:PsiDirectoryNode" />
+              <item name="accounts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="team3_testing_system" type="b2602c69:ProjectViewProjectNode" />
               <item name="team3_testing_system" type="462c0819:PsiDirectoryNode" />
               <item name="test_system" type="462c0819:PsiDirectoryNode" />
-              <item name="file_uploader" type="462c0819:PsiDirectoryNode" />
+              <item name="accounts" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="team3_testing_system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="team3_testing_system" type="462c0819:PsiDirectoryNode" />
+              <item name="test_system" type="462c0819:PsiDirectoryNode" />
+              <item name="mark_scaler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="team3_testing_system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="team3_testing_system" type="462c0819:PsiDirectoryNode" />
+              <item name="test_system" type="462c0819:PsiDirectoryNode" />
+              <item name="mark_scaler" type="462c0819:PsiDirectoryNode" />
               <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -172,17 +212,20 @@
       <workItem from="1560080164857" duration="8790000" />
       <workItem from="1560098754540" duration="5160000" />
       <workItem from="1560108503683" duration="1810000" />
+      <workItem from="1560119185019" duration="671000" />
+      <workItem from="1560154588517" duration="6340000" />
+      <workItem from="1560167555693" duration="16000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15760000" />
+    <option name="totallyTimeSpent" value="22787000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15052573" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15550636" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -294,16 +337,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_system/evaluation/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="24" column="55" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test_system/evaluation/api/permissions.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -347,16 +380,6 @@
         <state relative-caret-position="-761">
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_system/accounts/api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-506">
-          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -469,10 +492,70 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test_system/file_uploader/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="709">
-          <caret line="250" selection-start-line="250" selection-end-line="250" />
+        <state relative-caret-position="696">
+          <caret line="249" selection-start-line="249" selection-end-line="249" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/evaluation/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="696">
+          <caret line="202" selection-start-line="202" selection-end-line="202" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/evaluation/api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#90#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/evaluation/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="21" column="8" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/mark_scaler/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/accounts/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_system/mark_scaler/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
