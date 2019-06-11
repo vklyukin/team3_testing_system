@@ -37,18 +37,18 @@ case "$base_path" in
     ;;
 esac
 
-
 printf "$superuser_name\nsuperuser_mail\n$superuser_password" > .superuser.txt
 docker-compose build
 
-sed 's/^STATIC_ROOT/# STATIC_ROOT/' -i ./test_system/test_system/settings.py
+sed -i'.original' -e 's/^STATIC_ROOT/# STATIC_ROOT/' ./test_system/test_system/settings.py
 
 docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py makemigrations"
 docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py migrate"
 docker-compose run --rm djangoapp /bin/bash -c "cat .superuser.txt | python3 test_system/manage.py initadmin"
 
-sed 's/^# STATIC_ROOT/STATIC_ROOT/' -i ./test_system/test_system/settings.py
+sed -i'.original' -e 's/^# STATIC_ROOT/STATIC_ROOT/' ./test_system/test_system/settings.py
+rm ./test_system/test_system/settings.py.original
+
 docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-input
 
 [ "$start_on_complete" = true ] && docker-compose up
-
