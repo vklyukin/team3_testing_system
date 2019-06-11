@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tmp_test_system.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/base_path.js' %}"></script>
+  </head>
+  <body id="page-top">
+    <div id="wrapper">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+          <!-- Topbar -->
+          <nav class="navbar navbar-expand navbar-light topbar static-top">
+
+              <div class="test_time" id="test_time">
+
+              </div>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+
+              {% if user.is_authenticated %}
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="mr-2 d-none d-lg-inline user_info_name">{{ user.username }}</span>
+                  <img class="img-profile rounded-circle" src="{% static 'img/profile.png' %}">
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                  <a class="dropdown-item" href="{% url 'account:logout' %}">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+
+              {% else %}
+
+              <li class="nav-item">
+                <a class="dropdown-item" href="{% url 'account:login' %}">
+                  <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Login
+                </a>
+              </li>
+
+              {% endif %}
+
+            </ul>
+
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <div class="card">
+              <div class="card-body question_text">
+                <p id="question_number">Task 1 out of 65</p>
+                <p id="question_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Proin in ante sit amet leo dignissim laoreet sed eu arcu.</p>
+              </div>
+            </div>
+            <button class="btn btn-block question_variant" type="button" id="question_answer1" onclick="button1_choose()"></button>
+            <button class="btn btn-block question_variant" type="button" id="question_answer2" onclick="button2_choose()"></button>
+            <button class="btn btn-block question_variant" type="button" id="question_answer3" onclick="button3_choose()"></button>
+            <button class="btn btn-block question_variant" type="button" id="question_answer4" onclick="button4_choose()"></button>
+            <button class="btn btn-block question_next" type="button" onclick="next_question()" id="question_next">Next question</button>
+            <div class="card reading" id="reading_text">
+              <div class="card-body reading_text" id="question_reading">
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/sb-admin-2.min.js' %}"></script>
+    <script src="{% static 'js/tmp_test_system.js' %}"></script>
+    <script type="text/javascript">
+      init();
+    </script>
+  </body>
+</html>

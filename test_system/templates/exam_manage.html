@@ -3,11 +3,12 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/picker.min.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/exam_manage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/theme.default.css' %}">
 <script type="text/javascript" src="{% static 'js/base_path.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/exam_manage.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap-validate.js' %}"></script>
 <script type="text/javascript">
-   evaluate();
+   SendGet();
 </script>
 <div class="row">
   <div class="col-lg-12">
@@ -51,16 +52,16 @@
                   <th scope="col">Student</th>
                   <th scope="col">Major</th>
                   <th scope="col">Test Mark</th>
-                  <th scope="col" style="white-space: nowrap;">Test Level</th>
-                  <th scope="col">Removed</th>
-                  <th scope="col" style="white-space: nowrap;">Speaking Level</th>
-                  <th scope="col" style="white-space: nowrap;">Overall Level</th>
+                  <th data-sorter="false" scope="col" style="white-space: nowrap;">Test Level</th>
+                  <th data-sorter="false" scope="col">Removed</th>
+                  <th data-sorter="false" scope="col" style="white-space: nowrap;">Speaking Level</th>
+                  <th data-sorter="false" scope="col" style="white-space: nowrap;">Overall Level</th>
                   <th scope="col" hidden="hidden">User</th>
                   <th scope="col" hidden="hidden">Speaking</th>
                   <th scope="col" hidden="hidden">Room</th>
                   <th scope="col" hidden="hidden">Position</th>
                   <th scope="col" hidden="hidden">Confident</th>
-                  <th scope="col">Submit</th>
+                  <th data-sorter="false" scope="col">Submit</th>
                 </tr>
               </thead>
               <tbody id=q_table_body>
