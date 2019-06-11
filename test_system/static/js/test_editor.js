@@ -151,27 +151,6 @@ const SendGet = () => { //function that get all questions from the server side
                     q_corr_wrapper_th.appendChild(q_corr_wrapper);
                     q_tr.appendChild(q_corr_wrapper_th);
 
-                    const q_duration_div = document.createElement("div");
-                    const q_duration_container = document.createElement("div");
-                    q_duration_container.setAttribute("class", "picker-container");
-                    const q_duration_th = document.createElement("td");
-                    q_duration_div.innerHTML = json[i].duration;
-                    let q_duration_ID = "q_dur_";
-                    q_duration_ID = q_duration_ID.concat(json[i].pk);
-                    q_duration_div.setAttribute("class", "js-inline-picker");
-                    q_duration_div.setAttribute("id", q_duration_ID);
-                    const picker = new Picker(q_duration_div, {
-                        format: 'HH:mm:ss',
-                        container: q_duration_container,
-                        controls: true,
-                        inline: true,
-                        headers: true,
-                        rows: 3
-                    });
-                    q_duration_th.appendChild(q_duration_div);
-                    q_duration_th.appendChild(q_duration_container);
-                    q_tr.appendChild(q_duration_th);
-
                     const q_reading = document.createElement("input");
                     q_reading.setAttribute("type", "checkbox");
                     let q_reading_ID = "q_reading_";
@@ -210,7 +189,6 @@ const SendChanges = () => { //function that checks for the changes in the questi
         let q_ans_4 = document.getElementById('q_ans_' + q_pk + '_4'); //getting question's answer option 4
         let q_corr = document.getElementById('q_corr_' + q_pk); //getting question's correct answer wrapper
         let selected = q_corr.options[q_corr.selectedIndex].value - 1; //getting question's correct answer
-        let q_dur = document.getElementById('q_dur_' + q_pk);
         let q_reading = document.getElementById('q_reading_' + q_pk);
         fetch(BASE_PATH + 'api/question/' + q_pk + '/', { //sending fetch put request to add changed question to the Data Base
             method: "PUT",
@@ -230,7 +208,6 @@ const SendChanges = () => { //function that checks for the changes in the questi
                 answ_option2: q_ans_2.value,
                 answ_option3: q_ans_3.value,
                 answ_option4: q_ans_4.value,
-                duration: q_dur.innerHTML,
                 is_reading: q_reading.checked,
             })
         }).then(function (response) {
