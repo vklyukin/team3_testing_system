@@ -1,9 +1,0 @@
-django
-future
-djangorestframework
-markdown
-django-filter
-fulltext
-numpy
-xlrd
-xlsxwriter

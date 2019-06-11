@@ -1,0 +1,11 @@
+django
+future
+djangorestframework
+markdown
+django-filter
+fulltext
+numpy
+xlrd
+xlsxwriter
+psycopg2
+gunicorn
