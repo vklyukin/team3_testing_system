@@ -67,9 +67,9 @@ vim test_system/test_system/constants.py
 ./auto_bootstrap.sh
 ```
 
-> You can run bash using
+> Collect static & run server
 ```sh
-docker-compose run --rm djangoapp /bin/bash
+./start_server.sh
 ```
 
 > Run server
@@ -77,9 +77,9 @@ docker-compose run --rm djangoapp /bin/bash
 docker-compose up
 ```
 
-> Collect static
+> You can run bash using
 ```sh
-docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-input
+docker-compose run --rm djangoapp /bin/bash
 ```
 
 > Reset docker (not recommended)
