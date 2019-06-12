@@ -8,7 +8,8 @@ WORKDIR /opt/services/djangoapp/src
 RUN apt-get update -y && \
     apt-get install -y antiword \ 
     abiword unrtf poppler-utils \
-    libjpeg-dev pstotext whiptail
+    libjpeg-dev pstotext whiptail \
+    vim
 
 RUN pip3 install -r requirements.txt
 
