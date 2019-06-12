@@ -45,10 +45,12 @@ sed -i'.original' -e 's/^STATIC_ROOT/# STATIC_ROOT/' ./test_system/test_system/s
 docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py makemigrations"
 docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py migrate"
 docker-compose run --rm djangoapp /bin/bash -c "cat .superuser.txt | python3 test_system/manage.py initadmin"
+docker-compose run --rm djangoapp /bin/bash -c "python3 test_system/manage.py initscale"
 
 sed -i'.original' -e 's/^# STATIC_ROOT/STATIC_ROOT/' ./test_system/test_system/settings.py
 rm ./test_system/test_system/settings.py.original
 
 docker-compose run djangoapp python3 test_system/manage.py collectstatic --no-input
+docker-compose run --rm djangoapp /bin/bash -c "cp -r ./test_system/static/* ../static"
 
 [ "$start_on_complete" = true ] && docker-compose up

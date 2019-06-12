@@ -20,3 +20,5 @@ class Command(BaseCommand):
             user=admin,
             user_preference=Preference.ADMIN.name
         )
+
+        print(f"initadmin: User {username} created")
