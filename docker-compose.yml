@@ -6,7 +6,7 @@ services:
     build: .
     volumes:
       - .:/opt/services/djangoapp/src
-      - static_volume:/opt/services/djangoapp/src/test_system/static
+      - static_volume:/opt/services/djangoapp/static
     networks:
       - nginx_network
       - database1_network
@@ -19,7 +19,7 @@ services:
       - 5000:80
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
-      - static_volume:/opt/services/djangoapp/src/test_system/static
+      - static_volume:/opt/services/djangoapp/static
     depends_on:
       - djangoapp
     networks:
