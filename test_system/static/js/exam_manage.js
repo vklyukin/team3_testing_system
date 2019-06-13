@@ -38,15 +38,11 @@ const SendGet = () => { //function that get all questions from the server side
                 q_tr.appendChild(q_test_major);
 
                 const q_test_mark_wr = document.createElement("td");
-                let q_test_mark = document.createElement("input");
-                q_test_mark.setAttribute("class", "form-control");
+                let q_test_mark = document.createElement("div");
                 let q_test_mark_id = 'q_test_mark_' + json[i].pk;
                 q_test_mark.setAttribute("id", q_test_mark_id);
-                q_test_mark.setAttribute("value", json[i].test_mark);
-                let q_test_mark_script = document.createElement("script");
-                q_test_mark_script.innerHTML = "bootstrapValidate('#" + q_test_mark_id + "', 'regex:^[0-9]+$:Only numbers')";
+                q_test_mark.innerHTML = json[i].test_mark;
                 q_test_mark_wr.appendChild(q_test_mark);
-                q_test_mark_wr.appendChild(q_test_mark_script);
                 q_tr.appendChild(q_test_mark_wr);
 
                 const q_test_level_wrapper = document.createElement("select");
@@ -299,7 +295,7 @@ const SendGet = () => { //function that get all questions from the server side
 };
 
 const SendPut = (id) => { //function that checks for the changes in the questions and send them to the server side
-    let test_mark = document.getElementById('q_test_mark_' + id).value;
+    let test_mark = document.getElementById('q_test_mark_' + id).innerHTML;
     let test_level = document.getElementById('q_test_level_' + id);
     let test_level_selected = test_level.options[test_level.selectedIndex].value;
     let removed = document.getElementById('q_test_removed_' + id).checked;
