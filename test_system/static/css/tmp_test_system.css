@@ -32,7 +32,6 @@
 .question_next {
   color: #007bff;
   border-color: #007bff;
-  float: right;
   height: 9vh;
   font-size: 3vh;
   margin-bottom: 2vh;
@@ -41,6 +40,19 @@
 .question_next:hover {
   color: #fff;
   background-color: #007bff;
+}
+
+.end_test {
+  color: #e74a3b;
+  border-color: #e74a3b;
+  height: 9vh;
+  font-size: 3vh;
+  margin-bottom: 2vh;
+}
+
+.end_test:hover {
+  color: #fff;
+  background-color: #e74a3b;
 }
 
 .question_variant {

@@ -200,7 +200,7 @@ class CountMarksView(generics.ListAPIView):
                         sp_mark = 1
                         if mark.speaking_mark:
                             sp_mark = SpeakingLevel.get_value(mark.speaking_mark)
-                        Mark.objects.filter(pk=mark.pk).update(level=TestLevel.rev_vals()[int((sp_mark + t_mark) / 2)])
+                        Mark.objects.filter(pk=mark.pk).update(level=TestLevel.rev_vals()[int(round((sp_mark + t_mark) / 2))])
                     return Mark.objects.all()
                 except AttributeError:
                     return HttpResponse('Unknown error', status=500)

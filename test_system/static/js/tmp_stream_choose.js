@@ -31,6 +31,7 @@ function SendPost(id) {
   }).then(function (response) {
     if (response.status === 201) {
       window.location.href = BASE_PATH + 'tmp/test_system/';
+      // window.location.href = BASE_PATH + 'test_system/test/';
     }
   });
 }
