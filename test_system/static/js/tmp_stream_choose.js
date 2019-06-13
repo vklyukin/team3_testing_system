@@ -30,13 +30,26 @@ function SendPost(id) {
     })
   }).then(function (response) {
     if (response.status === 201) {
-      window.location.href = BASE_PATH + 'tmp/test_system/';
-      // window.location.href = BASE_PATH + 'test_system/test/';
+      window.location.href = BASE_PATH + 'test_system/test/';
     }
   });
 }
 
 function init() {
+  fetch(BASE_PATH + 'api/mark/', {
+    method: 'get'
+  }).then(function (response) {
+    return response.json();
+  }).then(function (json) {
+    if (json[0].position !== 0 && json[0].room != null) {
+      window.location.href = BASE_PATH + 'speaking/info/';
+    } else if (json[0].position !== 0 && json[0].room == null) {
+      window.location.href = BASE_PATH + 'speaking/choose/';
+    } else if (json[0].removed == true) {
+      window.location.href = BASE_PATH + 'speaking/choose/';
+    }
+  });
+  localStorage.removeItem('time');
   check_time();
   fetch(BASE_PATH + 'api/exam/', {
     method: 'get'
@@ -51,10 +64,6 @@ function init() {
         let finish_str = json[i].finish;
         stream_button.setAttribute('class', 'btn btn-block stream-variant');
         stream_button.setAttribute('onclick', 'SendPost(' + json[i].pk + ')');
-        // stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
-        // + json[i].stream + '</td><td>'
-        // + start_str.slice(11, 16) + '</td><td>'
-        // + finish_str.slice(11, 16) + '</td></table>';
         stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
         + json[i].stream + '</td><td>1 hour 30 minutes</td><tr></table>';
         if (json[i].start_button === false) {
