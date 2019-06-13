@@ -83,14 +83,17 @@ class TextUploadView(APIView):
                 except Exception as ex:
                     pass
 
-                    for i in range(20, 25):
-                        questions[i].is_reading = True
+                for i in range(20, 25):
+                    questions[i].is_reading = True
 
-                    ReadingTest.objects.create(
-                        text=''.join(map(lambda x: '<p>' + x.replace("\n", " ") + '.</p>',
-                                         re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace(
-                            "<p>.</p>", ""),
-                    )
+                reading = reading.replace('Read the text below. For questions 21 to 25, choose the best answer (a, b,', '')
+                reading = reading.replace('c or d).', '')
+
+                ReadingTest.objects.create(
+                    text=''.join(map(lambda x: '<p>' + x.replace("\n", " ") + '.</p>',
+                                     re.compile('[\.!?]\n').split(reading))).replace("<p> .</p>", "").replace(
+                        "<p>.</p>", ""),
+                )
 
             return Response({"status": "OK"}, status=status.HTTP_201_CREATED)
         else:
