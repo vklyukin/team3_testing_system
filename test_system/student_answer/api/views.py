@@ -86,7 +86,7 @@ class StudentAnswerRudView(generics.RetrieveUpdateDestroyAPIView):
 def redirect(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
-        return render(request, 'test_system.html', {})
+        return render(request, 'tmp_test_system.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')
 

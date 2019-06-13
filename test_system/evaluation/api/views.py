@@ -122,6 +122,9 @@ class MarkRudView(generics.RetrieveUpdateDestroyAPIView):
                 raise NotAcceptable('Already in this queue')
         elif pref.user_preference == Preference.ADMIN or pref.user_preference == Preference.TEACHER:
             instance = self.get_object()
+            if not instance.removed and request.data['removed']:
+                StudentAnswer.objects.filter(user=instance.user, answer=32767). \
+                    update(answer=-1)
             if instance.position != -1 and request.data['position'] == -1:
                 try:
                     Mark.objects.filter(room=instance.room.pk).exclude(position__lte=instance.position) \

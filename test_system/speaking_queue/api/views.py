@@ -17,7 +17,7 @@ from test_system import base_path
 def choose(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
-        return render(request, 'room_choose.html', {})
+        return render(request, 'tmp_room_choose.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
 
@@ -25,7 +25,7 @@ def choose(request):
 def info(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
-        return render(request, 'room_info.html', {})
+        return render(request, 'tmp_room_info.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
 
@@ -33,7 +33,7 @@ def info(request):
 def thanks(request):
     qs = UserPreferences.objects.filter(user=request.user)
     if qs[0].user_preference == Preference.STUDENT:
-        return render(request, 'thanks.html', {})
+        return render(request, 'tmp_thanks.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor')
 
