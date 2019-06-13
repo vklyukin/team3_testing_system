@@ -297,9 +297,10 @@ const time_exam_end = async () => {
 const get_exam_id = async () => {
   const response = await fetch(BASE_PATH + 'api/user-exam/');
   const json = await response.json();
-  exam_id = json[0].exam;
-  if (json[0].exam == null) {
+  if (json.length == 0) {
     window.location.href = BASE_PATH + 'stream_choose/choose/';
+  } else {
+    exam_id = json[0].exam;
   }
 }
 
@@ -358,7 +359,7 @@ function init() {
       }).then(function (response) {
         if (response.status === 200) {
           location.reload(true);
-          window.location.href = BASE_PATH + 'speaking/choose/';
+          window.location.href = BASE_PATH + 'speaking/info/';
         }
       });
     }
@@ -383,7 +384,7 @@ function init() {
       answer_objects = json;
       fill_question(answer_objects[0])
     } else {
-      window.location.href = BASE_PATH + 'speaking/info/';
+      window.location.href = BASE_PATH + 'speaking/choose/';
     }
   });
 }
