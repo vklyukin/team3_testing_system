@@ -25,9 +25,10 @@ function getMark() {
 const get_exam_id = async () => {
   const response = await fetch(BASE_PATH + 'api/user-exam/');
   const json = await response.json();
-  exam_id = json[0].exam;
-  if (json[0].exam == null) {
+  if (json.length == 0) {
     window.location.href = BASE_PATH + 'stream_choose/choose/';
+  } else {
+    exam_id = json[0].exam;
   }
 }
 
@@ -71,7 +72,6 @@ function RoomCard() {
 
 function init() {
   get_exam_id();
-  localStorage.removeItem('time');
   getMark();
   fetch(BASE_PATH + 'api/answer/', {
     method: 'get'

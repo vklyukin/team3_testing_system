@@ -44,9 +44,9 @@ function init() {
     if (json[0].position !== 0 && json[0].room != null) {
       window.location.href = BASE_PATH + 'speaking/info/';
     } else if (json[0].position !== 0 && json[0].room == null) {
-      window.location.href = BASE_PATH + 'speaking/choose/';
+      window.location.href = BASE_PATH + 'speaking/info/';
     } else if (json[0].removed == true) {
-      window.location.href = BASE_PATH + 'speaking/choose/';
+      window.location.href = BASE_PATH + 'speaking/info/';
     }
   });
   localStorage.removeItem('time');
