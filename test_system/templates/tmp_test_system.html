@@ -68,16 +68,18 @@
           <div class="container-fluid">
             <div class="card">
               <div class="card-body question_text">
-                <p id="question_number">Task 1 out of 65</p>
-                <p id="question_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Proin in ante sit amet leo dignissim laoreet sed eu arcu.</p>
+                <p id="question_number"></p>
+                <p id="question_text"></p>
               </div>
             </div>
-            <button class="btn btn-block question_variant" type="button" id="question_answer1" onclick="button1_choose()"></button>
-            <button class="btn btn-block question_variant" type="button" id="question_answer2" onclick="button2_choose()"></button>
-            <button class="btn btn-block question_variant" type="button" id="question_answer3" onclick="button3_choose()"></button>
-            <button class="btn btn-block question_variant" type="button" id="question_answer4" onclick="button4_choose()"></button>
-            <button class="btn btn-block question_next" type="button" onclick="next_question()" id="question_next">Next question</button>
+            <div class="row">
+              <button class="btn btn-block question_variant" type="button" id="question_answer1" onclick="button1_choose()"></button>
+              <button class="btn btn-block question_variant" type="button" id="question_answer2" onclick="button2_choose()"></button>
+              <button class="btn btn-block question_variant" type="button" id="question_answer3" onclick="button3_choose()"></button>
+              <button class="btn btn-block question_variant" type="button" id="question_answer4" onclick="button4_choose()"></button>
+              <button class="btn btn-block question_next" type="button" onclick="next_question()" id="question_next"><span>Next question</span></button>
+              <button class="btn btn-block btn-outline-danger end_test" type="button" name="button" onclick="EndTest()">End Test</button>
+            </div>
             <div class="card reading" id="reading_text">
               <div class="card-body reading_text" id="question_reading">
               </div>
