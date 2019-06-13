@@ -1,0 +1,29 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.navbar {
+  background-color: #fff;
+}
+
+.container-fluid {
+  background: #fff;
+}
+
+#content {
+  background-color: #fff;
+}
+
+.user_info_name {
+  color: #858796;
+  font-size: 3vh;
+}
+
+#info_header {
+  font-size: 6vh;
+  text-align: center;
+}
+
+#info_queue {
+  font-size: 5vh;
+  text-align: center;
+}

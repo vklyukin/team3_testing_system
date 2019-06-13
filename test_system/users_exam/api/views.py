@@ -98,6 +98,6 @@ def redirect(request):
                 return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
             return HttpResponseRedirect(base_path.BASE_PATH + 'test_system/test/')
         else:
-            return render(request, 'stream_choose.html', {})
+            return render(request, 'tmp_stream_choose.html', {})
     else:
         return HttpResponseRedirect(base_path.BASE_PATH + 'test_editor/')

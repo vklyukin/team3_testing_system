@@ -58,19 +58,35 @@
   background-color: #28a745;
 }
 
+.room-choosen {
+  color: #fff;
+  border-color: #007bff;
+  background-color: #007bff;
+  height: 25vh;
+  margin-bottom: 2vh;
+  margin-top: 0;
+  font-size: 2.5vh;
+  margin: 1vw;
+}
+
+.room-choosen:hover {
+  color: #fff;
+  box-shadow: 0 0 0 .2rem rgba(0,123,255,.5);
+}
+
 .room_number {
   font-size: 4vh;
   margin-bottom: 0.5rem;
 }
 
 @media screen and (min-width: 550px) {
-    .room-variant {
+    .room-variant, .room-choosen {
       width: 40vw;
     }
 }
 
 @media screen and (min-width: 1000px) {
-    .room-variant {
+    .room-variant, .room-choosen {
       width: 20vw;
     }
 }

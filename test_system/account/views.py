@@ -25,4 +25,10 @@ def redirect(request):
                 return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
             if userexam[0].exam.finish < localtime(now()):
                 return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
+            answers = StudentAnswer.objects.filter(user=request.user)
+            finished = True
+            for answer in answers:
+                finished &= answer.answer != 32767
+            if finished:
+                return HttpResponseRedirect(base_path.BASE_PATH + 'speaking/info/')
         return HttpResponseRedirect(base_path.BASE_PATH + 'stream_choose/choose/')

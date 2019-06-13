@@ -237,7 +237,7 @@ function FillNextQuestion() {
       }
     }).then(function (response) {
       if (response.status === 200) {
-        window.location.href = BASE_PATH + 'tmp/room_choose/';
+        window.location.href = BASE_PATH + 'speaking/choose/';
       }
     });
   }
@@ -298,6 +298,9 @@ const get_exam_id = async () => {
   const response = await fetch(BASE_PATH + 'api/user-exam/');
   const json = await response.json();
   exam_id = json[0].exam;
+  if (json[0].exam == null) {
+    window.location.href = BASE_PATH + 'stream_choose/choose/';
+  }
 }
 
 const time_now = async () => {
@@ -355,7 +358,7 @@ function init() {
       }).then(function (response) {
         if (response.status === 200) {
           location.reload(true);
-          window.location.href = BASE_PATH + 'tmp/room_choose/';
+          window.location.href = BASE_PATH + 'speaking/choose/';
         }
       });
     }
@@ -379,6 +382,8 @@ function init() {
       max_question_number = json[json.length - 1].number;
       answer_objects = json;
       fill_question(answer_objects[0])
+    } else {
+      window.location.href = BASE_PATH + 'speaking/info/';
     }
   });
 }
@@ -395,7 +400,7 @@ function EndTest() {
     }).then(function (response) {
       if (response.status === 200) {
         location.reload(true);
-        window.location.href = BASE_PATH + 'tmp/room_choose/';
+        window.location.href = BASE_PATH + 'speaking/choose/';
       }
     });
   }

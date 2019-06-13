@@ -6,7 +6,7 @@
 }
 
 .container-fluid {
-    background: #fff;
+  background: #fff;
 }
 
 #content {
@@ -19,5 +19,49 @@
 }
 
 #info_header {
+  font-size: 6vh;
+  text-align: center;
+}
+
+#info_queue {
   font-size: 5vh;
+  text-align: center;
+}
+
+b {
+  font-size: 8vh;
+  color: #007bff;
+}
+
+#info_position {
+  text-align: center;
+}
+
+#info_time {
+  font-size: 5vh;
+  text-align: center;
+}
+
+#info_wait {
+  text-align: center;
+}
+
+hr {
+  width: 60vw;
+}
+
+.room_list {
+  color: #007bff;
+  border-color: #007bff;
+  font-size: 5vh;
+  margin-bottom: 2vh;
+}
+
+.center {
+  text-align: center;
+}
+
+.room_list:hover {
+  color: #fff;
+  background-color: #007bff;
 }
