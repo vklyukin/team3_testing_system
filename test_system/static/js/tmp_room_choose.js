@@ -3,37 +3,10 @@ window.onpopstate = function () {
     history.go(1);
 };
 
-const rooms_container = document.getElementById('rooms');
-let minutes = 0;
-let hours = 0;
-let seconds = 0;
 let mark_info;
 
-function getMark() {
-  fetch(BASE_PATH + 'api/mark/', {
-    method: 'get'
-  }).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    mark_info = json[0];
-    if (json[0].position === -1) {
-      window.location.href = BASE_PATH + 'speaking/thanks/';
-    }
-  });
-}
-
-const get_exam_id = async () => {
-  const response = await fetch(BASE_PATH + 'api/user-exam/');
-  const json = await response.json();
-  if (json.length == 0) {
-    window.location.href = BASE_PATH + 'stream_choose/choose/';
-  } else {
-    exam_id = json[0].exam;
-  }
-}
-
 function SendRoom(room_pk) {
-  fetch(BASE_PATH + 'api/mark/' + mark_info.pk + '/', {
+  return fetch(BASE_PATH + 'api/mark/' + mark_info.pk + '/', {
     method: "PUT",
     credentials: "same-origin", //including cookie information
     headers: {
@@ -54,7 +27,7 @@ function SendRoom(room_pk) {
     if (response.status === 200) {
       window.location.href = BASE_PATH + 'speaking/info/';
     }
-  })
+  });
 }
 
 const sortrule = () => function (a, b) {
@@ -71,8 +44,11 @@ function RoomCard() {
 }
 
 function init() {
-  get_exam_id();
-  getMark();
+  const rooms_container = document.getElementById('rooms');
+  let minutes = 0;
+  let hours = 0;
+  let seconds = 0;
+
   fetch(BASE_PATH + 'api/answer/', {
     method: 'get'
   }).then(function (response) {
@@ -80,48 +56,71 @@ function init() {
   }).then(function (json) {
     if (json.length !== 0 && mark_info.removed == false) {
       window.location.href = BASE_PATH + 'test_system/test/';
-    }
-  });
-  fetch(BASE_PATH + 'api/room/', {
-    method: 'get'
-  }).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    if (json.length !== undefined) {
-      json.sort(sortrule());
-      for (let i = 0; i < json.length; ++i) {
-        let waiting_time;
-        if (json[i].amount_teach === 0) {
-          waiting_time = "Undefined";
+    } else {
+      fetch(BASE_PATH + 'api/user-exam/', {
+        method: 'get'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        if (json.length == 0) {
+          window.location.href = BASE_PATH + 'stream_choose/choose/';
         } else {
-          waiting_time = (json[i].amount_stud * parseFloat(json[i].avg_time)) / json[i].amount_teach;
-          minutes = waiting_time % 60;
-          hours = waiting_time - minutes;
-          hours = hours / 60;
-          seconds = minutes;
-          minutes = Math.floor(minutes);
-          seconds = seconds - minutes;
-          seconds = seconds * 60;
-          minutes = minutes.toFixed();
-          seconds = seconds.toFixed();
-          hours = hours.toFixed();
+          fetch(BASE_PATH + 'api/mark/', {
+            method: 'get'
+          }).then(function (response) {
+            return response.json();
+          }).then(function (json) {
+            if (json[0].position === -1) {
+              window.location.href = BASE_PATH + 'speaking/thanks/';
+            } else {
+              mark_info = json[0];
+
+              fetch(BASE_PATH + 'api/room/', {
+                method: 'get'
+              }).then(function (response) {
+                return response.json();
+              }).then(function (json) {
+                if (json.length !== undefined) {
+                  json.sort(sortrule());
+                  for (let i = 0; i < json.length; ++i) {
+                    let waiting_time;
+                    if (json[i].amount_teach === 0) {
+                      continue;
+                    } else {
+                      waiting_time = (json[i].amount_stud * parseFloat(json[i].avg_time)) / json[i].amount_teach;
+                      minutes = waiting_time % 60;
+                      hours = waiting_time - minutes;
+                      hours = hours / 60;
+                      seconds = minutes;
+                      minutes = Math.floor(minutes);
+                      seconds = seconds - minutes;
+                      seconds = seconds * 60;
+                      minutes = minutes.toFixed();
+                      seconds = seconds.toFixed();
+                      hours = hours.toFixed();
+                    }
+                    let room = document.createElement('button');
+                    if (mark_info.room === json[i].pk) {
+                      room.setAttribute('class', 'btn room-choosen');
+                      room.setAttribute('onclick', 'RoomCard()');
+                      room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><p class="room_number"><b>Your Room</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Waiting</th><td>'
+                      + hours + ':' + minutes + ':' + seconds + '</td></tr></table>';
+                    } else {
+                      room.setAttribute('class', 'btn room-variant');
+                      room.setAttribute('onclick', 'SendRoom(' + json[i].pk + ')');
+                      room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Students</th><td>'
+                      + json[i].amount_stud + '</td></tr><tr><th>Teachers</th><td>'
+                      + json[i].amount_teach + '</td></tr><tr><th>Waiting</th><td>'
+                      + hours + ':' + minutes + ':' + seconds + '</td></tr></table>';
+                    }
+                    rooms_container.appendChild(room);
+                  }
+                }
+              });
+            }
+          });
         }
-        let room = document.createElement('button');
-        if (mark_info.room === json[i].pk) {
-          room.setAttribute('class', 'btn room-choosen');
-          room.setAttribute('onclick', 'RoomCard()');
-          room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><p class="room_number"><b>Your Room</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Waiting</th><td>'
-          + hours + ':' + minutes + ':' + seconds + '</td></tr></table>';
-        } else {
-          room.setAttribute('class', 'btn room-variant');
-          room.setAttribute('onclick', 'SendRoom(' + json[i].pk + ')');
-          room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Students</th><td>'
-          + json[i].amount_stud + '</td></tr><tr><th>Teachers</th><td>'
-          + json[i].amount_teach + '</td></tr><tr><th>Waiting</th><td>'
-          + hours + ':' + minutes + ':' + seconds + '</td></tr></table>';
-        }
-        rooms_container.appendChild(room);
-      }
+      });
     }
   });
 }

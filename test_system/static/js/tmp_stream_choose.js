@@ -3,21 +3,8 @@ window.onpopstate = function () {
     history.go(1);
 };
 
-const strems = document.getElementById('streams');
-let time_now;
-
-function check_time() {
-  fetch(BASE_PATH + 'api/time/', {
-    method: 'get'
-  }).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    time_now = json.time;
-  });
-}
-
 function SendPost(id) {
-  fetch(BASE_PATH + 'api/user-exam/', {
+  return fetch(BASE_PATH + 'api/user-exam/', {
     method: 'post',
     credentials: "same-origin",
     headers: {
@@ -36,6 +23,8 @@ function SendPost(id) {
 }
 
 function init() {
+  const strems = document.getElementById('streams');
+  let time_now;
   fetch(BASE_PATH + 'api/mark/', {
     method: 'get'
   }).then(function (response) {
@@ -47,32 +36,40 @@ function init() {
       window.location.href = BASE_PATH + 'speaking/info/';
     } else if (json[0].removed == true) {
       window.location.href = BASE_PATH + 'speaking/info/';
-    }
-  });
-  localStorage.removeItem('time');
-  check_time();
-  fetch(BASE_PATH + 'api/exam/', {
-    method: 'get'
-  }).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    if (json.length !== undefined) {
-      let date = time_now.slice(0, 10);
-      for(let i = 0; i < json.length; ++i) {
-        let stream_button = document.createElement("button");
-        let start_str = json[i].start;
-        let finish_str = json[i].finish;
-        stream_button.setAttribute('class', 'btn btn-block stream-variant');
-        stream_button.setAttribute('onclick', 'SendPost(' + json[i].pk + ')');
-        stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
-        + json[i].stream + '</td><td>1 hour 30 minutes</td><tr></table>';
-        if (json[i].start_button === false) {
-          stream_button.setAttribute('disabled', 'disabled');
-        }
-        if (date == start_str.slice(0, 10)) {
-          streams.appendChild(stream_button);
-        }
-      }
+    } else {
+      localStorage.removeItem('time');
+      fetch(BASE_PATH + 'api/time/', {
+        method: 'get'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        time_now = json.time;
+
+        fetch(BASE_PATH + 'api/exam/', {
+          method: 'get'
+        }).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          if (json.length !== undefined) {
+            let date = time_now.slice(0, 10);
+            for(let i = 0; i < json.length; ++i) {
+              let stream_button = document.createElement("button");
+              let start_str = json[i].start;
+              let finish_str = json[i].finish;
+              stream_button.setAttribute('class', 'btn btn-block stream-variant');
+              stream_button.setAttribute('onclick', 'SendPost(' + json[i].pk + ')');
+              stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
+              + json[i].stream + '</td><td>1 hour 30 minutes</td><tr></table>';
+              if (json[i].start_button === false) {
+                stream_button.setAttribute('disabled', 'disabled');
+              }
+              if (date == start_str.slice(0, 10)) {
+                streams.appendChild(stream_button);
+              }
+            }
+          }
+        });
+      });
     }
   });
 }

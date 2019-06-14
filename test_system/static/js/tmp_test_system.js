@@ -4,20 +4,13 @@ let answer1 = document.getElementById('question_answer1');
 let answer2 = document.getElementById('question_answer2');
 let answer3 = document.getElementById('question_answer3');
 let answer4 = document.getElementById('question_answer4');
+let question_next = document.getElementById('question_next');
 let count = 0;
-let answer_objects;
 let question_reading_text;
 let question_reading_container = document.createElement('div');
 let question_reading;
-let question_next = document.getElementById('question_next');
-let test_time = document.getElementById('test_time');
-let countDownDateHourAndHalf;
-let timeNow;
-let countDownDateExamEnd;
-let countDownDateSessionEnd;
-let now;
-let exam_id;
 let max_question_number = 0;
+let answer_objects;
 
 const sortrule = () => function (a, b) {
     if (a.number > b.number) {
@@ -204,7 +197,7 @@ function button4_choose() {
 }
 
 function SendAnswer(answer) {
-  fetch(BASE_PATH + 'api/answer/' + answer_objects[count].pk + '/', {
+  return fetch(BASE_PATH + 'api/answer/' + answer_objects[count].pk + '/', {
     method: "PUT",
     credentials: "same-origin", //including cookie information
     headers: {
@@ -228,7 +221,7 @@ function FillNextQuestion() {
     fill_question(answer_objects[count]);
     default_choose();
   } else {
-    fetch(BASE_PATH + 'api/answer/finish/', {
+    return fetch(BASE_PATH + 'api/answer/finish/', {
       method: "POST",
       credentials: "same-origin",
       headers: {
@@ -265,7 +258,7 @@ function next_question() {
 }
 
 function fill_question(answer_object) {
-  fetch(BASE_PATH + 'api/question/' + answer_object.question + '/', {
+  return fetch(BASE_PATH + 'api/question/' + answer_object.question + '/', {
     method: 'get'
   }).then(function (response) {
     return response.json();
@@ -288,110 +281,117 @@ function fill_question(answer_object) {
   });
 }
 
-const time_exam_end = async () => {
-  const response = await fetch(BASE_PATH + 'api/exam/' + exam_id + '/');
-  const json = await response.json();
-  countDownDateExamEnd = new Date((json.finish).slice(0, 19));
-}
-
-const get_exam_id = async () => {
-  const response = await fetch(BASE_PATH + 'api/user-exam/');
-  const json = await response.json();
-  if (json.length == 0) {
-    window.location.href = BASE_PATH + 'stream_choose/choose/';
-  } else {
-    exam_id = json[0].exam;
-  }
-}
-
-const time_now = async () => {
-  const response = await fetch(BASE_PATH + 'api/time/');
-  const json = await response.json();
-  timeNow = new Date((json.time).slice(0, 19));
-}
-
 function init() {
-  get_exam_id();
-  var x = setInterval(function() {
-    now = new Date();
-    var countDownDate = localStorage.getItem('time');
-    if (countDownDate == null || countDownDate == "Invalid Date") {
-      time_now();
-      time_exam_end();
-      countDownDateHourAndHalf = new Date();
-      countDownDateHourAndHalf.setHours(countDownDateHourAndHalf.getHours() + 1);
-      countDownDateHourAndHalf.setMinutes(countDownDateHourAndHalf.getMinutes() + 30);
-      time_now();
-      time_exam_end();
-      if (countDownDateHourAndHalf - now <= countDownDateExamEnd - timeNow) {
-        localStorage.setItem('time', countDownDateHourAndHalf.toString());
-        countDownDate = countDownDateHourAndHalf;
-      } else {
-        var countDownDateExamEnd_number = Date.parse(countDownDateExamEnd);
-        var timeNow_number = Date.parse(timeNow);
-        var dist = countDownDateExamEnd_number - timeNow_number;
-        countDownDateSessionEnd = now;
-        countDownDateSessionEnd.setHours(countDownDateSessionEnd.getHours() + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-        countDownDateSessionEnd.setMinutes(countDownDateSessionEnd.getMinutes() + Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)));
-        countDownDateSessionEnd.setSeconds(countDownDateSessionEnd.getSeconds() + Math.floor((dist % (1000 * 60)) / 1000));
-        localStorage.setItem('time', countDownDateSessionEnd.toString());
-        countDownDate = countDownDateSessionEnd;
-      }
-    } else {
-      countDownDate = Date.parse(localStorage.getItem('time'));
-    }
-    var distance = countDownDate - now;
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    if (!Number.isNaN(hours) || !Number.isNaN(minutes) || !Number.isNaN(seconds)) {
-      test_time.innerHTML = hours + ":" + minutes + ":" + seconds;
-    }
-    if (distance < 0) {
-      clearInterval(x);
-      fetch(BASE_PATH + 'api/answer/finish/', {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "X-CSRFToken": getCookie("csrftoken"),
-            "Accept": "application/json"
-        }
-      }).then(function (response) {
-        if (response.status === 200) {
-          location.reload(true);
-          window.location.href = BASE_PATH + 'speaking/info/';
-        }
-      });
-    }
-  }, 1000);
-  question_reading_text = document.getElementById('question_reading');
-  question_reading = document.getElementById('reading_text');
-  fetch(BASE_PATH + 'api/question/text', {
+  let timeNow;
+  let exam_id;
+  let countDownDateExamEnd;
+  let countDownDateHourAndHalf;
+  let now;
+  let countDownDateSessionEnd;
+  let test_time = document.getElementById('test_time');
+  let countDownDate;
+
+  fetch(BASE_PATH + 'api/user-exam/', {
     method: 'get'
   }).then(function (response) {
     return response.json();
   }).then(function (json) {
-    question_reading_container.innerHTML = json[0].text;
-  });
-  fetch(BASE_PATH + 'api/answer/', {
-    method: 'get'
-  }).then(function (response) {
-      return response.json();
-  }).then(function (json) {
-    if (json.length !== 0) {
-      json.sort(sortrule());
-      max_question_number = json[json.length - 1].number;
-      answer_objects = json;
-      fill_question(answer_objects[0])
+    if (json.length == 0) {
+      window.location.href = BASE_PATH + 'stream_choose/choose/';
     } else {
-      window.location.href = BASE_PATH + 'speaking/choose/';
+      exam_id = json[0].exam;
+
+      var x = setInterval(function() {
+        now = new Date();
+        countDownDate = localStorage.getItem('time');
+        if (countDownDate == null || countDownDate == "Invalid Date") {
+          fetch(BASE_PATH + 'api/time/', {
+            method: 'get'
+          }).then(function (response) {
+            return response.json();
+          }).then(function (json) {
+            timeNow = new Date((json.time).slice(0, 19));
+
+            fetch(BASE_PATH + 'api/exam/' + exam_id + '/', {
+              method: 'get'
+            }).then(function (response) {
+              return response.json();
+            }).then(function (json) {
+              countDownDateExamEnd = new Date((json.finish).slice(0, 19));
+
+              countDownDateHourAndHalf = new Date();
+              countDownDateHourAndHalf.setHours(countDownDateHourAndHalf.getHours() + 1);
+              countDownDateHourAndHalf.setMinutes(countDownDateHourAndHalf.getMinutes() + 30);
+              if (countDownDateHourAndHalf - now <= countDownDateExamEnd - timeNow) {
+                localStorage.setItem('time', countDownDateHourAndHalf.toString());
+              } else {
+                let countDownDateExamEnd_number = Date.parse(countDownDateExamEnd);
+                let timeNow_number = Date.parse(timeNow);
+                let dist = countDownDateExamEnd_number - timeNow_number;
+                countDownDateSessionEnd = now;
+                countDownDateSessionEnd.setHours(countDownDateSessionEnd.getHours() + Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+                countDownDateSessionEnd.setMinutes(countDownDateSessionEnd.getMinutes() + Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60)));
+                countDownDateSessionEnd.setSeconds(countDownDateSessionEnd.getSeconds() + Math.floor((dist % (1000 * 60)) / 1000));
+                localStorage.setItem('time', countDownDateSessionEnd.toString());
+              }
+            });
+          });
+        }
+        countDownDate = Date.parse(localStorage.getItem('time'));
+        let distance = countDownDate - now;
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        if (!Number.isNaN(hours) || !Number.isNaN(minutes) || !Number.isNaN(seconds)) {
+          test_time.innerHTML = hours + ":" + minutes + ":" + seconds;
+        }
+        if (distance < 0) {
+          clearInterval(x);
+          fetch(BASE_PATH + 'api/answer/finish/', {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken"),
+                "Accept": "application/json"
+            }
+          }).then(function (response) {
+            if (response.status === 200) {
+              window.location.href = BASE_PATH + 'speaking/info/';
+            }
+          });
+        }
+      }, 1000);
+      question_reading_text = document.getElementById('question_reading');
+      question_reading = document.getElementById('reading_text');
+      fetch(BASE_PATH + 'api/question/text', {
+        method: 'get'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (json) {
+        question_reading_container.innerHTML = json[0].text;
+
+        fetch(BASE_PATH + 'api/answer/', {
+          method: 'get'
+        }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+          if (json.length !== 0) {
+            json.sort(sortrule());
+            max_question_number = json[json.length - 1].number;
+            answer_objects = json;
+            fill_question(answer_objects[0])
+          } else {
+            window.location.href = BASE_PATH + 'speaking/choose/';
+          }
+        });
+      });
     }
   });
 }
 
 function EndTest() {
   if (confirm("Are you sure you want to abort the test?")) {
-    fetch(BASE_PATH + 'api/answer/finish/', {
+    return fetch(BASE_PATH + 'api/answer/finish/', {
       method: "POST",
       credentials: "same-origin",
       headers: {
@@ -400,7 +400,6 @@ function EndTest() {
       }
     }).then(function (response) {
       if (response.status === 200) {
-        location.reload(true);
         window.location.href = BASE_PATH + 'speaking/choose/';
       }
     });
