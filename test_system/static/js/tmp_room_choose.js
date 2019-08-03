@@ -87,7 +87,9 @@ function init() {
                     if (json[i].amount_teach === 0) {
                       continue;
                     } else {
-                      waiting_time = (json[i].amount_stud * parseFloat(json[i].avg_time)) / json[i].amount_teach;
+                      waiting_time = json[i].amount_stud / json[i].amount_teach;
+                      waiting_time = parseInt(waiting_time.toFixed());
+                      waiting_time = waiting_time * parseFloat(json[i].avg_time);
                       minutes = waiting_time % 60;
                       hours = waiting_time - minutes;
                       hours = hours / 60;
