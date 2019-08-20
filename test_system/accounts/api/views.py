@@ -60,6 +60,10 @@ class UserCreate(CreateAPIView):
             del response['password']
             del response['first_name']
             del response['last_name']
+            try:
+                del response['fathers_name']
+            except KeyError:
+                pass
             return HttpResponseRedirect(base_path.BASE_PATH + 'account/login/')
         else:
             return HttpResponseRedirect(base_path.BASE_PATH + 'api/registration/signup/')
