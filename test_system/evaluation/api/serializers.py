@@ -12,13 +12,23 @@ class MarksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mark
-        fields = ['pk', 'test_mark', 'test_level', 'removed', 'speaking_mark', 'level', 'user', 'speaking',
-                  'first_name',
-                  'second_name',
-                  'room',
-                  'position',
-                  'confident',
-                  'major']
+        fields = [
+            'pk',
+            'fathers_name',
+            'test_mark',
+            'test_level',
+            'removed',
+            'speaking_mark',
+            'level',
+            'user',
+            'speaking',
+            'first_name',
+            'second_name',
+            'room',
+            'position',
+            'confident',
+            'major'
+        ]
 
 
 class MarkStudentSerializer(serializers.ModelSerializer):
@@ -31,6 +41,7 @@ class MarkStudentSerializer(serializers.ModelSerializer):
             'position',
             'first_name',
             'second_name',
+            'fathers_name',
             'removed',
         ]
         read_only_fields = [
@@ -38,6 +49,7 @@ class MarkStudentSerializer(serializers.ModelSerializer):
             'position',
             'first_name',
             'second_name',
+            'fathers_name',
             'test_mark',
             'speaking_mark',
             'level',

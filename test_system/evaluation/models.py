@@ -116,6 +116,7 @@ class SpeakingLevel(Enum):
 
 class Mark(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    fathers_name = models.CharField(max_length=100, null=True, blank=True)
     test_mark = models.IntegerField(default=0)
     test_level = models.CharField(
         max_length=29,
