@@ -37,7 +37,14 @@ class UserCreate(CreateAPIView):
                 user=user,
                 user_major=Major.get_name(request.data['major'])
             )
-            Mark.objects.create(user=user, first_name=user.first_name, second_name=user.last_name,
+            try:
+                fathers_name = request.data['fathers_name']
+            except KeyError:
+                fathers_name = "-"
+            Mark.objects.create(user=user,
+                                first_name=user.first_name,
+                                second_name=user.last_name,
+                                fathers_name=fathers_name,
                                 major=Major.get_name(request.data['major']))
             UserStudentID.objects.create(user=user, student_id=request.data['password'])
             data = 'Your username: ' + request.data['username'] + '\nYour password: ' + request.data['password'] +\
@@ -53,6 +60,10 @@ class UserCreate(CreateAPIView):
             del response['password']
             del response['first_name']
             del response['last_name']
+            try:
+                del response['fathers_name']
+            except KeyError:
+                pass
             return HttpResponseRedirect(base_path.BASE_PATH + 'account/login/')
         else:
             return HttpResponseRedirect(base_path.BASE_PATH + 'api/registration/signup/')

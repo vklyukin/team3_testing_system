@@ -3,3 +3,4 @@ test_system/static/admin/
 test_system/static/rest_framework/
 test_system/test_system/settings.py.original
 .idea/
+venv/
