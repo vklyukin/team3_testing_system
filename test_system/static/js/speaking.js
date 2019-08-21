@@ -10,15 +10,20 @@ const TableFill = (q_table_body, json) => {
     let q_test_student = document.createElement("td");
     let q_test_student_FN_div = document.createElement("div");
     let q_test_student_LN_div = document.createElement("div");
+    let q_test_student_FAN_div = document.createElement("div");
     q_test_student_LN_div.setAttribute("id", 'second_name_' + json.pk);
     q_test_student_FN_div.setAttribute("id", 'first_name_' + json.pk);
+    q_test_student_FAN_div.setAttribute("id", 'fathers_name_' + json.pk);
     let space = document.createElement("div");
     space.innerHTML = " ";
     q_test_student_FN_div.innerHTML = json.first_name; //name
     q_test_student_LN_div.innerHTML = json.second_name; //surname
+    q_test_student_FAN_div.innerHTML = json.fathers_name; //fathers_name
     q_test_student.appendChild(q_test_student_LN_div);
     q_test_student.appendChild(space);
     q_test_student.appendChild(q_test_student_FN_div);
+    q_test_student.appendChild(space);
+    q_test_student.appendChild(q_test_student_FAN_div);
     q_tr.appendChild(q_test_student);
 
     let q_test_major = document.createElement("td");

@@ -43,8 +43,7 @@ function fillCard() {
           info_time.innerHTML = 'Average waiting time:';
           let info_wait = document.getElementById('info_wait');
           info_wait.style.visibility = 'visible';
-          waiting_time = json.amount_stud / json.amount_teach;
-          waiting_time = parseInt(waiting_time.toFixed());
+          waiting_time = Math.ceil((json.amount_stud - json.amount_teach) / json.amount_teach);
           waiting_time = waiting_time * parseFloat(json.avg_time);
           minutes = waiting_time % 60;
           hours = waiting_time - minutes;
