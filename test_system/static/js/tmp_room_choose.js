@@ -83,31 +83,48 @@ function init() {
                 if (json.length !== undefined) {
                   json.sort(sortrule());
                   for (let i = 0; i < json.length; ++i) {
-                    let waiting_time;
-                    if (json[i].amount_teach === 0) {
-                      continue;
-                    } else {
-                      waiting_time = json[i].amount_stud / json[i].amount_teach;
-                      waiting_time = parseInt(waiting_time.toFixed());
-                      waiting_time = waiting_time * parseFloat(json[i].avg_time);
-                      minutes = waiting_time % 60;
-                      hours = waiting_time - minutes;
-                      hours = hours / 60;
-                      seconds = minutes;
-                      minutes = Math.floor(minutes);
-                      seconds = seconds - minutes;
-                      seconds = seconds * 60;
-                      minutes = minutes.toFixed();
-                      seconds = seconds.toFixed();
-                      hours = hours.toFixed();
-                    }
                     let room = document.createElement('button');
                     if (mark_info.room === json[i].pk) {
+                      let waiting_time;
+                      if (json[i].amount_teach === 0) {
+                        continue;
+                      } else {
+                        waiting_time = Math.ceil((json[i].amount_stud - json[i].amount_teach) / json[i].amount_teach);
+                        waiting_time = waiting_time * parseFloat(json[i].avg_time);
+                        minutes = waiting_time % 60;
+                        hours = waiting_time - minutes;
+                        hours = hours / 60;
+                        seconds = minutes;
+                        minutes = Math.floor(minutes);
+                        seconds = seconds - minutes;
+                        seconds = seconds * 60;
+                        minutes = minutes.toFixed();
+                        seconds = seconds.toFixed();
+                        hours = hours.toFixed();
+                      }
                       room.setAttribute('class', 'btn room-choosen');
                       room.setAttribute('onclick', 'RoomCard()');
                       room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><p class="room_number"><b>Your Room</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Waiting</th><td>'
                       + hours + ':' + minutes + ':' + seconds + '</td></tr></table>';
                     } else {
+                      let waiting_time;
+                      if (json[i].amount_teach === 0) {
+                        continue;
+                      } else {
+                        waiting_time = json[i].amount_stud / json[i].amount_teach;
+                        waiting_time = parseInt(waiting_time.toFixed());
+                        waiting_time = waiting_time * parseFloat(json[i].avg_time);
+                        minutes = waiting_time % 60;
+                        hours = waiting_time - minutes;
+                        hours = hours / 60;
+                        seconds = minutes;
+                        minutes = Math.floor(minutes);
+                        seconds = seconds - minutes;
+                        seconds = seconds * 60;
+                        minutes = minutes.toFixed();
+                        seconds = seconds.toFixed();
+                        hours = hours.toFixed();
+                      }
                       room.setAttribute('class', 'btn room-variant');
                       room.setAttribute('onclick', 'SendRoom(' + json[i].pk + ')');
                       room.innerHTML = '<p class="room_number"><b>Room ' + json[i].number + '</b></p><table style="table-layout: fixed; width: 100%;"><tr><th>Students</th><td>'
