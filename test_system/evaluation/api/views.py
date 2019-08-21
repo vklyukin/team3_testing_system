@@ -308,9 +308,9 @@ class GroupListView(APIView):
     def get_permissions(self):
         if self.request.user.is_authenticated:
             pref = UserPreferences.objects.filter(user=self.request.user)
-            if pref[0].user_preference == Preference.STUDENT or pref[0].user_preference == Preference.TEACHER:
+            if pref[0].user_preference == Preference.STUDENT:
                 return [EmptyPermission()]
-            elif pref[0].user_preference == Preference.ADMIN:
+            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
                 return [IsTeacherOrAdmin()]
         else:
             return [EmptyPermission()]
