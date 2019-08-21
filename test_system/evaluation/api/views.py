@@ -266,7 +266,7 @@ def get_student_list(major: str, groups: int, students: int) -> list:
 
     marks = list(map(lambda x: (TestLevel.vals()[x.level], x.level, x.test_mark == 0 and
                                 x.speaking_mark == 'A1m' and x.level == 'A1', x.first_name,
-                                x.second_name), marks))
+                                x.second_name, x.fathers_name), marks))
 
     pv = list(filter(lambda x: x[2] == False, marks))  # Probably visited
     pnv = list(filter(lambda x: x[2] == True, marks))
@@ -293,7 +293,9 @@ def get_student_list(major: str, groups: int, students: int) -> list:
 
     g = [gpv[i] + gpnv[i] for i in range(groups)]  # Merge groups
 
-    return tuple(map(lambda x: tuple(map(lambda y: (y[4], y[3], y[1]), x)), g))
+    print(g)
+
+    return tuple(map(lambda x: tuple(map(lambda y: (y[4], y[3], y[5], y[1]), x)), g))
 
 
 class GroupListView(APIView):
@@ -306,9 +308,9 @@ class GroupListView(APIView):
     def get_permissions(self):
         if self.request.user.is_authenticated:
             pref = UserPreferences.objects.filter(user=self.request.user)
-            if pref[0].user_preference == Preference.STUDENT:
+            if pref[0].user_preference == Preference.STUDENT or pref[0].user_preference == Preference.TEACHER:
                 return [EmptyPermission()]
-            elif pref[0].user_preference == Preference.ADMIN or pref[0].user_preference == Preference.TEACHER:
+            elif pref[0].user_preference == Preference.ADMIN:
                 return [IsTeacherOrAdmin()]
         else:
             return [EmptyPermission()]

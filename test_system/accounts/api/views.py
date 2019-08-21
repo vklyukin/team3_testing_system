@@ -83,14 +83,21 @@ def get_student_list():
                 password = 'Unknown'
                 if len(pass_s) > 0:
                     password = pass_s[0].student_id
+                    mark = Mark.objects.get(user=user.pk)
                 if u_major == Major.SE:
                     se.append(
-                        ['Программная инженерия', 'Имя: ' + user.first_name, 'Фамилия: ' + user.last_name,
+                        ['Программная инженерия',
+                         'Имя: ' + user.first_name,
+                         'Фамилия: ' + user.last_name,
+                         'Отчество: ' + mark.fathers_name,
                          'Логин: ' + user.username, 'Пароль: ' + password,
                          'email: ' + user.email])
                 if u_major == Major.AMI:
                     ami.append(
-                        ['Прикладная математика и информатика', 'Имя: ' + user.first_name, 'Фамилия: ' + user.last_name,
+                        ['Прикладная математика и информатика',
+                         'Имя: ' + user.first_name,
+                         'Фамилия: ' + user.last_name,
+                         'Отчество: ' + mark.fathers_name,
                          'Логин: ' + user.username, 'Пароль: ' + password,
                          'email: ' + user.email])
     return se + ami
