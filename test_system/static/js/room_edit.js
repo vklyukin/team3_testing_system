@@ -6,7 +6,7 @@ let numbers = [];
 const Submit = () => {
     if (number.value == "") {
         alert("This field should not be empty");
-    } else if (!numbers.includes(parseInt(number.value))) {
+    } else if (!numbers.includes(number.value)) {
         fetch(BASE_PATH + 'api/room/', {
             method: "POST",
             credentials: "same-origin",
@@ -16,7 +16,7 @@ const Submit = () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                number: parseInt(number.value),
+                number: number.value,
                 amount_stud: amount_stud.value,
                 avg_time: avg_time.value,
             })
