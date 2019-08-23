@@ -320,7 +320,7 @@ function init() {
               countDownDateExamEnd = new Date((json.finish).slice(0, 19));
 
               countDownDateHourAndHalf = new Date();
-              countDownDateHourAndHalf.setHours(countDownDateHourAndHalf.getHours() + 1);
+              //countDownDateHourAndHalf.setHours(countDownDateHourAndHalf.getHours() + 1);
               countDownDateHourAndHalf.setMinutes(countDownDateHourAndHalf.getMinutes() + 30);
               if (countDownDateHourAndHalf - now <= countDownDateExamEnd - timeNow) {
                 localStorage.setItem('time', countDownDateHourAndHalf.toString());
