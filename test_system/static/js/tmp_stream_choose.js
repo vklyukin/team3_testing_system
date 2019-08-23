@@ -59,7 +59,7 @@ function init() {
               stream_button.setAttribute('class', 'btn btn-block stream-variant');
               stream_button.setAttribute('onclick', 'SendPost(' + json[i].pk + ')');
               stream_button.innerHTML = '<table style="table-layout: fixed; width: 100%;"><tr><td>'
-              + json[i].stream + '</td><td>1 hour 30 minutes</td><tr></table>';
+              + json[i].stream + '</td><td>30 minutes</td><tr></table>';
               if (json[i].start_button === false) {
                 stream_button.setAttribute('disabled', 'disabled');
               }
